@@ -1,0 +1,56 @@
+@import "abstract/function";
+@import "abstract/mixins";
+@import "abstract/variables";
+
+.template-item {
+    overflow: hidden;
+    .card-content {
+        opacity: 0;
+        transition: all  0.3s;
+    }
+    &:hover  {
+        .card-content {
+            opacity: 1;
+        } 
+    }
+}
+.contact-cover-2 {
+    max-height: 200px;
+    @media (min-width: 768px) {
+        max-height: 600px;
+    }
+}
+.bi-star-fill::before,.bi-star::before {
+    vertical-align: inherit!important;
+}
+.owl-item {
+    padding-bottom: 15px;
+}
+/*dark style accordion */
+.dark-background-color 
+.accordion-button:not(.collapsed){
+    background-color: transparent!important;
+}
+/*owl carousel nav */
+.owl-carousel .owl-nav button.owl-prev,
+.owl-carousel .owl-nav button.owl-next {
+    position: absolute;
+    background-color: rgba($color: #fff, $alpha: 0.8)!important;
+    width: 50px;
+    top: 25%;
+    &:hover {
+        background-color: rgba($color: #fff, $alpha: 1)!important;
+    }
+}
+.owl-carousel .owl-nav button.owl-prev{
+    left: 0;
+}
+.owl-carousel .owl-nav button.owl-next {
+    right: 0;
+}
+.owl-carousel .owl-item img {
+    width: inherit!important;
+}
+.owl-carousel .owl-item img.cover {
+    width: 100%!important;
+}

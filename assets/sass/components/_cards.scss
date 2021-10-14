@@ -1,0 +1,37 @@
+@import "../abstract/variables.scss";
+.card-item {
+    border: 1px solid #eee;
+    position: relative;
+}
+.dark-background-color .card-item {
+    border: 1px solid #252B42;
+    position: relative;
+}
+.card-item.noborder{
+    border: none;
+}
+.card-item.cover,.card.cover {
+    .media.bg-cover {
+        height: inherit;
+    }
+    .card-content {
+        position: relative;
+        z-index: 10;
+    }
+}
+.card-item.full-width {
+    // Small devices (landscape phones, 576px and up)
+    @media (min-width: 576px) { 
+        .media {
+            width: 60%;
+            height: 250px;
+        }
+     }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) { 
+        .media {
+            width: 40%;
+        }
+    }
+}

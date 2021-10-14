@@ -1,0 +1,85 @@
+@import "../abstract/variables.scss";
+a {
+    text-decoration: none;
+}
+.btn {
+	cursor: pointer;
+	padding: 12px 24px;
+	//icon size included inside a button
+	.icn,i {
+		width: 18px;
+	}
+}
+.btn-sm {
+	cursor: pointer;
+	padding: 8px 16px;
+	.icn,i {
+		width: 14px;
+	}
+}
+.btn-lg {
+	padding: 16px 32px;
+	.icn,i {
+		width: 24px;
+	}
+}
+/**/
+.btn-rectangle {
+	border-radius: 0;
+}
+.btn-outline,.outline {
+	border: 1px solid;
+	background-color: transparent;
+}
+.btn-round {
+	border-radius: 50px;
+}
+
+/**/
+.btn-circle,.lg-btn-circle,.md-btn-circle,.sm-btn-circle {
+	border-radius: 50%;
+}
+/*circle btn size*/
+.lg-btn-circle,.md-btn-circle,.sm-btn-circle {
+	text-align: center;
+	padding: 1rem;
+	overflow: hidden;
+}
+.lg-btn-circle {
+	width: 6rem;
+	height: 6rem;
+	font-size: 2rem!important;
+}
+.btn-circle {
+	width: 4rem;
+	height: 4rem;
+	font-size: 1rem!important;
+}
+.sm-btn-circle {
+	width: 3rem;
+	height: 3rem;
+	padding: 0;
+	font-size: 0.8rem!important;
+}
+//scroll-down
+.down-circle {
+	padding:0!important;
+	height: 50px;
+	width: 50px;
+	position: absolute;
+	bottom: 5%;
+	.fa {
+		margin-right: 0!important;
+		margin-top: 3px;
+		font-size: 1.5rem;
+	}
+  }
+  .play {
+	&.btn {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1;
+	}
+  }
