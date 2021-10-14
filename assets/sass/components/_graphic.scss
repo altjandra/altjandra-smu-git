@@ -1,0 +1,76 @@
+/*images size and shape*/
+.round {
+	overflow: hidden;
+	border-radius: 1rem;
+}
+.icn-circle,.btn-circle,.circle-box,.circle {
+	position: relative;
+  	display: inline-block;
+  	border-radius: 50%;
+	.fa,svg,i,img {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	}
+}
+.circle-xl,.circle-lg,.circle-md,.circle-sm,.circle-xs {
+	overflow: hidden;
+	border-radius: 50%;
+}
+.circle-xs {
+	height: 32px;
+	width: 32px;
+}
+.circle-sm {
+	height: 48px;
+	width: 48px;
+}
+.circle-md {
+	height: 72px;
+	width: 72px;
+}
+.circle-lg {
+	height: 96px;
+	width: 96px;
+}
+.circle-xl {
+	height: 128px;
+	width: 128px;
+}
+
+/*squared block*/
+.square-box {
+    position: relative;
+    overflow: hidden;
+    &:before{
+    	content: "";
+    	display: block;
+    	padding-top: 100%;
+	}
+}
+.circle-box {
+	border-radius: 50%; 
+	position: relative;
+    overflow: hidden;
+}
+.square-content{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    text-align: center;
+  	width: 100%;
+  	height: 100%;
+}
+i.icon {
+	float: left;
+	margin-top: -5px;
+	margin-right: 10px;
+}
+.svg-shape {
+	position: absolute; 
+	top:0;
+	z-index: -1;
+}

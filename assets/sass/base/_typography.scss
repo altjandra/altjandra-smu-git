@@ -1,0 +1,243 @@
+@import "../abstract/variables";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;700;800;900&display=swap');
+
+.h1 {
+  margin-bottom: 0 !important;
+  line-height: 1.2 !important;
+}
+
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+.p,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-bottom: 0 !important;
+}
+
+.h4,
+.h5,
+.h6,
+.p {
+  margin-bottom: 0 !important;
+}
+
+a {
+  display: inline-block;
+}
+
+//base
+/*font-size*/
+.h0 {
+  @if variable-exists(h0on) {
+    @include h0;
+  }
+
+  @media (max-width: 992px) {
+    @if variable-exists(h2on) {
+      @include h2;
+    }
+  }
+}
+
+.h1 {
+  @if variable-exists(h1on) {
+    @include h1;
+  }
+
+  @media (max-width: 992px) {
+    @if variable-exists(h2on) {
+      @include h2;
+    }
+  }
+}
+
+.h2 {
+  @if variable-exists(h2on) {
+    @include h2;
+  }
+}
+
+.h3 {
+  @if variable-exists(h3on) {
+    @include h3;
+  }
+}
+
+.h4 {
+  @if variable-exists(h4on) {
+    @include h4;
+  }
+
+  @media (max-width: 992px) {
+    @if variable-exists(paragraphon) {
+      @include paragraph;
+    }
+  }
+}
+
+.h5 {
+  @if variable-exists(h5on) {
+    @include h5;
+  }
+}
+
+.h6 {
+  @if variable-exists(h6on) {
+    @include h6;
+  }
+}
+
+.paragr {
+  @if variable-exists(paragraphon) {
+    @include paragraph;
+  }
+}
+
+.small {
+  @if variable-exists(smallon) {
+    @include small;
+  }
+}
+
+.nav-link {
+  @if variable-exists(linkon) {
+    @include link;
+  }
+}
+
+.navbar-brand {
+  @if variable-exists(h3on) {
+    @include h3;
+  }
+}
+
+.btn,
+.btn-text {
+  @if variable-exists(btn-texton) {
+    @include btn-text;
+  }
+}
+
+.btn-sm {
+  @if variable-exists(h6on) {
+    @include h6;
+  }
+}
+
+.btn-md {
+  @if variable-exists(btn-texton) {
+    @include btn-text;
+  }
+}
+
+.btn-lg {
+  @if variable-exists(h3on) {
+    @include h3;
+  }
+}
+
+.list {
+  @if variable-exists(liston) {
+    @include list;
+  }
+}
+
+.link {
+  @if variable-exists(linkon) {
+    @include link;
+  }
+}
+
+.graphic {
+  i {
+    @if variable-exists(h5on) {
+      @include h5
+    }
+  }
+}
+
+.graphic.icn-circle {
+  strong {
+    @if variable-exists(h5on) {
+      @include h5
+    }
+  }
+
+  i {
+    @if variable-exists(h5on) {
+      @include h5
+    }
+  }
+}
+
+.svg-icn {
+  width: 1em;
+  height: 1em;
+  pointer-events: none;
+  vertical-align: middle;
+}
+
+.bi {
+  line-height: 0 !important;
+}
+
+.icn-xxs {
+  font-weight: 400;
+  width: 12px !important;
+  height: 12px !important;
+  font-size: 12px;
+}
+
+.icn-xs {
+  font-weight: 400;
+  width: 16px !important;
+  height: 16px !important;
+  font-size: 16px;
+}
+
+.icn-sm {
+  font-weight: 400;
+  width: 24px !important;
+  height: 24px !important;
+  font-size: 24px;
+}
+
+.icn-md {
+  font-weight: 500;
+  width: 32px !important;
+  height: 32px !important;
+  font-size: 32px;
+}
+
+.icn-lg {
+  font-weight: 700;
+  width: 48px !important;
+  height: 48px !important;
+  font-size: 48px;
+}
+
+.icn-xl {
+  font-weight: 700;
+  width: 72px !important;
+  height: 72px !important;
+  font-size: 72px;
+}
+
+.line-through {
+  text-decoration: line-through;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.overline {
+  text-decoration: overline;
+}
