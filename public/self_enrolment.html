@@ -135,41 +135,80 @@
         </div>
       </nav>
 
+      <h2 class="h2 text-color text-center" style="margin-top: 10px">
+        Enrolment: Installation of Components
+      </h2>>
+      <div class="container position-relative z-index-1">
+        <div class="product-item light-background-color">
+          <div class="product-media position-relative" style="height: 300px">
+            <img class="zoom cover" src="img/courses/electrical.jpg" alt="">
+            <div class="product-actions position-absolute d-flex justify-content-center w-100" style="bottom: 20px">
+              <a class="d-block icn-circle circle-sm light-background-color light-background-color" href="#"><i class="bi bi-heart icn-xs text-color"></i></a><a class=
+              "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-cart icn-xs text-color"></i></a><a class=
+              "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-eye-fill icn-xs text-color"></i></a>
+            </div>
+            <div class="tag position-absolute rounded danger-color text-center" style="padding: 5px 10px; left: 20px; top: 20px">
+              <h6 class="h6 light-text-color">
+                Eligible
+              </h6>
+            </div>
+          </div>
+          <div style="padding: 25px 25px 35px 25px">
+            <div class="d-flex flex-row justify-content-between align-items-center">
+              <div class="d-flex flex-row justify-content-start align-items-center">
+                <a class="link primary-text-color" href="#">Maintenance Courses</a>
+              </div>
+            </div>
+            <h5 class="h5 text-color" style="margin-top: 10px">
+              Installation of Components
+            </h5>
+            <p class="paragraph second-text-color" style="margin-top: 10px">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit minus quas, eos unde culpa autem suscipit optio alias veniam deleniti magnam aliquid laborum voluptatem accusantium enim nam. Sit, nemo exercitationem!
+            </p>
+            <div class="d-flex" style="margin-top: 10px; padding: 5px 0px">
+              <h5 class="h5 muted-text-color">
+                Pre-requisites: None
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <h3 class="h3 text-color text-center" style="margin-top: 10px">
-        Overview of My Enrolled Courses
+        Class Schedule
       </h3>
       <div class="container position-relative z-index-1">
         <table class="responsive-table">
           <thead>
             <tr>
-              <th scope="col">Course Name</th>
-              <th scope="col">Class</th>
-              <th scope="col">Date</th>
-              <th scope="col">Time</th>
               <th scope="col">Trainer Name</th>
+              <th scope="col">Class</th>
+              <th scope="col">Start/End Date</th>
+              <th scope="col">Start/End Time</th>
+              <th scope="col">Class Size</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td scope="row">Foundations of Hardware</th>
-              <td data-title="Class">G1</td>
-              <td data-title="Date">23/01/2021-24/01/2021</td>
-              <td data-title="Time">0800-0900</td>
-              <td data-title="Trainer Name">Lim Ah Seng</td>
+              <td scope="row">Tan Hock Seng</th>
+              <td data-title="Trainer Name">G1</td>
+              <td data-title="Class">1 Oct 2021 - 1 Dec 2021</td>
+              <td data-title="Start/End Date">0800-0900</td>
+              <td data-title="Class Size">40</td>
             </tr>
             <tr>
-              <td scope="row">Service Quality Management</th>
-              <td data-title="Class">G7</td>
-              <td data-title="Date">23/01/2021-24/01/2021</td>
-              <td data-title="Time">0800-0900</td>
-              <td data-title="Trainer Name">Nick Low</td>
+              <td scope="row">Lim Wei Ming</th>
+              <td data-title="Trainer Name">G2</td>
+              <td data-title="Class">1 Oct 2021 - 1 Dec 2021</td>
+              <td data-title="Start/End Date">0800-0900</td>
+              <td data-title="Class Size">40</td>
             </tr>
             <tr>
-              <td scope="row">Hardware Maintenance</th>
-              <td data-title="Class">G5</td>
-              <td data-title="Date">23/01/2021-24/01/2021</td>
-              <td data-title="Time">0800-0900</td>
-              <td data-title="Trainer Name">Tan Jeffrey</td>
+              <td scope="row">Jack Lee</th>
+              <td data-title="Trainer Name">G3</td>
+              <td data-title="Class">1 Oct 2021 - 1 Dec 2021</td>
+              <td data-title="Start/End Date">0800-0900</td>
+              <td data-title="Class Size">40</td>
             </tr>
           </tbody>
         </table>
@@ -180,134 +219,21 @@
       <div class="container py-7 py-lg-10">
         <div class="row justify-content-center">
           <div class="text-center col-lg-6">
-            <h2 class="h2 text-color text-center">
-              Browse Other Courses
+            <h2 class="h3 text-color text-center">
+              Select Class Enrolment
             </h2>
-            <form class="search-container position-relative z-index-1" action="#" method="post">
-              <input type="text" id="search-bar" placeholder="Search">
-              <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
-            </form>
             <div class="dropdown">
-              <button onclick="myFunction()" class="dropbtn">Filter</button>
+              <button onclick="myFunction()" class="dropbtn">Select Available Class</button>
               <div id="myDropdown" class="dropdown-content">
-                <a href="#eligible">Eligible</a>
-                <a href="#noneligible">Non-Eligible</a>
+                <a href="#g1">G1 | Slots Left: 24</a>
+                <a href="#g2">G2 | Slots Left: 2</a>
+                <a href="#g2">G4 | Slots Left: 30</a>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="row align-items-stretch justify-content-center mt-5 mt-md-7">
-          <div class="owl-carousel owl-theme 2-items">
 
-            <div class="product-item light-background-color">
-              <div class="product-media position-relative" style="height: 300px">
-                <img class="zoom cover" src="img/courses/electrical.jpg" alt="">
-                <div class="product-actions position-absolute d-flex justify-content-center w-100" style="bottom: 20px">
-                  <a class="d-block icn-circle circle-sm light-background-color light-background-color" href="#"><i class="bi bi-heart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-cart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-eye-fill icn-xs text-color"></i></a>
-                </div>
-                <div class="tag position-absolute rounded danger-color text-center" style="padding: 5px 10px; left: 20px; top: 20px">
-                  <h6 class="h6 light-text-color">
-                    Eligible
-                  </h6>
-                </div>
-              </div>
-              <div style="padding: 25px 25px 35px 25px">
-                <div class="d-flex flex-row justify-content-between align-items-center">
-                  <div class="d-flex flex-row justify-content-start align-items-center">
-                    <a class="link primary-text-color" href="#">Maintenance Courses</a>
-                  </div>
-                </div>
-                <h5 class="h5 text-color" style="margin-top: 10px">
-                  Installation of Components
-                </h5>
-                <p class="paragraph second-text-color" style="margin-top: 10px">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit minus quas, eos unde culpa autem suscipit optio alias veniam deleniti magnam aliquid laborum voluptatem accusantium enim nam. Sit, nemo exercitationem!
-                </p>
-                <div class="d-flex" style="margin-top: 10px; padding: 5px 0px">
-                  <h5 class="h5 muted-text-color">
-                    Pre-requisites: None
-                  </h5>
-                </div><button class="btn primary-color btn-round btn-outline btn-sm" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
-                "bi bi-chevron-right icn-xs primary-text-color"></i></button>
-              </div>
-            </div>
-
-            <div class="product-item light-background-color">
-              <div class="product-media position-relative" style="height: 300px">
-                <img class="zoom cover" src="img/courses/repair.jpg" alt="">
-                <div class="product-actions position-absolute d-flex justify-content-center w-100" style="bottom: 20px">
-                  <a class="d-block icn-circle circle-sm light-background-color light-background-color" href="#"><i class="bi bi-heart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-cart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-eye-fill icn-xs text-color"></i></a>
-                </div>
-                <div class="tag position-absolute rounded danger-color text-center" style="padding: 5px 10px; left: 20px; top: 20px">
-                  <h6 class="h6 light-text-color">
-                    Eligible
-                  </h6>
-                </div>
-              </div>
-              <div style="padding: 25px 25px 35px 25px">
-                <div class="d-flex flex-row justify-content-between align-items-center">
-                  <div class="d-flex flex-row justify-content-start align-items-center">
-                    <a class="link primary-text-color" href="#">Training Courses</a>
-                  </div>
-                </div>
-                <h5 class="h5 text-color" style="margin-top: 10px">
-                  Advanced Repair Techniques
-                </h5>
-                <p class="paragraph second-text-color" style="margin-top: 10px">
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa pariatur veniam provident accusantium consequuntur inventore optio quasi placeat amet odio dolorem perspiciatis maiores, quod veritatis aperiam fuga. Veniam, quisquam molestiae.
-                </p>
-                <div class="d-flex" style="margin-top: 10px; padding: 5px 0px">
-                  <h5 class="h5 muted-text-color">
-                    Pre-requisites: Intro to Repair
-                  </h5>
-                </div><button class="btn primary-color btn-round btn-outline btn-sm" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
-                "bi bi-chevron-right icn-xs primary-text-color"></i></button>
-              </div>
-            </div>
-            
-            <div class="product-item light-background-color">
-              <div class="product-media position-relative" style="height: 300px">
-                <img class="zoom cover" src="img/courses/cables.jpg" alt="">
-                <div class="product-actions position-absolute d-flex justify-content-center w-100" style="bottom: 20px">
-                  <a class="d-block icn-circle circle-sm light-background-color light-background-color" href="#"><i class="bi bi-heart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-cart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-eye-fill icn-xs text-color"></i></a>
-                </div>
-                <div class="tag position-absolute rounded danger-color text-center" style="padding: 5px 10px; left: 20px; top: 20px">
-                  <h6 class="h6 light-text-color">
-                    Not Eligible
-                  </h6>
-                </div>
-              </div>
-              <div style="padding: 25px 25px 35px 25px">
-                <div class="d-flex flex-row justify-content-between align-items-center">
-                  <div class="d-flex flex-row justify-content-start align-items-center">
-                    <a class="link primary-text-color" href="#">Maintenance Courses</a>
-                  </div>
-                </div>
-                <h5 class="h5 text-color" style="margin-top: 10px">
-                  Intro to Electrical Wiring
-                </h5>
-                <p class="paragraph second-text-color" style="margin-top: 10px">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, nisi. Illum sit molestiae ad labore architecto fuga modi, similique ut officia soluta nisi? Eveniet quia beatae quidem ab atque illo?
-                </p>
-                <div class="d-flex" style="margin-top: 10px; padding: 5px 0px">
-                  <h5 class="h5 muted-text-color">
-                    Pre-requisites: None
-                  </h5>
-                </div><button class="btn primary-color btn-round btn-outline btn-sm" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
-                "bi bi-chevron-right icn-xs primary-text-color"></i></button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <footer>
       <div class="position-relative">
