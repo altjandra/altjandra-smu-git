@@ -59,8 +59,6 @@
       padding-top: 5px;
     }
 
-    
-
     body {
         color: #566787;
     background: #f5f5f5;
@@ -203,26 +201,6 @@
         font-size: 13px;
     }
 
-    /* The popup form - hidden by default */
-    /*
-    .form-popup {
-      display: none;
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      width: 50%;
-      transform: translate(-50%, -50%);
-      border: 3px solid #f1f1f1;
-    }
-
-    /* Add styles to the form container */
-    /*
-    .form-container {
-      max-width: 100%;
-      padding: 10px;
-      background-color: white;
-    }
-
     /* Full-width input fields */
     .form-container input[type=text] {
       width: 100%;
@@ -238,31 +216,6 @@
       background-color: #f1efef;
       outline: none;
     }
-
-    /* Set a style for the submit/login button */
-    .optionBtn {
-      background-color: #fff;
-      color: #666;
-      padding: 10px;
-      border: 2px solid #f1f1f1;
-      border-radius: 10px;
-      width: 100%;
-      margin-bottom:10px;
-      margin-top: 10px;
-    }
-
-
-
-    /* Add some hover effects to buttons */
-    .optionBtn:hover {
-      background-color: #96BB7C;
-      border: #f1f1f1;
-    }
-
-    .optionBtn:active {
-      background-color: #96BB7C;
-      border: #f1f1f1;
-    }
     
     .search_categories{
       font-size: 13px;
@@ -274,8 +227,6 @@
       position: relative;
       margin-bottom: 20px;
     }
-
-   
 
     .search_categories .select select{
       background: transparent;
@@ -293,7 +244,7 @@
       z-index: 9999;
     }
 </style>
-      
+      <!--Nav Bar-->
       <nav class="navbar navbar-expand-lg navbar-light py-4 px-md-5 position-relative z-index-1" id="navbar">
         <a class="navbar-brand" href="#">
         <h1 class="h3 mt-0">
@@ -302,19 +253,17 @@
         aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse ms-lg-5 mt-4 mt-lg-0" id="navbarSupportedContent">
           <ul class="navbar-nav align-items-center">
-            <li class="nav-item">
-              <a class="nav-link" href="admin.html"><span>Home</span></a>
-            </li>
+           
             <li class="nav-item">
               <a class="nav-link" href="course_mgmt.html"><span>Course Management</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><span>Learners Management</span></a>
+              <a class="nav-link" href="learner_mgmt.html"><span>Learners Management</span></a>
             </li>  
           </ul>
         </nav> 
 
-          
+        <!--Main Table-->  
         <script>
         $(document).ready(function(){
           $('[data-toggle="tooltip"]').tooltip();
@@ -431,7 +380,7 @@
         </div>     
         </body>
         
-        
+        <!--Popup for Create a Course-->
         <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
@@ -452,7 +401,7 @@
                   <div class="field_wrapper">
                     <div>
                       
-                      <label for="class"><b>Class</b></label>
+                      <label for="class" style="margin-top: 30px;"><b>Class</b></label>
                       <a href="javascript:void(0);" class="add_button" title="Add field"><i class="material-icons">&#xe146;</i></a>
                     
                       <div class="search_categories">
@@ -494,10 +443,13 @@
                      </div>
 
                      <label for="classsize"><b>Class Size</b></label>
-                     <input type="text" placeholder="Enter class size" name="newCClass-size" required>
+                     <input type="text" placeholder="Enter class size" name="newClass-size" required>
 
-                     <label for="classdate"><b>Class Start/End Date</b></label>
-                     <input type="text" placeholder="Enter start/end date" name="newCClass-date" required>
+                     <label for="classdate"><b>Class Start Date</b></label>
+                     <input type="text" placeholder="Enter start date" name="newClass-startdate" required>
+
+                     <label for="classdate"><b>Class End Date</b></label>
+                     <input type="text" placeholder="Enter end date" name="newClass-enddate" required>
 
       
                     </div>
@@ -507,79 +459,18 @@
             
               <div class="modal-footer">
                 <button type="button" class="btn" style="background-color: #fff; border: 2px solid #999;" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Create Course</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #96BB7C; border-color: #96BB7C;">Create Course</button>
               </div>
               </form>
             </div>
           </div>
         </div>
         
+        <!--Not sure if you need this to fetch anything for the popup-->
         <script>
           var myModal = new bootstrap.Modal(document.getElementById('myModal'), options)
         </script>
-        <!--
-        <div class="form-popup" id="myForm">
-          <form action="/action_page.php" class="form-container">
-            <h5><b>Create a Course</b></h5>
-        
-            <label style="margin-top: 10px;" for="newcourse-name"><b>Course Name</b></label>
-            <input type="text" placeholder="Enter a course name" name="newCourse-name" required>
-            
-            <div class="field_wrapper">
-              <div>
-                
-                <label for="class"><b>Class</b></label>
-                <a href="javascript:void(0);" class="add_button" title="Add field"><i class="material-icons">&#xe146;</i></a>
-              
-                <div class="search_categories">
-                  <div class="select">
-                     <select name="search_categories" id="search_categories">
-                        <option value="1" selected="selected">G1</option>
-                        <option value="2">G2</option>
-                        <option value="3">G3</option>
-                        <option value="4">G4</option>
-                      </select>
-
-                   </div>
-               </div>
-
-                <label for="trainer"><b>Assign Trainer</b></label>
-                <div class="search_categories">
-                  <div class="select">
-                     <select name="search_categories" id="search_categories">
-                        <option value="1" selected="selected">Tom</option>
-                        <option value="2">Dick</option>
-                        <option value="3">Harry</option>
-                        <option value="4">Idk</option>
-                      </select>
-
-                   </div>
-               </div>
-
-              </div>
-            </div>
-            
-
-         
-            <div>
-            <button type="submit" class="btn" style="background-color: #96BB7C; color: #fff; margin-top: 20px;">Create Course</button>
-            <button type="button" class="btn btn-danger" style="margin-top: 20px;" onclick="closeForm()">Cancel</button>
-            </div>
-          </form>
-        </div>
-        -->
-
-        <!--
-        <script>
-          function createCourse() {
-            document.getElementById("exampleModal").style.display = "block";
-          }
-          
-          function closeForm() {
-            document.getElementById("exampleModal").style.display = "none";
-          }
-          </script>
-        -->
+       
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -598,7 +489,7 @@
           if(x < maxField){ 
               x++; //Increment field counter
               $(wrapper).append(`<div id="extra_input">
-        <label for="class"><b>Class</b></label>
+        <label for="class" style="margin-top: 30px;"><b>Class</b></label>
         <a href="javascript:void(0);" class="remove_button"><i class="material-icons">&#xe15c;</i></a>
         <div class="search_categories">
                   <div class="select">
@@ -639,10 +530,14 @@
                   </div>
 
                 <label for="classsize"><b>Class Size</b></label>
-                <input type="text" placeholder="Enter class size" name="newCClass-size" required>
+                <input type="text" placeholder="Enter class size" name="newClass-size" required>
 
-                <label for="classdate"><b>Class Start/End Date</b></label>
-                <input type="text" placeholder="Enter start/end date" name="newCClass-date" required>
+                <label for="classdate"><b>Class Start Date</b></label>
+                     <input type="text" placeholder="Enter start date" name="newClass-startdate" required>
+
+                <label for="classdate"><b>Class End Date</b></label>
+                <input type="text" placeholder="Enter end date" name="newClass-enddate" required>
+
 
       </div>`); //Add field html
           }
@@ -656,11 +551,6 @@
       });
   });
   </script>
-
-
-
-
-        
 
     <script src="js/jquery-3.4.1.min.js"></script> 
     <script src="js/bootstrap.bundle.min.js"></script> 

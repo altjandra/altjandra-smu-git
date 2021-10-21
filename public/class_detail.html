@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 
       
   </head>
@@ -59,8 +63,6 @@
       font-size: 20px;
       padding-top: 5px;
     }
-
-    
 
     body {
         color: #566787;
@@ -203,9 +205,14 @@
 
     #popup {
       z-index: 9999;
+    } 
+
+    .modal-body {
+      padding-bottom: 300px;
     }
 </style>
-      
+<body>
+  <!--Nav Bar-->
       <nav class="navbar navbar-expand-lg navbar-light py-4 px-md-5 position-relative z-index-1" id="navbar">
         <a class="navbar-brand" href="#">
         <h1 class="h3 mt-0">
@@ -214,19 +221,17 @@
         aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse ms-lg-5 mt-4 mt-lg-0" id="navbarSupportedContent">
           <ul class="navbar-nav align-items-center">
-            <li class="nav-item">
-              <a class="nav-link" href="admin.html"><span>Home</span></a>
-            </li>
+           
             <li class="nav-item">
               <a class="nav-link" href="course_mgmt.html"><span>Course Management</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><span>Learners Management</span></a>
+              <a class="nav-link" href="learner_mgmt.html"><span>Learners Management</span></a>
             </li>  
           </ul>
         </nav> 
 
-          
+        <!--Main Table-->  
         <script>
         $(document).ready(function(){
           $('[data-toggle="tooltip"]').tooltip();
@@ -318,7 +323,7 @@
             </div>        
         </div>
         
-        
+        <!--Popup for Assign New Learners-->
         <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
@@ -329,108 +334,32 @@
               <div class="modal-body">
                 <!-- From Here --> 
                 <form action="#" class="form-container">
-              
-                  <label style="margin-top: 10px;" for="newcourse-name"><b>Course Name</b></label>
-                  <input type="text" placeholder="Enter a course name" name="newCourse-name" required>
-
-                  <label style="margin-top: 10px;" for="newcourse-enroldate"><b>Course Start/End Enrolment Date</b></label>
-                  <input type="text" placeholder="Enter a course start/end enrolment date" name="newCourse-enroldate" required>
                   
-                  <label style="margin-top: 10px;" for="newcourse-enroldate"><b>Select Learners</b></label>
-                  <select name="langOpt[]" multiple id="langOpt">
-                    <option value="C++">C++</option>
-                    <option value="C#">C#</option>
-                    <option value="Java">Java</option>
-                    <option value="Objective-C">Objective-C</option>
-                    <option value="JavaScript">JavaScript</option>
-                    <option value="Perl">Perl</option>
-                    <option value="PHP">PHP</option>
-                    <option value="Ruby on Rails">Ruby on Rails</option>
-                    <option value="Android">Android</option>
-                    <option value="iOS">iOS</option>
-                    <option value="HTML">HTML</option>
-                    <option value="XML">XML</option>
-                  </select>
-      
-                  
-                  <div class="field_wrapper">
-                    <div>
-                      
-                      <label for="class"><b>Class</b></label>
-                      <a href="javascript:void(0);" class="add_button" title="Add field"><i class="material-icons">&#xe146;</i></a>
-                    
-                      <div class="search_categories">
-                        <div class="select">
-                           <select name="search_categories" id="search_categories">
-                              <option value="1" selected="selected">G1</option>
-                              <option value="2">G2</option>
-                              <option value="3">G3</option>
-                              <option value="4">G4</option>
-                            </select>
-      
-                         </div>
-                     </div>
-      
-                      <label for="trainer"><b>Assign Trainer</b></label>
-                      <div class="search_categories">
-                        <div class="select">
-                           <select name="search_categories" id="search_categories">
-                              <option value="1" selected="selected">Tom</option>
-                              <option value="2">Dick</option>
-                              <option value="3">Harry</option>
-                              <option value="4">Idk</option>
-                            </select>
-      
-                         </div>
-                     </div>
-
-                     <label for="classtime"><b>Class Start/End Time</b></label>
-                      <div class="search_categories">
-                        <div class="select">
-                           <select name="search_categories" id="search_categories">
-                              <option value="1" selected="selected">0800 - 1000</option>
-                              <option value="2">1000 - 1200</option>
-                              <option value="3">1200 - 1400</option>
-                              <option value="4">1400 - 1600</option>
-                            </select>
-      
-                         </div>
-                     </div>
-
-                     <label for="classsize"><b>Class Size</b></label>
-                     <input type="text" placeholder="Enter class size" name="newCClass-size" required>
-
-                     <label for="classdate"><b>Class Start/End Date</b></label>
-                     <input type="text" placeholder="Enter start/end date" name="newCClass-date" required>
-
-      
-                    </div>
-                
+                  <label style="margin-top: 10px;" for="newcourse-enroldate"><b>Select Learners To Assign</b></label>
+                  <div>
+                  <select class="selectpicker" id="assignlearner" multiple data-live-search="true">
+                    <option>Jun Jie</option>
+                    <option>Josh</option>
+                    <option>Kelly</option>
+                  </select> 
+                  </div>               
 
               </div>
             
               <div class="modal-footer">
                 <button type="button" class="btn" style="background-color: #fff; border: 2px solid #999;" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Create Course</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #96BB7C; border-color: #96BB7C;">Confirm Assign</button>
               </div>
               </form>
             </div>
           </div>
         </div>
     
- <!-- jQuery library -->
-    <script src="js/jquery.min.js"></script>
-
-<!-- JS & CSS library of MultiSelect plugin -->
-    <script src="multiselect/jquery.multiselect.js"></script>
-    <link rel="stylesheet" href="multiselect/jquery.multiselect.css">
-
-    <!-- MultiSelect CSS & JS library -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/css/bootstrap-multiselect.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.15/js/bootstrap-multiselect.min.js"></script>
+ 
 
     <script>
-      $('select[multiple]').multiselect();
+      $('select').selectpicker();
+
 
     </script>
     
