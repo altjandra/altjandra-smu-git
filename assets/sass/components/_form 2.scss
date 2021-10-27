@@ -1,0 +1,106 @@
+@import "../abstract/variables.scss";
+
+$form-color : #F9F9F9;
+//forms color
+.form-group {
+    .btn {
+        height: 100%;
+    }
+}
+.input-group  {
+    .dropdown-toggle {
+        padding: 1.1rem 1.3rem;  
+        background-color: $form-color;
+        border-color: #ced4da;
+    }
+}
+.form-control {
+    padding: 1rem 1.3rem;
+}
+.form-control,.input-group-text {
+    background-color: $form-color;
+}
+
+.input-group-focus {
+    .input-group-text {
+        background-color: #fff;
+    }
+}
+//forms on focus 
+.form-control:focus,
+.input-group-focus .input-group-prepend, 
+.input-group-focus .form-control {
+    outline: none;
+    box-shadow: none;
+    border: 1px solid #2e6ffa;
+    border-top-left-radius:0.3125rem;
+    border-bottom-left-radius:0.3125rem;
+}
+
+.input-group.input-style-1 {
+    height: 100%;
+    .input-group-text {
+        border-right: none;
+        border-color: #ced4da;
+    }
+    .form-control {
+        border-left: none;
+        padding-left: 0.5rem;
+        border-top-right-radius:  0.3125rem!important;
+        border-bottom-right-radius: 0.3125rem!important;
+    }
+}
+
+.input-group-prepend {
+    .input-group-text {
+        height: 100%;
+    }
+}
+.form-group-file  {
+    position: relative;
+    .form-control-file {
+        position: absolute;
+        top: 0;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+        z-index: 10;
+    }
+}
+//large forms
+.form-control.form-control-lg, .input-group .dropdown-toggle-lg {
+    font-size: 1.2rem;
+    padding: 1.5rem;
+}
+textarea.form-control.form-control-lg {
+    font-size: 1rem;
+}
+.form-select {
+    padding: 1.1rem 1.3rem;  
+    background-color: $form-color;
+}
+.form-select-lg {
+    font-size: 1.2rem;
+    height: 4.5rem;
+    padding: 1.1rem 1.3rem;  
+    background-color: $form-color;
+}
+//responsive mobile forms
+@media (max-width: 576px) {
+    .input-group-append {
+        width: 100%;
+        .dropdown {
+            width: 100%;
+            .btn {
+                width: 100%;
+                text-align: left;
+            }
+            .dropdown-menu {
+                width: 100%;
+            }
+        }
+        .btn{
+            width: 100%;
+        }
+    }
+ }
