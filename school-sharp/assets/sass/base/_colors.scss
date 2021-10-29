@@ -1,0 +1,200 @@
+@import "../abstract/variables";
+@import "../abstract/variables_default";
+
+//base
+.primary-color {background-color: $primary-color; color: #fff;}
+.secondary-color-1{background-color: $secondary-color-1; color: #fff;} 
+.secondary-color-2{background-color: $secondary-color-2; color: #fff;} 
+.dark-background-color{background-color:$dark-background-color;} 
+.light-background-color{background-color:$light-background-color;} 
+.success-color{background-color:$success-color;} 
+.alert-color{background-color:$alert-color;} 
+.danger-color{background-color:$danger-color;} 
+.hover-color{background-color:$hover-color;} 
+.disabled-element-color{background-color:$disabled-element-color;} 
+.muted-color{background-color:$muted-color;} 
+.light-gray-1{background-color:$light-gray-1;} 
+.light-gray-2{background-color:$light-gray-2;} 
+.primary-text-color{color:$primary-text-color;} 
+.secondary-text-color-1{color:$secondary-text-color-1;}
+.secondary-text-color-2{color:$secondary-text-color-2;} 
+.text-color{color:$text-color;} 
+.second-text-color{color:$second-text-color;} 
+.light-text-color{color:$light-text-color;}
+.success-text-color{color:$success-text-color;}
+.alert-text-color{color:$alert-text-color;} 
+.danger-text-color{color:$danger-text-color;}
+.hover-text-color{color:$hover-text-color;} 
+.disabled-element-text-color{color:$disabled-element-text-color;}
+.muted-text-color{color:$muted-text-color;} 
+.light-text-gray-1{color:$light-text-gray-1;}
+.light-text-gray-2{color:$light-text-gray-2;}
+.faded-primary-color{background-color:$faded-primary-color;}
+.faded-secondary-color-1{background-color:$faded-secondary-color-1;}
+.faded-secondary-color-2{background-color:$faded-secondary-color-2;}
+
+//border color
+.border-primary-color {border-color: $primary-color!important}
+.border-secondary-color-1{border-color: $secondary-color-1!important;} 
+.border-secondary-color-2{border-color: $secondary-color-2!important;} 
+.border-dark-background-color{border-color:$dark-background-color!important;} 
+.border-light-background-color{border-color:$light-background-color!important;} 
+.border-success-color{border-color:$success-color!important;} 
+.border-alert-color{border-color:$alert-color!important;} 
+.border-danger-color{border-color:$danger-color!important;} 
+.border-hover-color{border-color:$hover-color!important;} 
+.border-disabled-element-color{border-color:$disabled-element-color!important;} 
+.border-muted-color{border-color:$muted-color!important;} 
+.border-light-gray-1{border-color:$light-gray-1!important;} 
+.border-light-gray-2{border-color:$light-gray-2!important;} 
+.border-primary-text-color{border-color:$primary-text-color!important;} 
+.border-secondary-text-color-1{border-color:$secondary-text-color-1!important;}
+.border-secondary-text-color-2{border-color:$secondary-text-color-2!important;} 
+.border-text-color{border-color:$text-color!important;} 
+.border-second-text-color{border-color:$second-text-color!important;} 
+.border-light-text-color{border-color:$light-text-color!important;}
+.border-success-text-color{border-color:$success-text-color!important;}
+.border-alert-text-color{border-color:$alert-text-color!important;} 
+.border-danger-text-color{border-color:$danger-text-color!important;}
+.border-hover-text-color{border-color:$hover-text-color!important;} 
+.border-disabled-element-text-color{border-color:$disabled-element-text-color!important;}
+.border-muted-text-color{border-color:$muted-text-color!important;} 
+.border-light-text-gray-1{border-color:$light-text-gray-1!important;}
+.border-light-text-gray-2{border-color:$light-text-gray-2!important;}
+.border-faded-primary-color{border-color:$faded-primary-color;}
+.border-faded-secondary-color-1{border-color:$faded-secondary-color-1;}
+.border-faded-secondary-color-2{border-color:$faded-secondary-color-2;}
+
+ //hover
+ a:hover {
+	&.text-color {
+		color:darken($color: $text-color, $amount: 15);
+	}
+	&.second-text-color {
+		color:darken($color: $second-text-color, $amount: 15);
+	}
+	&.muted-text-color {
+		color:darken($color: $muted-text-color, $amount: 15);
+	}
+	&.alert-text-color {
+		color:darken($color: $alert-text-color, $amount: 15);
+	}
+	&.white-text {
+		color:darken($color: $white, $amount: 15);
+	}
+	&.primary-text-color {
+		color:darken($color: $primary-text-color, $amount: 15);
+	}
+	&.secondary-text-color-1 {
+		color: darken($color: $secondary-text-color-1, $amount: 15);
+	}
+	&.secondary-text-color-2 {
+		color: darken($color: $secondary-text-color-2, $amount: 15);
+	}
+	&.light-text-color {
+		color:darken($color: $light-text-color, $amount: 15);
+	}
+ }
+
+.btn:hover {
+	&.primary-color {
+		background-color: darken($color: $primary-color, $amount: 20);
+		border-color: darken($color: $primary-color, $amount: 15);
+		color:#fff;
+	}
+	&.secondary-color-1 {
+		background-color: darken($color: $secondary-color-1, $amount: 20);
+		border-color: darken($color: $secondary-color-1, $amount: 15);
+		color:#fff;
+	}
+	&.secondary-color-2 {
+		background-color: darken($color: $secondary-color-2, $amount: 20);
+		border-color: darken($color: $secondary-color-2, $amount: 15);
+		color:#fff;
+	}
+	&.light-gray-1 {
+		background-color: darken($color: $light-gray-1, $amount: 20);
+		border-color: darken($color: $light-gray-1, $amount: 15);
+		color:#fff;
+	}
+	&.light-gray-2 {
+		background-color: darken($color: $light-gray-2, $amount: 20);
+		border-color: darken($color: $light-gray-2, $amount: 15);
+		color:#fff;
+	}
+	.primary-text-color {
+		color:#fff;
+	}
+}
+.btn-outline,.btn-light,.outline {
+	&.primary-color {
+		color:$primary-text-color;
+	}
+	&.secondary-color-1 {
+		color: $secondary-text-color-1;
+	}
+	&.secondary-color-2 {
+		color: $secondary-text-color-2;
+	}
+	&.light-gray-1 {
+		color: $light-text-gray-1;
+	}
+	&.light-gray-2 {
+		color: $light-text-gray-2;
+	}
+}
+.btn-outline.active {
+	&.primary-color {
+		background-color:$primary-color;
+		color: #fff;
+	}
+	&.secondary-color-1 {
+		background-color: $secondary-color-1;
+		color: #fff;
+	}
+	&.secondary-color-2 {
+		background-color: $secondary-color-2;
+		color: #fff;
+	}
+	&.light-gray-1 {
+		background-color: $light-gray-1;
+		color: #212121;
+	}
+	&.light-gray-2 {
+		background-color: $light-gray-2;
+		color: #212121;
+	}
+}
+.btn-outline:hover {
+	&.light-gray-1,&.light-gray-2 {
+		i,span {
+			color: $text-color;
+		}
+	}
+	&.light-text-color {
+		background-color: $light-text-color;
+		color: $primary-color;
+		border-color: $light-text-color;
+	}
+}
+//effects
+.light-drop-shadow {
+	@if variable-exists(light-drop-shadow-on) {
+		@include light-drop-shadow;
+	}
+}
+.accentued-drop-shadow {
+	@if variable-exists(accentued-drop-shadow-on) {
+		@include accentued-drop-shadow;
+	}
+}
+.dramatic-shadow {
+	@if variable-exists(dramatic-shadow-on) {
+		@include dramatic-shadow;
+	}
+}
+.text-shadow {
+	@if variable-exists(text-shadow-on) {
+		@include text-shadow;
+	}
+}

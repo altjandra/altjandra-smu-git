@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>
+      Index
+    </title>
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  </head>
+
+  <style>
+    #navbar {
+      background-color: #fff;
+      position: sticky;
+      top: 0px;
+      
+    }
+
+    .search {
+    width: 400px;
+    position: relative;
+    display: flex;
+    margin-left: -100px;
+    padding-top: 5px;
+    }
+
+    .searchTerm {
+      width: 100%;
+      border: 3px solid #96BB7C;
+      border-right: none;
+      padding: 5px;
+      height: 36px;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+      color: #96BB7C;
+    }
+
+    .searchTerm:focus{
+      color: #96BB7C;
+    }
+
+    .searchButton {
+      width: 40px;
+      height: 36px;
+      border: 1px solid #96BB7C;
+      background: #96BB7C;
+      text-align: center;
+      color: #fff;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      font-size: 20px;
+      padding-top: 5px;
+    }
+
+    
+
+    body {
+        color: #566787;
+    background: #f5f5f5;
+    font-family: 'Varela Round', sans-serif;
+    font-size: 13px;
+  }
+    .table-responsive {
+        margin: 30px 0;
+    }
+  .table-wrapper {
+        min-width: 1000px;
+        background: #fff;
+        padding: 20px 25px;
+    border-radius: 3px;
+        box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    }
+  .table-title {
+    padding-bottom: 15px;
+    background: #D8E3CF;
+    color: #000;
+    padding: 16px 30px;
+    margin: -20px -25px 10px;
+    border-radius: 3px 3px 0 0;
+    }
+    .table-title h2 {
+    margin: 5px 0 0;
+    font-size: 25px;
+  }
+  .table-title .btn {
+    color: #566787;
+    float: right;
+    font-size: 13px;
+    background: #fff;
+    border: none;
+    min-width: 50px;
+    border-radius: 2px;
+    border: none;
+    outline: none !important;
+    margin-left: 170px;
+    width: 250px;
+  }
+  .table-title .btn:hover, .table-title .btn:focus {
+        color: #566787;
+    background: #f2f2f2;
+  }
+  .table-title .btn i {
+    float: left;
+    font-size: 21px;
+    margin-right: 5px;
+    margin-top: 2px;
+  }
+
+  .table-title .btn span {
+    float: left;
+    margin-top: 2px;
+    margin-left: 30px;
+  }
+  
+    table.table tr th, table.table tr td {
+        border-color: #e9e9e9;
+    padding: 12px 15px;
+    vertical-align: middle;
+    }
+  table.table tr th:first-child {
+    width: 60px;
+  }
+  table.table tr th:last-child {
+    width: 100px;
+  }
+    table.table-striped tbody tr:nth-of-type(odd) {
+      background-color: #fcfcfc;
+  }
+  table.table-striped.table-hover tbody tr:hover {
+    background: #f5f5f5;
+  }
+    table.table th i {
+        font-size: 13px;
+        margin: 0 5px;
+        cursor: pointer;
+    }	
+    table.table td:last-child i {
+    opacity: 0.9;
+    font-size: 22px;
+        margin: 0 5px;
+    }
+  table.table td a {
+    font-weight: bold;
+    color: #566787;
+    display: inline-block;
+    text-decoration: none;
+  }
+  table.table td a:hover {
+    color: #96BB7C;
+  }
+  table.table td a.settings {
+        color: #96BB7C;
+    }
+    table.table td a.delete {
+        color: #F44336;
+    }
+    table.table td i {
+        font-size: 19px;
+    }
+   
+    .pagination {
+        float: right;
+        margin: 0 0 5px;
+    }
+    .pagination li a {
+        border: none;
+        font-size: 13px;
+        min-width: 30px;
+        min-height: 30px;
+        color: #999;
+        margin: 0 2px;
+        line-height: 30px;
+        border-radius: 2px !important;
+        text-align: center;
+        padding: 0 6px;
+    }
+    .pagination li a:hover {
+        color: #666;
+    }	
+    .pagination li.active a, .pagination li.active a.page-link {
+        background: #D8E3CF;
+    }
+    .pagination li.active a:hover {        
+        background: #D8E3CF;
+    }
+  .pagination li.disabled i {
+        color: #ccc;
+    }
+    .pagination li i {
+        font-size: 16px;
+        padding-top: 6px
+    }
+    .hint-text {
+        float: left;
+        margin-top: 10px;
+        font-size: 13px;
+    }
+
+    /* The popup form - hidden by default */
+    /*
+    .form-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 50%;
+      transform: translate(-50%, -50%);
+      border: 3px solid #f1f1f1;
+    }
+
+    /* Add styles to the form container */
+    /*
+    .form-container {
+      max-width: 100%;
+      padding: 10px;
+      background-color: white;
+    }
+
+    /* Full-width input fields */
+    .form-container input[type=text] {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0 10px 0;
+      border: 2px solid #f1f1f1;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    /* When the inputs get focus, do something */
+    .form-container input[type=text]:focus {
+      background-color: #f1efef;
+      outline: none;
+    }
+
+    /* Set a style for the submit/login button */
+    .optionBtn {
+      background-color: #fff;
+      color: #666;
+      padding: 10px;
+      border: 2px solid #f1f1f1;
+      border-radius: 10px;
+      width: 100%;
+      margin-bottom:10px;
+      margin-top: 10px;
+    }
+
+
+
+    /* Add some hover effects to buttons */
+    .optionBtn:hover {
+      background-color: #96BB7C;
+      border: #f1f1f1;
+    }
+
+    .optionBtn:active {
+      background-color: #96BB7C;
+      border: #f1f1f1;
+    }
+    
+    .search_categories{
+      font-size: 13px;
+      padding: 10px 8px 10px 14px;
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+   
+
+    .search_categories .select select{
+      background: transparent;
+      line-height: 1;
+      border: 0;
+      padding: 0;
+      border-radius: 0;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+      font-size: 1em;
+    }
+
+    #popup {
+      z-index: 9999;
+    }
+</style>
+      
+      <nav class="navbar navbar-expand-lg navbar-light py-4 px-md-5 position-relative z-index-1" id="navbar">
+        <a class="navbar-brand" href="#">
+        <h1 class="h3 mt-0">
+          All-In-One
+        </h1></a><button class="navbar-toggler" type="button" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" aria-controls="navbarSupportedContent" aria-expanded="false"
+        aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse ms-lg-5 mt-4 mt-lg-0" id="navbarSupportedContent">
+          <ul class="navbar-nav align-items-center">
+            <li class="nav-item">
+              <a class="nav-link" href="admin.html"><span>Home</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="course_mgmt.html"><span>Course Management</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#"><span>Learners Management</span></a>
+            </li>  
+          </ul>
+        </nav> 
+
+          
+        <script>
+        $(document).ready(function(){
+          $('[data-toggle="tooltip"]').tooltip();
+        });
+        </script>
+
+        <div class="container">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-7">
+                                <h2><b>Quiz Creation</b></h2>
+                            </div>
+                            <!-- <div class="col-2">
+                              <div class="search">
+                                 <input type="text" class="searchTerm" placeholder="Search">
+                                 <button type="submit" class="searchButton">
+                                    <i class="material-icons">&#xe8b6;</i>
+                                </button>
+                              </div>
+                           </div> -->
+                           <!-- data-bs-toggle="modal" data-bs-target="#popup" -->
+                            <div class="col-5">
+                              <button type="button" class="btn" onclick="createQn()">
+                                <i class="material-icons">&#xE147;</i> <span>Add new question</span>
+                              </button>
+                            </div>
+
+                            
+
+                            <script>
+                              function createQn() {
+                                var container = document.getElementById("questions");
+                                var section = document.getElementById("mainsection");
+                                container.appendChild(section.cloneNode(true));
+                              }
+
+                                  
+                            </script>
+                            
+                        </div>
+                    </div>
+
+                    <form id="questions">
+
+                      <div class="row">
+                        <div class="col-1">
+                          <h3>Timer</h3>
+                      </div>
+                      
+                        <div class="col" id="timer_input">
+                          <input type="number" min="-1" max="24" step="1" autocomplete="off" value="0" name="hours"   id="time_hours"  > hours,
+                          <input type="number" min="-1" max="60" step="1" autocomplete="off" value="0" name="minutes" id="time_minutes"> minutes,
+                          <input type="number" min="-1" max="60" step="1" autocomplete="off" value="0" name="seconds" id="time_seconds"> seconds
+                        </div>
+                      
+                      </div>
+
+                      <script>
+                        function time_form_input_handler(ev) {
+                            var form = ev.currentTarget;
+
+                            if (form.seconds.valueAsNumber == -1) {
+                              if (form.minutes.valueAsNumber > 0 || form.hours.valueAsNumber > 0 || form.days.valueAsNumber > 0) {
+                                form.minutes.valueAsNumber--;
+                                form.seconds.valueAsNumber = 59;
+                              } else {
+                                form.seconds.valueAsNumber = 0;
+                              }
+                            } else if (form.seconds.valueAsNumber == 60) {
+                              form.minutes.valueAsNumber++;
+                              form.seconds.valueAsNumber = 0;
+                            }
+
+                            if (form.minutes.valueAsNumber == -1) {
+                              if (form.hours.valueAsNumber > 0 || form.days.valueAsNumber > 0) {
+                                form.hours.valueAsNumber--;
+                                form.minutes.valueAsNumber = 59;
+                              } else {
+                                form.minutes.valueAsNumber = 0;
+                              }
+                            } else if (form.minutes.valueAsNumber == 60) {
+                              form.hours.valueAsNumber++;
+                              form.minutes.valueAsNumber = 0;
+                            }
+
+                            if (form.hours.valueAsNumber == -1) {
+                              if (form.days.valueAsNumber > 0) {
+                                form.days.valueAsNumber--;
+                                form.hours.valueAsNumber = 23;
+                              } else {
+                                form.hours.valueAsNumber = 0;
+                              }
+                            } else if (form.hours.valueAsNumber == 24) {
+                              form.days.valueAsNumber++;
+                              form.hours.valueAsNumber = 0;
+                            }
+                          }
+
+                          document.getElementById('time_form').addEventListener('input', time_form_input_handler);
+                      </script>
+                      
+                      <!-- <div class="form-group">
+                        <label for="exampleFormControlSelect1">Example select</label>
+                        <select class="form-control" id="exampleFormControlSelect1">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                          <option>5</option>
+                        </select>
+                      </div> -->
+                      <section id="mainsection">
+                      <div class="form-group mb-4 mt-3">
+                        <label for="formGroupExampleInput">Question</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Input your question">
+                      </div>
+                      
+
+                      <!-- <div class="form-group mb-4">
+                        <label for="exampleFormControlSelect2">Answer</label>
+
+                        
+                       
+                        
+                        <select multiple class="form-control" id="exampleFormControlSelect2">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                        </select>
+
+                        
+                     
+                      </div> -->
+                      <!-- 1 ANSWER -->
+                      <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Text input with checkbox">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" aria-label="Checkbox for following text input">
+                          </div>
+                          <!-- <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a> -->
+                        </div>
+                      </div>
+
+                      <!-- 1 ANSWER -->
+                      <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Text input with checkbox">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" aria-label="Checkbox for following text input">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 1 ANSWER -->
+                      <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Text input with checkbox">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" aria-label="Checkbox for following text input">
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- 1 ANSWER -->
+                      <div class="input-group mb-3">
+                        <input type="text" class="form-control" aria-label="Text input with checkbox">
+                        <div class="input-group-prepend">
+                          <div class="input-group-text">
+                            <input type="checkbox" aria-label="Checkbox for following text input">
+                          </div>
+                        </div>
+                      </div>
+
+                      
+
+                      
+                      <hr/>
+                    </section>
+             
+
+                      <!-- <div class="form-group mb-3 mt-3">
+                        <label for="formGroupExampleInput">Question 2</label>
+                        <input type="text" class="form-control" id="formGroupExampleInput" placeholder="Input your question">
+                      </div>
+                      
+
+                      <div class="form-group mb-3">
+                        <label for="exampleFormControlSelect2">Answers for Question 2</label>
+                        <select multiple class="form-control" id="exampleFormControlSelect2">
+                          <option>1</option>
+                          <option>2</option>
+                          <option>3</option>
+                          <option>4</option>
+                        </select>
+                      </div>
+
+                      <hr/> -->  
+                    
+                    </form>
+
+                    <div class="d-flex justify-content-center mt-3">
+                      <button type="submit" class="btn btn-light">Confirm Quiz</button>
+                    </div>
+                    
+                </div>
+            </div>        
+        </div>     
+        </body>
+        
+        
+        <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create a Course</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- From Here --> 
+                <form action="#" class="form-container">
+              
+                  <label style="margin-top: 10px;" for="newcourse-name"><b>Course Name</b></label>
+                  <input type="text" placeholder="Enter a course name" name="newCourse-name" required>
+                  
+                  <div class="field_wrapper">
+                    <div>
+                      
+                      <label for="class"><b>Class</b></label>
+                      <a href="javascript:void(0);" class="add_button" title="Add field"><i class="material-icons">&#xe146;</i></a>
+                    
+                      <div class="search_categories">
+                        <div class="select">
+                           <select name="search_categories" id="search_categories">
+                              <option value="1" selected="selected">G1</option>
+                              <option value="2">G2</option>
+                              <option value="3">G3</option>
+                              <option value="4">G4</option>
+                            </select>
+      
+                         </div>
+                     </div>
+      
+                      <label for="trainer"><b>Assign Trainer</b></label>
+                      <div class="search_categories">
+                        <div class="select">
+                           <select name="search_categories" id="search_categories">
+                              <option value="1" selected="selected">Tom</option>
+                              <option value="2">Dick</option>
+                              <option value="3">Harry</option>
+                              <option value="4">Idk</option>
+                            </select>
+      
+                         </div>
+                     </div>
+      
+                    </div>
+                
+
+              </div>
+            
+              <div class="modal-footer">
+                <button type="button" class="btn" style="background-color: #fff; border: 2px solid #999;" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Create Course</button>
+              </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        
+        <script>
+          var myModal = new bootstrap.Modal(document.getElementById('myModal'), options)
+        </script>
+        <!--
+        <div class="form-popup" id="myForm">
+          <form action="/action_page.php" class="form-container">
+            <h5><b>Create a Course</b></h5>
+        
+            <label style="margin-top: 10px;" for="newcourse-name"><b>Course Name</b></label>
+            <input type="text" placeholder="Enter a course name" name="newCourse-name" required>
+            
+            <div class="field_wrapper">
+              <div>
+                
+                <label for="class"><b>Class</b></label>
+                <a href="javascript:void(0);" class="add_button" title="Add field"><i class="material-icons">&#xe146;</i></a>
+              
+                <div class="search_categories">
+                  <div class="select">
+                     <select name="search_categories" id="search_categories">
+                        <option value="1" selected="selected">G1</option>
+                        <option value="2">G2</option>
+                        <option value="3">G3</option>
+                        <option value="4">G4</option>
+                      </select>
+
+                   </div>
+               </div>
+
+                <label for="trainer"><b>Assign Trainer</b></label>
+                <div class="search_categories">
+                  <div class="select">
+                     <select name="search_categories" id="search_categories">
+                        <option value="1" selected="selected">Tom</option>
+                        <option value="2">Dick</option>
+                        <option value="3">Harry</option>
+                        <option value="4">Idk</option>
+                      </select>
+
+                   </div>
+               </div>
+
+              </div>
+            </div>
+            
+
+         
+            <div>
+            <button type="submit" class="btn" style="background-color: #96BB7C; color: #fff; margin-top: 20px;">Create Course</button>
+            <button type="button" class="btn btn-danger" style="margin-top: 20px;" onclick="closeForm()">Cancel</button>
+            </div>
+          </form>
+        </div>
+        -->
+
+        <!--
+        <script>
+          function createCourse() {
+            document.getElementById("exampleModal").style.display = "block";
+          }
+          
+          function closeForm() {
+            document.getElementById("exampleModal").style.display = "none";
+          }
+          </script>
+        -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      var maxField = 10; //Input fields increment limitation
+      var addButton = $('.add_button'); //Add button selector
+      var wrapper = $('.field_wrapper'); //Input field wrapper
+      
+
+      var x = 2; //Initial field counter is 1
+      
+      //Once add button is clicked
+      $(addButton).click(function(){
+          //Check maximum number of input fields
+          if(x < maxField){ 
+              x++; //Increment field counter
+              $(wrapper).append(`<div id="extra_input">
+        <label for="class"><b>Class</b></label>
+        <a href="javascript:void(0);" class="remove_button"><i class="material-icons">&#xe15c;</i></a></div>
+        <div class="search_categories">
+                  <div class="select">
+                     <select name="search_categories" id="search_categories">
+                        <option value="1" selected="selected">G1</option>
+                        <option value="2">G2</option>
+                        <option value="3">G3</option>
+                        <option value="4">G4</option>
+                      </select>
+
+                   </div>
+               </div>
+
+               <label for="trainer"><b>Assign Trainer</b></label>
+                <div class="search_categories">
+                  <div class="select">
+                     <select name="search_categories" id="search_categories">
+                        <option value="1" selected="selected">Tom</option>
+                        <option value="2">Dick</option>
+                        <option value="3">Harry</option>
+                        <option value="4">Idk</option>
+                      </select>
+
+                   </div>
+               </div>
+
+      </div>`); //Add field html
+          }
+      });
+      
+      //Once remove button is clicked
+      $(wrapper).on('click', '.remove_button', function(e){
+          e.preventDefault();
+          $(this).parents("#extra_input").remove(); //Remove field html
+          x--; //Decrement field counter
+      });
+  });
+  </script>
+
+
+
+
+        
+
+    <script src="js/jquery-3.4.1.min.js"></script> 
+    <script src="js/bootstrap.bundle.min.js"></script> 
+    <script src="js/owl.carousel.min.js"></script> 
+    <script src="js/tools.js"></script>
+  </body>
+</html>
