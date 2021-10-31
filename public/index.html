@@ -11,63 +11,88 @@
     <link rel="stylesheet" href="css/bootstrap-icons.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
     <link rel="stylesheet" href="css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  </head>
 
     <style>
-      .responsive-table {
-        width: 100%;
-        margin-bottom: 1.5em;
-        border-spacing: 0;
+      
+      body {
+        background-color: #f5f5f5;
       }
+        
 
-      th {
-      font-weight: normal;
+      #navbar {
+        background-color: #fff;
+        position: sticky;
+        top: 0px;    
+    }
+
+    #table-card {
+        background-color: #fff;
+        border: 5px solid
+    }
+
+    .card-header{
+        background-color: #D8E3CF;
+    }
+   
+    table.table-striped tbody tr:nth-of-type(odd) {
+      background-color: #fcfcfc;
+  }
+    table.table-striped.table-hover tbody tr:hover {
+    background: #f5f5f5;
+  }
+    
+  table.table td a {
+    font-weight: bold;
+    color: #566787;
+    display: inline-block;
+    text-decoration: none;
+  }
+  
+  .search {
+    width: 600px;
+    position: relative;
+    display: flex;
+    margin-left: 280px;
+    margin-top: 30px;
+    padding-top: 5px;
+    }
+
+  .searchTerm {
+      width: 100%;
+      border: 3px solid #96BB7C;
+      border-right: none;
+      padding: 5px;
+      height: 36px;
+      border-radius: 5px 0 0 5px;
+      outline: none;
+      color: #96BB7C;
+    }
+
+    .search-bar:focus{
+      color: #96BB7C;
+    }
+
+    .searchButton {
+      width: 40px;
+      height: 36px;
+      border: 1px solid #96BB7C;
+      background: #96BB7C;
       text-align: center;
-      color: grey;
-      }
-
-      td {
-      font-weight: normal;
-      text-align: center;
-      color: black;
-      }
-
-      tr{
-        border-color: black;
-      }
-
-      table, th, td {
-        border: 1px solid black;
-      }
-
-      .search-container{
-        width: 490px;
-        display: block;
-        margin: 0 auto;
-      }
-
-      input#search-bar{
-        margin: 0 auto;
-        width: 100%;
-        height: 45px;
-        padding: 0 20px;
-        font-size: 1rem;
-        border: 1px solid #D0CFCE;
-        outline: none;
-      }
-
-      .search-icon{
-        position: relative;
-        float: right;
-        width: 75px;
-        height: 75px;
-        top: -62px;
-        right: -220px;
-      }
+      color: #fff;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      font-size: 20px;
+      padding-top: 5px;
+    }
+      
 
       .dropbtn {
-        background-color: #04AA6D;
+        background-color: #96BB7C;
         color: white;
-        padding: 16px;
+        padding: 5px 16px 5px 16px;
+        margin-left: 30px;
         font-size: 16px;
         border: none;
         cursor: pointer;
@@ -103,16 +128,11 @@
       .show {display:block;}
     </style>
 
-  </head>
 
-  <body>
     <header class="position-relative">
-      <div class="background position-absolute w-100">
-        <img class="w-100" src="img/hero-9-bg-shape-cover.png" alt="">
-        <div class="filter light-filter-diagonal d-lg-none"></div>
-      </div>
+      
 
-      <nav class="navbar navbar-expand-lg navbar-light py-4 px-md-5 position-relative z-index-1">
+      <nav class="navbar navbar-expand-lg navbar-light py-4 px-md-5 position-relative z-index-1" id="navbar">
         <a class="navbar-brand">
           <h1 class="h3 mt-0">All-In-One</h1>
         </a>
@@ -124,7 +144,7 @@
               <a class="nav-link" href="./index.html"><span>Home</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="./self_enrolment.html"><span>My Courses</span></a>
+              <a class="nav-link" href=""><span>My Courses</span></a>
             </li>
           </ul>
           <ul class="navbar-nav mt-4 mt-lg-0 ms-auto align-items-center">
@@ -134,68 +154,82 @@
           </ul>
         </div>
       </nav>
+      </header>
 
-      <h3 class="h3 text-color text-center" style="margin-top: 10px">
+<body class="mainbody">
+
+      <div class="card" style="width: 80%; margin: auto; margin-top: 30px;">
+      <h4 class="card-header text-color text-center" style="padding-top: 20px; padding-bottom: 20px;" >
         Overview of My Enrolled Courses
-      </h3>
-      <div class="container position-relative z-index-1">
-        <table class="responsive-table">
-          <thead>
-            <tr>
-              <th scope="col">Course Name</th>
-              <th scope="col">Class</th>
-              <th scope="col">Date</th>
-              <th scope="col">Time</th>
-              <th scope="col">Trainer Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td scope="row">Foundations of Hardware</th>
-              <td data-title="Class">G1</td>
-              <td data-title="Date">23/01/2021-24/01/2021</td>
-              <td data-title="Time">0800-0900</td>
-              <td data-title="Trainer Name">Lim Ah Seng</td>
-            </tr>
-            <tr>
-              <td scope="row">Service Quality Management</th>
-              <td data-title="Class">G7</td>
-              <td data-title="Date">23/01/2021-24/01/2021</td>
-              <td data-title="Time">0800-0900</td>
-              <td data-title="Trainer Name">Nick Low</td>
-            </tr>
-            <tr>
-              <td scope="row">Hardware Maintenance</th>
-              <td data-title="Class">G5</td>
-              <td data-title="Date">23/01/2021-24/01/2021</td>
-              <td data-title="Time">0800-0900</td>
-              <td data-title="Trainer Name">Tan Jeffrey</td>
-            </tr>
-          </tbody>
+      </h4>
+      <div class="card-body container position-relative z-index-1" >
+        
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Course Name</th>						
+                    <th>Class</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Trainer Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Foundations of Hardware</td>
+                    <td>G1</td>                        
+                    <td>01/10/2021 - 1/12/2021</td>
+                    <td>0800 - 1000</td>
+                    <td>Lim Ah Seng</td>
+                </tr>
+                <tr>
+                    <td>Fundamentals of Xerox Workcentre</td>
+                    <td>G3</td>                       
+                    <td>01/10/2021 - 1/12/2021</td>
+                    <td>0800 - 1000</td>
+                    <td>Nick Low</td>
+                </tr>
+                <tr>
+                    <td>Hardware Maintenance</td>
+                    <td>G4</td>
+                    <td>01/10/2021 - 1/12/2021</td>
+                    <td>1200 - 1400</td>                        
+                    <td>Tan Jeffrey</td>                      
+                </tr>
+                <tr>
         </table>
+        </div>
       </div>
-    </header>
+    
 
-    <section class="light-background-color">
-      <div class="container py-7 py-lg-10">
+    <section>
+      <div class="container py-7 py-lg-7">
         <div class="row justify-content-center">
-          <div class="text-center col-lg-6">
-            <h2 class="h2 text-color text-center">
+          <div class=" col-lg-10">
+            <h3 class="text-color" style="margin-left: 50px;">
               Browse Other Courses
             </h2>
-            <form class="search-container position-relative z-index-1" action="#" method="post">
-              <input type="text" id="search-bar" placeholder="Search">
-              <a href="#"><img class="search-icon" src="http://www.endlessicons.com/wp-content/uploads/2012/12/search-icon.png"></a>
-            </form>
-            <div class="dropdown">
-              <button onclick="myFunction()" class="dropbtn">Filter</button>
-              <div id="myDropdown" class="dropdown-content">
-                <a href="#eligible">Eligible</a>
-                <a href="#noneligible">Non-Eligible</a>
-              </div>
             </div>
+            <div class="dropdown col-lg-2">
+                <button onclick="myFunction()" class="dropbtn dropdown-toggle">Filter</button>
+                <div id="myDropdown" class="dropdown-content">
+                  <a href="#eligible">Eligible</a>
+                  <a href="#noneligible">Non-Eligible</a>
+                </div>
+              </div>
+            <form class="search-container position-relative z-index-1" action="#" method="post">
+                <div class="search">
+                    <input type="text" id="search-bar" class="searchTerm" placeholder="Search">
+                    <button type="submit" class="searchButton">
+                       <i class="material-icons">&#xe8b6;</i>
+                   </button>
+                 </div>  
+              
+            </form>
+            
           </div>
         </div>
+        </section>
 
         <div class="row align-items-stretch justify-content-center mt-5 mt-md-7">
           <div class="owl-carousel owl-theme 2-items">
@@ -204,9 +238,7 @@
               <div class="product-media position-relative" style="height: 300px">
                 <img class="zoom cover" src="img/courses/electrical.jpg" alt="">
                 <div class="product-actions position-absolute d-flex justify-content-center w-100" style="bottom: 20px">
-                  <a class="d-block icn-circle circle-sm light-background-color light-background-color" href="#"><i class="bi bi-heart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-cart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-eye-fill icn-xs text-color"></i></a>
+                  
                 </div>
                 <div class="tag position-absolute rounded danger-color text-center" style="padding: 5px 10px; left: 20px; top: 20px">
                   <h6 class="h6 light-text-color">
@@ -230,8 +262,8 @@
                   <h5 class="h5 muted-text-color">
                     Pre-requisites: None
                   </h5>
-                </div><button class="btn primary-color btn-round btn-outline btn-sm" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
-                "bi bi-chevron-right icn-xs primary-text-color"></i></button>
+                </div><a class="btn primary-color btn-round btn-outline btn-sm" href="./self_enrolment.html" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
+                "bi bi-chevron-right icn-xs primary-text-color"></i></a>
               </div>
             </div>
 
@@ -239,9 +271,7 @@
               <div class="product-media position-relative" style="height: 300px">
                 <img class="zoom cover" src="img/courses/repair.jpg" alt="">
                 <div class="product-actions position-absolute d-flex justify-content-center w-100" style="bottom: 20px">
-                  <a class="d-block icn-circle circle-sm light-background-color light-background-color" href="#"><i class="bi bi-heart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-cart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-eye-fill icn-xs text-color"></i></a>
+                
                 </div>
                 <div class="tag position-absolute rounded danger-color text-center" style="padding: 5px 10px; left: 20px; top: 20px">
                   <h6 class="h6 light-text-color">
@@ -265,8 +295,8 @@
                   <h5 class="h5 muted-text-color">
                     Pre-requisites: Intro to Repair
                   </h5>
-                </div><button class="btn primary-color btn-round btn-outline btn-sm" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
-                "bi bi-chevron-right icn-xs primary-text-color"></i></button>
+                </div><a class="btn primary-color btn-round btn-outline btn-sm" href= "./self_enrolment.html" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
+                "bi bi-chevron-right icn-xs primary-text-color"></i></a>
               </div>
             </div>
             
@@ -274,9 +304,7 @@
               <div class="product-media position-relative" style="height: 300px">
                 <img class="zoom cover" src="img/courses/cables.jpg" alt="">
                 <div class="product-actions position-absolute d-flex justify-content-center w-100" style="bottom: 20px">
-                  <a class="d-block icn-circle circle-sm light-background-color light-background-color" href="#"><i class="bi bi-heart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-cart icn-xs text-color"></i></a><a class=
-                  "d-block icn-circle circle-sm light-background-color light-background-color" href="#" style="margin-left: 10px"><i class="bi bi-eye-fill icn-xs text-color"></i></a>
+                  
                 </div>
                 <div class="tag position-absolute rounded danger-color text-center" style="padding: 5px 10px; left: 20px; top: 20px">
                   <h6 class="h6 light-text-color">
@@ -300,102 +328,15 @@
                   <h5 class="h5 muted-text-color">
                     Pre-requisites: None
                   </h5>
-                </div><button class="btn primary-color btn-round btn-outline btn-sm" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
-                "bi bi-chevron-right icn-xs primary-text-color"></i></button>
+                </div><a class="btn primary-color btn-round btn-outline btn-sm" href="./self_enrolment.html" style="margin-top: 10px"><span class="btn-text">Enrol Now</span><i class=
+                "bi bi-chevron-right icn-xs primary-text-color"></i></a>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </section>
 
-    <footer>
-      <div class="position-relative">
-        <div class="container py-5">
-          <div class="row align-items-stretch">
-            <div class="col-lg-2 col-md-4 mb-5 mb-lg-0">
-              <h5 class="h5 text-color">
-                Company Info
-              </h5>
-              <div class="links" style="margin-top: 20px">
-                <a class="link d-block second-text-color" href="#">About Us</a><a class="link d-block second-text-color" href="#" style="margin-top: 10px">Carrier</a><a class=
-                "link d-block second-text-color" href="#" style="margin-top: 10px">We are hiring</a><a class="link d-block second-text-color" href="#" style="margin-top: 10px">Blog</a>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-5 mb-lg-0">
-              <h5 class="h5 text-color">
-                Legal
-              </h5>
-              <div class="links" style="margin-top: 20px">
-                <a class="link d-block second-text-color" href="#">About Us</a><a class="link d-block second-text-color" href="#" style="margin-top: 10px">Carrier</a><a class=
-                "link d-block second-text-color" href="#" style="margin-top: 10px">We are hiring</a><a class="link d-block second-text-color" href="#" style="margin-top: 10px">Blog</a>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-5 mb-lg-0">
-              <h5 class="h5 text-color">
-                Features
-              </h5>
-              <div class="links" style="margin-top: 20px">
-                <a class="link d-block second-text-color" href="#">Business Marketing</a><a class="link d-block second-text-color" href="#" style="margin-top: 10px">User Analytic</a><a class=
-                "link d-block second-text-color" href="#" style="margin-top: 10px">Live Chat</a><a class="link d-block second-text-color" href="#" style="margin-top: 10px">Unlimited Support</a>
-              </div>
-            </div>
-            <div class="col-lg-2 col-md-4 mb-5 mb-lg-0">
-              <h5 class="h5 text-color">
-                Resources
-              </h5>
-              <div class="links" style="margin-top: 20px">
-                <a class="link d-block second-text-color" href="#">IOS & Android</a><a class="link d-block second-text-color" href="#" style="margin-top: 10px">Watch a Demo</a><a class=
-                "link d-block second-text-color" href="#" style="margin-top: 10px">Customers</a><a class="link d-block second-text-color" href="#" style="margin-top: 10px">API</a>
-              </div>
-            </div>
-            <div class="col-lg-4 col-md-4 mb-5 mb-lg-0">
-              <h5 class="h5 text-color">
-                Get In Touch
-              </h5>
-              <div class="links" style="margin-top: 20px">
-                <div class="feature-item d-flex align-items-center">
-                  <i class="bi bi-telephone-fill icn-sm primary-text-color"></i>
-                  <h6 class="h6 second-text-color" style="margin-left: 10px">
-                    (480) 555-0103
-                  </h6>
-                </div>
-                <div class="feature-item d-flex align-items-center" style="margin-top: 10px">
-                  <i class="bi bi-geo-alt icn-sm primary-text-color"></i>
-                  <h6 class="h6 second-text-color" style="margin-left: 10px">
-                    4517 Washington Ave. Manchester, Kentucky 39495
-                  </h6>
-                </div>
-                <div class="feature-item d-flex align-items-center" style="margin-top: 10px">
-                  <i class="bi bi-envelope-fill icn-sm primary-text-color"></i>
-                  <h6 class="h6 second-text-color" style="margin-left: 10px">
-                    debra.holt@example.com
-                  </h6>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="position-relative light-gray-1">
-        <div class="container py-4">
-          <div class="row justify-content-between align-items-center">
-            <div class="col-md-7 mb-5 mb-md-0">
-              <h6 class="h6 second-text-color">
-                Made With Love By G8T4 All Right Reserved
-              </h6>
-            </div>
-            <div class="col-md-3 text-center">
-              <div class="card-content py-2">
-                <a class="facebook" href="#"><i class="bi bi-facebook icn-sm primary-text-color" style="margin-left: 20px"></i></a><a class="instagram" href="#"><i class=
-                "bi bi-instagram icn-sm primary-text-color" style="margin-left: 20px"></i></a><a class="twitter" href="#"><i class="bi bi-twitter icn-sm primary-text-color" style=
-                "margin-left: 20px"></i></a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
+    
     <script src="js/jquery-3.4.1.min.js"></script> 
     <script src="js/bootstrap.bundle.min.js"></script> 
     <script src="js/owl.carousel.min.js"></script> 
