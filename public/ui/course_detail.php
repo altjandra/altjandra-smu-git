@@ -1,3 +1,12 @@
+<?php
+session_start();
+?>
+
+<script>
+  let course_name = sessionStorage.getItem("course_name");
+  console.log(course_name);
+</script>
+
 <!DOCTYPE html>
 <html class="no-js" lang="en">
   <head>
