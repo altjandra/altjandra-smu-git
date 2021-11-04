@@ -356,13 +356,16 @@ ALTER TABLE `class`
 -- Constraints for table `completed_courses`
 --
 ALTER TABLE `completed_courses`
-  ADD CONSTRAINT `completed_courses_fk1` FOREIGN KEY (`user_name`) REFERENCES `employee` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `completed_courses_fk1` FOREIGN KEY (`user_name`) REFERENCES `employee` (`user_name`),
+  ADD CONSTRAINT `completed_courses_fk2` FOREIGN KEY (`course_id`) 
+  REFERENCES `class` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `course_section_materials`
 --
 ALTER TABLE `course_section_materials`
-  ADD CONSTRAINT `course_section_materials_fk1` FOREIGN KEY (`course_id`) REFERENCES `class` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `course_section_materials_fk1` FOREIGN KEY (`course_id`) REFERENCES `class` (`course_id`),
+  ADD CONSTRAINT `course_section_materials_fk2` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `course_section_progress`
