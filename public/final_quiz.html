@@ -39,6 +39,11 @@
       /* background-color: transparent; */
       text-decoration: none;
     }
+
+    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+        color: white;
+        background-color: #98b27d;
+    }
   </style>
 
   <body>
@@ -51,20 +56,8 @@
       <div class="collapse navbar-collapse ms-lg-5 mt-4 mt-lg-0" id="navbarSupportedContent">
         <ul class="navbar-nav align-items-center">
           <li class="nav-item">
-            <a class="nav-link" href="#home"><span>Home</span></a>
+            <a class="nav-link" href="index.html"><span>Home</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#course_mgmt"><span>Course Management</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#"><span>Learners Management</span></a>
-          </li>  
-        </ul>
-        <ul class="navbar-nav mt-4 mt-lg-0 ms-auto align-items-center">
-          <li class="nav-item">
-            <a class="primary-text-color" href="#"><strong>Welcome, Ben Tan</strong></a>
-          </li>
-        </ul>
     </nav>
 
     <div class="container py-5 py-lg-7">
@@ -72,7 +65,7 @@
         <!-- <h6 class="h6 primary-text-color text-center"> -->
           <ul class="nav nav-pills justify-content-center" id="myTab" role="tablist">
             <li class="nav-item">
-              <a class="nav-link"  href="#courseHompage" >Course Homepage</a>
+              <a class="nav-link"  href="course_detail.html" >Course Homepage</a>
             </li>
             <li class="nav-item">
               <a class="nav-link"  href="course_content.html" >Content</a>
@@ -80,21 +73,8 @@
             <li class="nav-item">
               <a class="nav-link active" href="final_quiz.html" >Final Quiz</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#learnersProgress">Learners' Progress</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#forum" >Forum</a>
-            </li>
           </ul>
-        <!-- </h6> -->
-        <!-- <div class="tab-content" id="myTabContent">
-          <div class="tab-pane fade" id="courseHompage" role="tabpanel" aria-labelledby="courseHompage-tab">WOAHHHHH</div>
-          <div class="tab-pane fade" id="content" role="tabpanel" aria-labelledby="content-tab">...</div>
-          <div class="tab-pane fade" id="finalQuiz" role="tabpanel" aria-labelledby="finalQuiz-tab">...</div>
-          <div class="tab-pane fade" id="learnersProgress" role="tabpanel" aria-labelledby="learnersProgress-tab">...</div>
-          <div class="tab-pane fade" id="forum" role="tabpanel" aria-labelledby="forum-tab">...</div>
-        </div> -->
+        
       </div>
     </div>
     
@@ -110,7 +90,7 @@
         </div>
         <!-- Section Contents -->
         <div class="row align-items-stretch justify-content-center mt-5 mt-md-7">
-          <a class="btn btn-light btn-sm mt-4" href="quiz_creation.html" role="button">Add New Quiz</a>
+          <a class="btn btn-light btn-sm mt-4" href="final_quiz_creation.html" role="button">Add New Quiz</a>
         </div>
       </div>
 
