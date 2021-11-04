@@ -85,10 +85,10 @@
       <ul class="navbar-nav align-items-center">
         
         <li class="nav-item">
-          <a class="nav-link" href="course_mgmt.html"><span>Course Management</span></a>
+          <a class="nav-link" href="course_mgmt.php"><span>Course Management</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="learner_mgmt.html"><span>Learners Management</span></a>
+          <a class="nav-link" href="learner_mgmt.php"><span>Learners Management</span></a>
         </li>  
       </ul>
     </nav> 

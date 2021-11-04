@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="../css/owl.theme.default.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+    <script src="../js/jquery-3.4.1.min.js"></script> 
+    <script src="../js/bootstrap.bundle.min.js"></script> 
+    <script src="../js/owl.carousel.min.js"></script> 
+    <script src="../js/tools.js"></script>
+
   </head>
 
   <style>
@@ -255,16 +260,16 @@
           <ul class="navbar-nav align-items-center">
            
             <li class="nav-item">
-              <a class="nav-link" href="course_mgmt.html"><span>Course Management</span></a>
+              <a class="nav-link" href="course_mgmt.php"><span>Course Management</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="learner_mgmt.html"><span>Learners Management</span></a>
+              <a class="nav-link" href="learner_mgmt.php"><span>Learners Management</span></a>
             </li>  
           </ul>
           
           <ul class="navbar-nav mt-4 mt-lg-0 ms-auto align-items-center">
             <li class="nav-item">
-              <a class="primary-text-color"><strong>Welcome, Zora! [ADMIN] </strong></a>
+              <a class="primary-text-color"><strong>Welcome, Zora! [Admin] </strong></a>
             </li>
           </ul>
         </nav> 
@@ -286,8 +291,8 @@
                             </div>
                             <div class="col-2">
                               <div class="search">
-                                 <input type="text" class="searchTerm" placeholder="Search">
-                                 <button type="submit" class="searchButton">
+                                 <input type="text" class="searchTerm" placeholder="Search by Course Name" id="search_query">
+                                 <button type="submit" class="searchButton" onclick="search()">
                                     <i class="material-icons">&#xe8b6;</i>
                                 </button>
                               </div>
@@ -303,12 +308,10 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
-                                <th><input type="checkbox" id="select-all" style="width: 17px; height: 17px"></th>
-                                <th>Course Name</th>						
-                                <th>Total No. Of Learners</th>
-                                <th>Enrolment Start Date</th>
-                                <th>Enrolment End Date</th>
-                                <th>Action</th>
+                                <th>Course ID</th>						
+                                <th>Course Name</th>
+                                <th>Course Description</th>
+                                <th></th>
                             </tr>
                         </thead>
 
@@ -320,18 +323,6 @@
                         </tbody>
 
                     </table>
-                    <div class="clearfix">
-                        <div class="hint-text">Showing <b>5</b> out of <b>25</b> courses</div>
-                        <ul class="pagination">
-                            <li class="page-item disabled"><a href="#">Previous</a></li>
-                            <li class="page-item"><a href="#" class="page-link">1</a></li>
-                            <li class="page-item"><a href="#" class="page-link">2</a></li>
-                            <li class="page-item active"><a href="#" class="page-link">3</a></li>
-                            <li class="page-item"><a href="#" class="page-link">4</a></li>
-                            <li class="page-item"><a href="#" class="page-link">5</a></li>
-                            <li class="page-item"><a href="#" class="page-link">Next</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>        
         </div>     
@@ -509,16 +500,11 @@
   });
   </script>
 
-  <script src="../js/jquery-3.4.1.min.js"></script> 
-  <script src="../js/bootstrap.bundle.min.js"></script> 
-  <script src="../js/owl.carousel.min.js"></script> 
-  <script src="../js/tools.js"></script>
-
+  <!-- Admin: view all courses -->
   <script>
-    // will replace entire division of original mock data to new database learners data
     window.onload = function display_courses(){
     const courses_table = document.getElementById("courses_table");
-    url = `http://localhost:5100/courses`;
+    url = `http://localhost:5000/view_all_courses`;
     var html_str = "";
 
     const response = fetch(url)
@@ -530,21 +516,16 @@
 
       else{
         for (var i = 0; i < data["data"]["courses"].length; i++){
-          var course_name = data["data"]["learners"][i].course_name;
-          var course_desc = data["data"]["learners"][i].course_desc;
-          var current_course_intake = data["data"]["learners"][i].current_course_intake;
-          var total_learners = data["data"]["learners"][i].total_learners;
-          var enrolment_start = data["data"]["learners"][i].enrolment_start;
-          var enrolment_end = data["data"]["learners"][i].enrolment_end;
+          var course_id = data["data"]["courses"][i].course_id;
+          var course_name = data["data"]["courses"][i].course_name;
+          var course_desc = data["data"]["courses"][i].course_desc;
 
           html_str = 
           `
           <tr>
-            <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-            <td><a href="course_detail.html">${course_name}</a></td>
-            <td>${current_course_intake}/${total_learners}</td>                        
-            <td>${enrolment_start}</td>
-            <td>${enrolment_end}</td>
+            <td><a href="course_detail.html">${course_id}</a></td>
+            <td>${course_name}</td>                        
+            <td>${course_desc}</td>
             <td>
                 <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
                 <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
@@ -558,18 +539,52 @@
     })
   }
   </script>
+
+  <!-- Admin: search for courses -->
+  <script>
+    function search() {
+      document.getElementById("search_courses_table").innerHTML = "";
+
+      const search_learners_table = document.getElementById("search_courses_table");
+      const search_query = document.getElementById("search_query").value
+      url = `http://localhost:5000/search_for_courses/${search_query}`;
+      var html_str = "";
+
+      document.getElementById("courses_table").style.display="none";
+
+      const response = fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        if (data["code"] != 200){
+          alert(data["message"])
+        }
+
+        else{
+          for (var i = 0; i < data["data"]["courses"].length; i++){
+            console.log(data["data"]["courses"])
+            var course_id = data["data"]["courses"][i].course_id;
+            var course_name = data["data"]["courses"][i].course_name;
+            var course_desc = data["data"]["courses"][i].course_desc;
+
+            html_str = 
+            `
+            <tr>
+              <td><a href="course_detail.html">${course_id}</a></td>
+              <td>${course_name}</td>                        
+              <td>${course_desc}</td>
+              <td>
+                  <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
+                  <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
+              </td>
+            </tr>
+            `;
+
+            search_courses_table.innerHTML += html_str;
+          }        
+        }
+      })
+  }
+  </script>
     
   </body>
 </html>
-
-<tr>
-  <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-  <td><a href="course_detail.html">Fundamentals of Xerox Workcentre</a></td>
-  <td>40/100</td>                        
-  <td>10/10/2021</td>
-  <td>10/12/2021</td>
-  <td>
-      <a href="#" class="settings" title="Settings" data-toggle="tooltip"><i class="material-icons">&#xE8B8;</i></a>
-      <a href="#" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE5C9;</i></a>
-  </td>
-</tr>
