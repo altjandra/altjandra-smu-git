@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `class` (
   `class_end_datetime` datetime NOT NULL,
   `enrolment_start_datetime` datetime NOT NULL,
   `enrolment_end_datetime` datetime NOT NULL,
-  `current_class_size` int(11) DEFAULT NULL,
+  `current_class_size` int(11) NULL DEFAULT 0,
   `total_class_size` int(11) NOT NULL,
   `final_quiz_id` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`course_id`,`class_id`),
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `class` (
 --
 
 INSERT INTO `class` (`course_id`, `class_id`, `trainer_name`, `class_start_datetime`, `class_end_datetime`, `enrolment_start_datetime`, `enrolment_end_datetime`, `current_class_size`, `total_class_size`, `final_quiz_id`) VALUES
-('EPSON101', 'G1', 'Ariel', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', NULL, 5, NULL),
+('EPSON101', 'G1', 'Ariel', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 0, 5, NULL),
 ('EPSON101', 'G2', 'Ariel', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 1, 5, NULL),
 ('EPSON101', 'G3', 'Blake', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 5, 5, NULL),
 ('EPSON102', 'G1', 'Crystal', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 1, 5, NULL),
@@ -349,7 +349,7 @@ INSERT INTO `quiz_question_options` (`quiz_id`, `question_no`, `option_id`, `opt
 -- Constraints for table `class`
 --
 ALTER TABLE `class`
-  ADD CONSTRAINT `class_fk1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`),
+  ADD CONSTRAINT `class_fk1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `class_fk2` FOREIGN KEY (`final_quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
