@@ -238,7 +238,7 @@
     outline: none;
   }
 
-  .search_categories {
+  .prerequisites_available {
     font-size: 13px;
     padding: 10px 8px 10px 14px;
     background: #fff;
@@ -249,7 +249,7 @@
     margin-bottom: 20px;
   }
 
-  .search_categories .select select {
+  .prerequisites_available .select select {
     background: transparent;
     line-height: 1;
     border: 0;
@@ -261,14 +261,13 @@
     font-size: 1em;
   }
 
-  #popup {
+  #create_popup {
     z-index: 9999;
   }
 </style>
 
 <body>
-
-  <!--Admin Nav Bar-->
+  <!-- Admin Nav Bar -->
   <nav class="navbar navbar-expand-lg navbar-light py-4 px-md-5 position-relative z-index-1" id="navbar">
     <a class="navbar-brand">
       <h1 class="h3 mt-0">All-In-One</h1>
@@ -293,7 +292,7 @@
     </div>
   </nav>
 
-  <!--Main Table-->
+  <!-- Main Table -->
   <script>
     $(document).ready(function () {
       $('[data-toggle="tooltip"]').tooltip();
@@ -308,23 +307,30 @@
             <div class="col-5">
               <h2><b>Course Management</b></h2>
             </div>
+
+            <!-- Search bar to find for all matching courses -->
             <div class="col-2">
               <div class="search">
                 <input type="text" class="searchTerm" placeholder="Search by Course Name" id="search_query">
-                <button type="submit" class="searchButton" onclick="search_by_course_name()">
+                <button type="submit" class="searchButton" onclick="search_for_courses()">
                   <i class="material-icons">&#xe8b6;</i>
                 </button>
               </div>
             </div>
+
+            <!-- Create New Course Button -->
+            <!-- On click, will lead to popup to create a new course -->
             <div class="col-5">
-              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#popup">
+              <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#create_popup">
                 <i class="material-icons">&#xE147;</i> <span>Create New Course</span>
               </button>
             </div>
           </div>
         </div>
-        <table class="table table-striped table-hover">
-          <thead>
+
+        <!-- Main Table Content -->
+        <table id="main_table" class="table table-striped table-hover">
+          <thead id="main_table_headers">
             <tr>
               <th>Course ID</th>
               <th>Course Name</th>
@@ -333,10 +339,12 @@
             </tr>
           </thead>
 
-          <!-- display database of learners -->
+          <!-- On load, to display all courses in table -->
+          <!-- By default, displays content. Will hide if search_courses_table populate. -->
           <tbody id="courses_table"></tbody>
 
-          <!-- display database of learners that matches search query -->
+          <!-- On search, to display all courses that match in table -->
+          <!-- By default, no content. -->
           <tbody id="search_courses_table"></tbody>
         </table>
       </div>
@@ -345,315 +353,240 @@
 </body>
 
 <!--Popup for Create a Course-->
-<div class="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="create_popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Create a Course</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
+      <!-- To add new course details -->
       <div class="modal-body">
-        <!-- To add new course -->
         <form action="#" class="form-container">
 
-          <label style="margin-top: 10px;" for="newcourse-id"><b>Course ID</b></label>
-          <input type="text" placeholder="Enter course ID" name="newCourse-ID" id="newCourse-ID" required>
+          <!-- To enter New Course ID -->
+          <label style="margin-top: 10px;" for="newcourse_id"><b>Course ID</b></label>
+          <input type="text" placeholder="Enter course ID" name="newcourse_id" id="newcourse_id">
 
-          <label style="margin-top: 10px;" for="newcourse-name"><b>Course Name</b></label>
-          <input type="text" placeholder="Enter course name" name="newCourse-name" id="newCourse-name" required>
+          <!-- To enter New Course Name -->
+          <label style="margin-top: 10px;" for="newcourse_name"><b>Course Name</b></label>
+          <input type="text" placeholder="Enter course name" name="newcourse_name" id="newcourse_name">
 
-          <label style="margin-top: 10px;" for="newcourse-description"><b>Course Description</b></label>
-          <input type="text" placeholder="Enter course description" name="newCourse-description"
-            id="newCourse-description" required>
+          <!-- To enter New Course Description -->
+          <label style="margin-top: 10px;" for="newcourse_desc"><b>Course Description</b></label>
+          <input type="text" placeholder="Enter course description" name="newcourse_desc" id="newcourse_desc">
 
-          <label style="margin-top: 10px;" for="newcourse-enroldate"><b>Course Prerequisite</b></label>
-          <input type="text" placeholder="Enter course prerequisite, NIL if not applicable"
-            name="newCourse-prerequisite" id="newCourse-prerequisite" required>
-
-          <!-- To add new class (move to course details page) -->
-          <!-- <div class="field_wrapper">
-            <div>
-
-              <label for="class" style="margin-top: 30px;"><b>Class</b></label>
-              <a href="javascript:void(0);" class="add_button" title="Add field"><i
-                  class="material-icons">&#xe146;</i></a>
-
-              <div class="search_categories">
-                <div class="select">
-                  <select name="search_categories" id="search_categories">
-                    <option value="1" selected="selected">G1</option>
-                    <option value="2">G2</option>
-                    <option value="3">G3</option>
-                    <option value="4">G4</option>
-                  </select>
-                </div>
-              </div>
-
-              <label for="trainer"><b>Assign Trainer</b></label>
-              <div class="search_categories">
-                <div class="select">
-                  <select name="search_categories" id="search_categories">
-                    <option value="1" selected="selected">Tom</option>
-                    <option value="2">Dick</option>
-                    <option value="3">Harry</option>
-                    <option value="4">Idk</option>
-                  </select>
-                </div>
-              </div>
-
-              <label for="classtime"><b>Class Start/End Time</b></label>
-              <div class="search_categories">
-                <div class="select">
-                  <select name="search_categories" id="search_categories">
-                    <option value="1" selected="selected">0800 - 1000</option>
-                    <option value="2">1000 - 1200</option>
-                    <option value="3">1200 - 1400</option>
-                    <option value="4">1400 - 1600</option>
-                  </select>
-                </div>
-              </div>
-
-              <label for="classsize"><b>Class Size</b></label>
-              <input type="text" placeholder="Enter class size" name="newClass-size" required>
-
-              <label for="classdate"><b>Class Start Date</b></label>
-              <input type="text" placeholder="Enter start date" name="newClass-startdate" required>
-
-              <label for="classdate"><b>Class End Date</b></label>
-              <input type="text" placeholder="Enter end date" name="newClass-enddate" required>
+          <!-- To select New Course Prerequisite -->
+          <label style="margin-top: 10px;" for="newcourse_prerequisite"><b>Course Prerequisite</b></label>
+          <!-- On load, to display all the courses available as prerequisite options -->
+          <div class="prerequisites_available">
+            <div class="select">
+              <select name="prerequisites_available" id="prerequisites_available">
+                <option value="NIL">NIL</option>
+              </select>
             </div>
-          </div> -->
+          </div>
 
+          <!-- Options to close or create the course -->
           <div class="modal-footer">
             <button type="button" class="btn" style="background-color: #fff; border: 2px solid #999;"
               data-bs-dismiss="modal">Close</button>
             <button class="btn btn-primary" style="background-color: #96BB7C; border-color: #96BB7C;"
-              onclick="create_course_and_prerequisite()">Create Course</button>
+              onclick="create_course()">Create Course</button>
           </div>
         </form>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- Helper function to add new class (to add/remove more if needed) -->
-  <!-- <script type="text/javascript">
-    $(document).ready(function () {
-      var maxField = 10; //Input fields increment limitation
-      var addButton = $('.add_button'); //Add button selector
-      var wrapper = $('.field_wrapper'); //Input field wrapper
+<!-- All Javascript functions to link app.py routes to UI functionalities -->
 
-      var x = 2; //Initial field counter is 1
+<!-- Function: (Admin) view all courses -->
+<!-- On load, admin is able to see all the courses available in the system. -->
+<!-- On load, admin is able to see all the courses as prerequisite options. -->
+<script>
+  window.onload = function display_all_courses() {
+    const main_table = document.getElementById("main_table")
+    const courses_table = document.getElementById("courses_table")
+    const prerequisites_available = document.getElementById("prerequisites_available")
 
-      //Once add button is clicked
-      $(addButton).click(function () {
-        //Check maximum number of input fields
-        if (x < maxField) {
-          x++; //Increment field counter
-          $(wrapper).append(`<div id="extra_input">
-        <label for="class" style="margin-top: 30px;"><b>Class</b></label>
-        <a href="javascript:void(0);" class="remove_button"><i class="material-icons">&#xe15c;</i></a>
-        <div class="search_categories">
-                  <div class="select">
-                     <select name="search_categories" id="search_categories">
-                        <option value="1" selected="selected">G1</option>
-                        <option value="2">G2</option>
-                        <option value="3">G3</option>
-                        <option value="4">G4</option>
-                      </select>
+    // Get all courses route (from Course table)
+    url = `http://localhost:5000/get_all_courses`;
 
-                   </div>
-               </div>
-
-               <label for="trainer"><b>Assign Trainer</b></label>
-                <div class="search_categories">
-                  <div class="select">
-                     <select name="search_categories" id="search_categories">
-                        <option value="1" selected="selected">Tom</option>
-                        <option value="2">Dick</option>
-                        <option value="3">Harry</option>
-                        <option value="4">Idk</option>
-                      </select>
-
-                   </div>
-               </div>
-
-               <label for="classtime"><b>Class Start/End Time</b></label>
-                   <div class="search_categories">
-                    <div class="select">
-                      <select name="search_categories" id="search_categories">
-                        <option value="1" selected="selected">0800 - 1000</option>
-                        <option value="2">1000 - 1200</option>
-                        <option value="3">1200 - 1400</option>
-                        <option value="4">1400 - 1600</option>
-                      </select>
-      
-                    </div>
-                  </div>
-
-                <label for="classsize"><b>Class Size</b></label>
-                <input type="text" placeholder="Enter class size" name="newClass-size" required>
-
-                <label for="classdate"><b>Class Start Date</b></label>
-                     <input type="text" placeholder="Enter start date" name="newClass-startdate" required>
-
-                <label for="classdate"><b>Class End Date</b></label>
-                <input type="text" placeholder="Enter end date" name="newClass-enddate" required>
-
-      </div>`); //Add field html
+    const response = fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        // Error received - Display error message
+        if (data["code"] != 200) {
+          main_table.innerHTML = data["message"]
         }
-      });
 
-      //Once remove button is clicked
-      $(wrapper).on('click', '.remove_button', function (e) {
-        e.preventDefault();
-        $(this).parents("#extra_input").remove(); //Remove field html
-        x--; //Decrement field counter
-      });
-    });
-  </script> -->
+        // No error received - Display all courses (and as prerequisites)
+        else {
+          for (var i = 0; i < data["data"]["courses"].length; i++) {
+            var course_id = data["data"]["courses"][i].course_id
+            var course_name = data["data"]["courses"][i].course_name
+            var course_desc = data["data"]["courses"][i].course_desc
 
-  <!-- Admin: view all courses (default screen) -->
-  <script>
-    window.onload = function display_courses() {
-      const courses_table = document.getElementById("courses_table");
-      url = `http://localhost:5000/view_all_courses`;
-      var html_str = "";
-
-      const response = fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data["code"] != 200) {
-            alert(data["message"]);
-          } else {
-            for (var i = 0; i < data["data"]["courses"].length; i++) {
-              var course_id = data["data"]["courses"][i].course_id;
-              var course_name = data["data"]["courses"][i].course_name;
-              var course_desc = data["data"]["courses"][i].course_desc;
-
-              html_str =
-                `
-          <tr id="${course_id}">
-            <td><a href="course_detail.php" onclick="select_course('${course_id}')">${course_id}</a></td>
-            <td>${course_name}</td>                        
-            <td>${course_desc}</td>
-            <td>
+            var course_str =
+              `
+            <tr id="${course_id}">
+              <td><a href="#" onclick="select_course('${course_id}')">${course_id}</a></td>
+              <td>${course_name}</td>                        
+              <td>${course_desc}</td>
+              <td>
                 <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="delete_course('${course_id}')"><i class="material-icons">&#xE5C9;</i></a>
-            </td>
-          </tr>
-          `;
+              </td>
+            </tr>
+            `
 
-              courses_table.innerHTML += html_str;
-            }
+            var prereq_str =
+              `<option value="${course_id}">${course_id}</option>`
+
+            courses_table.innerHTML += course_str
+            prerequisites_available.innerHTML += prereq_str
           }
-        })
+        }
+      })
+  }
+</script>
+
+<!-- Function: (Admin) search for courses -->
+<!-- On search, admin is able to see all the matching courses. -->
+<script>
+  function search_for_courses() {
+    // To reset the display of searched courses each time the search button is clicked
+    const search_learners_table = document.getElementById("search_courses_table")
+    search_learners_table.innerHTML = ""
+
+    const search_query = document.getElementById("search_query").value
+    const courses_table = document.getElementById("courses_table")
+
+    // Get all courses route (from Course table) if there is no search query
+    if (search_query.trim() == "") {
+      url = `http://localhost:5000/get_all_courses`
     }
-  </script>
 
-  <!-- Admin: search for courses -->
-  <script>
-    function search_by_course_name() {
-      document.getElementById("search_courses_table").innerHTML = "";
+    // Get searched courses route (from Course table) if there is a search query
+    else {
+      url = `http://localhost:5000/search_for_courses/${search_query}`
+    }
 
-      const search_learners_table = document.getElementById("search_courses_table");
-      const search_query = document.getElementById("search_query").value
-      url = `http://localhost:5000/search_for_courses/${search_query}`;
-      var html_str = "";
+    // Hide original displayed courses
+    courses_table.style.display = "none"
 
-      document.getElementById("courses_table").style.display = "none";
+    const response = fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        // Error received - Alert error message
+        if (data["code"] != 200) {
+          alert(data["message"])
+          window.location.reload()
+        }
 
-      const response = fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data["code"] != 200) {
-            alert(data["message"])
-            window.location.reload()
-          } else {
-            for (var i = 0; i < data["data"]["courses"].length; i++) {
-              var course_id = data["data"]["courses"][i].course_id;
-              var course_name = data["data"]["courses"][i].course_name;
-              var course_desc = data["data"]["courses"][i].course_desc;
+        // No error received - Display all matching courses
+        else {
+          for (var i = 0; i < data["data"]["courses"].length; i++) {
+            var course_id = data["data"]["courses"][i].course_id
+            var course_name = data["data"]["courses"][i].course_name
+            var course_desc = data["data"]["courses"][i].course_desc
 
-              html_str =
-                `
-          <tr id="${course_id}">
-            <td><a href="course_detail.php" onclick="select_course('${course_id}')">${course_id}</a></td>
-            <td>${course_name}</td>                        
-            <td>${course_desc}</td>
-            <td>
-                <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="delete_course('${course_id}')"><i class="material-icons">&#xE5C9;</i></a>
-            </td>
-          </tr>
-          `;
+            var searched_courses_str =
+              `
+            <tr id="${course_id}">
+              <td><a href="#" onclick="select_course('${course_id}')">${course_id}</a></td>
+              <td>${course_name}</td>                        
+              <td>${course_desc}</td>
+              <td>
+                  <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="delete_course('${course_id}')"><i class="material-icons">&#xE5C9;</i></a>
+              </td>
+            </tr>
+            `
 
-              search_courses_table.innerHTML += html_str;
-            }
+            search_courses_table.innerHTML += searched_courses_str
           }
-        })
+        }
+      })
+  }
+</script>
+
+<!-- Function: (Admin) delete a course -->
+<!-- On search, admin is able to delete a course. -->
+<script>
+  function delete_course(course_id) {
+    // Delete course route (from Course table) 
+    url = `http://localhost:5000/delete_course/${course_id}`;
+
+    const response = fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        // If course cannot be deleted, alert error message to user 
+        if (data["code"] != 200) {
+          alert(data["message"])
+        }
+
+        // Course can be deleted, reload page to show changes
+        else {
+          window.location.reload();
+        }
+      })
+  }
+</script>
+
+<!-- Function: (Admin) creates a course -->
+<!-- On click, admin is able to create a new course. -->
+<script>
+  function create_course() {
+    event.preventDefault();
+    var new_course_id = document.getElementById("newcourse_id").value
+    var new_course_name = document.getElementById("newcourse_name").value
+    var new_course_desc = document.getElementById("newcourse_desc").value
+    var new_course_prereq = document.getElementById("prerequisites_available").value
+
+    // Create course route (from Course table)
+    url = `http://localhost:5000/create_course`;
+
+    json = {
+      'course_id': new_course_id,
+      'course_name': new_course_name,
+      'course_desc': new_course_desc,
+      "prerequisite_id": new_course_prereq
     }
-  </script>
 
-  <!-- Retrieve course name to display details of in course_detail.php -->
-  <script>
-    function select_course(course_id) {
-      event.preventDefault();
-      sessionStorage.setItem("course_id", course_id);
-      location.href = "course_detail.php";
-    }
-  </script>
+    json = JSON.stringify(json);
 
-  <!-- Delete a course -->
-  <script>
-    function delete_course(course_id) {
-      url = `http://localhost:5000/delete_course/${course_id}`;
+    const response = fetch(url, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: json
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        // If course cannot be created, alert error message to user
+        if (data["code"] != 201) {
+          alert(data["message"]);
+        }
 
-      const response = fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          if (data["code"] != 200) {
-            alert(data["message"])
-          } else {
-            window.location.reload();
-          }
-        })
-    }
-  </script>
+        //  Course can be created, reload page to show changes
+        else {
+          window.location.reload()
+        }
+      })
+  }
+</script>
 
-  <!-- Create course/prerequisite -->
-  <script>
-    function create_course_and_prerequisite() {
-      event.preventDefault();
-      var new_course_id = document.getElementById("newCourse-ID").value
-      var new_course_name = document.getElementById("newCourse-name").value
-      var new_course_desc = document.getElementById("newCourse-description").value
-      var new_course_prereq = document.getElementById("newCourse-prerequisite").value
-
-      url = `http://localhost:5000/create_course_and_prerequisite`;
-
-      json = {
-        'course_id': new_course_id,
-        'course_name': new_course_name,
-        'course_desc': new_course_desc,
-        "prerequisite_id": new_course_prereq
-      }
-
-      json = JSON.stringify(json);
-
-      const response = fetch(url, {
-          method: 'POST',
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: json
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data["code"] != 201) {
-            alert(data["message"]);
-          } else {
-            window.location.reload()
-          }
-        })
-    }
-  </script>
+<!-- Function: (Admin) selects a course -->
+<!-- On click, admin is able to select a course to view its details. -->
+<script>
+  function select_course(course_id) {
+    // Set course id session storage item as the course id selected
+    event.preventDefault();
+    sessionStorage.setItem("course_id", course_id);
+    location.href = "course_detail.php";
+  }
+</script>
 
 </html>
