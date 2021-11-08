@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `class` (
   `course_id` varchar(10) NOT NULL,
   `class_id` varchar(10) NOT NULL,
   `trainer_name` varchar(100) NOT NULL,
+  `trainer_user_name` varchar(100) NOT NULL,
   `class_start_datetime` datetime NOT NULL,
   `class_end_datetime` datetime NOT NULL,
   `enrolment_start_datetime` datetime NOT NULL,
@@ -43,21 +44,21 @@ CREATE TABLE IF NOT EXISTS `class` (
   `total_class_size` int(11) NOT NULL,
   `final_quiz_id` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`course_id`,`class_id`),
-  KEY `class_fk2` (`final_quiz_id`)
+  KEY `class_fk3` (`final_quiz_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `class`
 --
 
-INSERT INTO `class` (`course_id`, `class_id`, `trainer_name`, `class_start_datetime`, `class_end_datetime`, `enrolment_start_datetime`, `enrolment_end_datetime`, `current_class_size`, `total_class_size`, `final_quiz_id`) VALUES
-('EPSON101', 'G1', 'Ariel', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 0, 5, NULL),
-('EPSON101', 'G2', 'Ariel', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 1, 5, NULL),
-('EPSON101', 'G3', 'Blake', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 5, 5, NULL),
-('EPSON102', 'G1', 'Crystal', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 1, 5, NULL),
-('EPSON102', 'G2', 'Dani', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 5, 5, NULL),
-('XEROX100', 'G1', 'Crystal', '2021-11-02 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 1, 5, 'XEROX_G_Final1'),
-('XEROX101', 'G1', 'Crystal', '2021-11-02 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 5, 5, 'XEROX_G_Final1');
+INSERT INTO `class` (`course_id`, `class_id`, `trainer_name`, `trainer_user_name`, `class_start_datetime`, `class_end_datetime`, `enrolment_start_datetime`, `enrolment_end_datetime`, `current_class_size`, `total_class_size`, `final_quiz_id`) VALUES
+('EPSON101', 'G1', 'Ariel', 'ariel.2021', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 0, 5, NULL),
+('EPSON101', 'G2', 'Ariel', 'ariel.2021', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 1, 5, NULL),
+('EPSON101', 'G3', 'Blake', 'blake.2021', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-12-22 00:00:00', 5, 5, NULL),
+('EPSON102', 'G1', 'Crystal', 'crystal.2021', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 1, 5, NULL),
+('EPSON102', 'G2', 'Dani', 'dani.2021', '2021-12-23 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 5, 5, NULL),
+('XEROX100', 'G1', 'Crystal', 'crystal.2021', '2021-11-02 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 1, 5, 'XEROX_G_Final1'),
+('XEROX101', 'G1', 'Crystal', 'crystal.2021', '2021-11-02 08:00:00', '2021-12-30 08:00:00', '2021-10-11 00:00:00', '2021-11-01 00:00:00', 5, 5, 'XEROX_G_Final1');
 
 -- --------------------------------------------------------
 
@@ -350,7 +351,8 @@ INSERT INTO `quiz_question_options` (`quiz_id`, `question_no`, `option_id`, `opt
 --
 ALTER TABLE `class`
   ADD CONSTRAINT `class_fk1` FOREIGN KEY (`course_id`) REFERENCES `course` (`course_id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `class_fk2` FOREIGN KEY (`final_quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `class_fk2` FOREIGN KEY (`trainer_user_name`) REFERENCES `employee` (`user_name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `class_fk3` FOREIGN KEY (`final_quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `completed_courses`

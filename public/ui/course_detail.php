@@ -75,10 +75,70 @@
   table.table td i {
     font-size: 19px;
   }
+
+  .table-title .btn {
+    color: #566787;
+    float: right;
+    font-size: 13px;
+    background: #fff;
+    border: none;
+    min-width: 50px;
+    border-radius: 2px;
+    border: none;
+    outline: none !important;
+    margin-left: 170px;
+    width: 250px;
+  }
+
+  #create_popup {
+    z-index: 9999;
+  }
+
+  /* Full-width input fields */
+  .form-container input[type=text],
+  .form-container input[type=number],
+  .form-container input[type=date],
+  .form-container input[type=time] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    border: 2px solid #f1f1f1;
+    border-radius: 10px;
+    background: #fff;
+  }
+
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus {
+    background-color: #f1efef;
+    outline: none;
+  }
+
+  .trainers_available {
+    font-size: 13px;
+    padding: 10px 8px 10px 14px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .trainers_available .select select {
+    background: transparent;
+    line-height: 1;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    font-size: 1em;
+  }
 </style>
 
 <body>
-  <!--Admin Nav Bar-->
+  <!-- Admin Nav Bar -->
   <nav class="navbar navbar-expand-lg navbar-light py-4 px-md-5 position-relative z-index-1" id="navbar">
     <a class="navbar-brand">
       <h1 class="h3 mt-0">All-In-One</h1>
@@ -106,117 +166,237 @@
   <!--Background Image-->
   <div class="product-item light-background-color">
     <div class="product-media position-relative" style="height: 300px">
+      <!-- Default BG image for all-->
       <img class="zoom cover" src="../img/printer.jpg" alt="">
-
       <div class="tag position-absolute rounded danger-color text-center"
         style="padding: 5px 10px; left: 20px; top: 20px">
       </div>
     </div>
+
+    <!-- Course details content -->
     <div style="padding: 25px 25px 35px 25px">
-
-      <!--Course Title, Description, PreReq-->
+      <!-- To populate Course ID: Course Name -->
       <h5 id="course_selected"></h5>
-
+      <!-- To populate Course Description-->
       <p id="course_description"></p>
-
+      <!-- To populate Course ID: Course Prerequisite -->
       <div class="d-flex" style="margin-top: 10px; padding: 5px 0px">
-        <h5 id="prereq"></h5>
+        <h5 id="course_prerequisite"></h5>
       </div>
 
-      <!--Classes Table-->
-      <h5 class="h5 text-color" style="margin-top: 60px;">
-        Classes
-      </h5>
 
-      <table class="table table-striped table-hover">
-        <thead id="no_classes"></thead>
+      <h5 class="h5 text-color" style="margin-top: 60px;">Classes</h5>
+      <!-- To create a new class -->
+      <div>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#create_popup"
+          style="background-color:grey; color:black;">
+          <i class="material-icons">&#xE147;</i> <span>Create New Class</span>
+        </button>
+      </div>
 
+      <!-- Main Class Table Content -->
+      <table id="main_table" class="table table-striped table-hover">
+        <thead id="main_table_headers">
+          <tr>
+            <th>Class</th>
+            <th>Trainer Name</th>
+            <th>Class Start - Class End</th>
+            <th>Enrolment Start - Enrolment End</th>
+            <th>Class Size</th>
+          </tr>
+        </thead>
+
+        <!-- On load, to display all classes in table -->
+        <!-- By default, displays content. Will hide if no classes. -->
         <tbody id="classes_table"></tbody>
       </table>
-
     </div>
   </div>
 </body>
 
-<!-- Admin: view all courses (default screen) -->
+<!--Popup for Create a Class-->
+<div class="modal fade" id="create_popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create a Class</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- To add new class details -->
+        <form action="#" class="form-container">
+
+          <!-- To enter New Class ID -->
+          <label style="margin-top: 10px;" for="newclass_id"><b>Class ID</b></label>
+          <input type="text" placeholder="Enter class ID" name="newclass_id" id="newclass_id">
+
+          <!-- To assign Trainer Name -->
+          <label style="margin-top: 10px;" for="newclass_trainername"><b>Trainer Name</b></label>
+          <!-- On load, to display all the trainers available as trainer options -->
+          <div class="trainers_available">
+            <div class="select">
+              <select name="trainers_available" id="trainers_available">
+              </select>
+            </div>
+          </div>
+
+          <!-- To enter Class Start Date -->
+          <label style="margin-top: 10px;" for="newclass_start_date"><b>Class Start Date</b></label>
+          <input type="date" name="newclass_start_date" id="newclass_start_date">
+
+          <!-- To enter Class Start Time -->
+          <label style="margin-top: 10px;" for="newclass_start_time"><b>Class Start Time</b></label>
+          <input type="time" name="newclass_start_time" id="newclass_start_time">
+
+          <!-- To enter Class End Date -->
+          <label style="margin-top: 10px;" for="newclass_end_date"><b>Class End Date</b></label>
+          <input type="date" name="newclass_end_date" id="newclass_end_date">
+
+          <!-- To enter Class End Time -->
+          <label style="margin-top: 10px;" for="newclass_end_time"><b>Class End Time</b></label>
+          <input type="time" name="newclass_end_time" id="newclass_end_time">
+
+          <!-- To enter Class Size -->
+          <label style="margin-top: 10px;" for="newclass_size"><b>Class Size</b></label>
+          <input type="number" placeholder="Enter class size" name="newclass_size" id="newclass_size">
+
+          <!-- To enter Enrolment Start Date -->
+          <label style="margin-top: 10px;" for="newenrolment_start_date"><b>Enrolment Start Date</b></label>
+          <input type="date" name="newenrolment_start_date" id="newenrolment_start_date">
+
+          <!-- To enter Enrolment Start Time -->
+          <label style="margin-top: 10px;" for="newenrolment_start_time"><b>Enrolment Start Time</b></label>
+          <input type="time" name="newenrolment_start_time" id="newenrolment_start_time">
+
+          <!-- To enter Enrolment End Date -->
+          <label style="margin-top: 10px;" for="newenrolment_end_date"><b>Enrolment End Date</b></label>
+          <input type="date" name="newenrolment_end_date" id="newenrolment_end_date">
+
+          <!-- To enter Enrolment End Time -->
+          <label style="margin-top: 10px;" for="newenrolment_end_time"><b>Enrolment End Time</b></label>
+          <input type="time" name="newenrolment_end_time" id="newenrolment_end_time">
+
+          <!-- Options to close or create the class -->
+          <div class="modal-footer">
+            <button type="button" class="btn" style="background-color: #fff; border: 2px solid #999;"
+              data-bs-dismiss="modal">Close</button>
+            <button class="btn btn-primary" style="background-color: #96BB7C; border-color: #96BB7C;"
+              onclick="admin_create_class()">Create Class</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- All Javascript functions to link app.py routes to UI functionalities -->
+
+<!-- Function: (Admin) view course details -->
+<!-- On load, admin is able to see all the details of the course selected. -->
 <script>
-  window.onload = function display_course_details() {
+  window.onload = function admin_get_course_details() {
     const course_selected = document.getElementById("course_selected")
     const course_description = document.getElementById("course_description")
-    const prereq = document.getElementById("prereq")
+    const course_prerequisite = document.getElementById("course_prerequisite")
+    const main_table = document.getElementById("main_table")
     const classes_table = document.getElementById("classes_table")
-    const no_classes = document.getElementById("no_classes")
+    const trainers_available = document.getElementById("trainers_available")
 
-    let course_id = sessionStorage.getItem("course_id")
-    url = `http://localhost:5000/view_course_prerequisite_and_classes/${course_id}`;
-    var html_str = "";
+    var course_id = sessionStorage.getItem("course_id")
+
+    // Get course & all trainers details (from Course, Prerequisite, Employee, Class tables)
+    url = `http://localhost:5000/admin_get_course_details/${course_id}`
 
     const response = fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        // Error received - Alert error message
         if (data["code"] != 200) {
-          alert(data["message"])
-        } else {
-          course_selected.innerHTML = `
-              <h5 class="h5 text-color" style="margin-top: 10px">
-        ${data["data"]["course_data"]["course_id"]}: ${data["data"]["course_data"]["course_name"]}
-      </h5>
-          `;
+          main_table.innerHTML = data["message"]
+        }
 
-          course_description.innerHTML = `
-          <p id="course_description" class="paragraph second-text-color" style="margin-top: 10px">
-          ${data["data"]["course_data"]["course_desc"]}
-      </p>
-          `;
+        // No error received - Display course and trainer details
+        else {
+          var course_name = data["data"]["course"]["course_name"]
+          var course_desc = data["data"]["course"]["course_desc"]
+          var prerequisite_id = data["data"]["prerequisite"]["prerequisite_id"]
 
-          prereq.innerHTML = `
-          <h5 class="h5 muted-text-color">
-          Prerequisite: ${data["data"]["prerequisite"]["prerequisite_id"]}
-      </h5>
-          `;
-
-          if (data["data"]["classes"].length == 0) {
-            html_str =
-              `
-                No classes for this course.
-          `;
-
-            classes_table.innerHTML = html_str;
-          } else {
-            no_classes.innerHTML =
-              `
-            <th>Class</th>
-            <th>Trainer Name</th>
-            <th>Start/End Class</th>
-            <th>Class Size</th>
-            <th>Start/End Enrolment</th>
+          course_selected.innerHTML =
+            `<h5 class="h5 text-color" style="margin-top: 10px">${course_id}: ${course_name}</h5>`
+          course_description.innerHTML =
             `
+          <p id="course_description" class="paragraph second-text-color" style="margin-top: 10px">
+            ${course_desc}
+          </p>
+          `
+          course_prerequisite.innerHTML = `<h5 class="h5 muted-text-color">Prerequisite: ${prerequisite_id}</h5>`
 
-            for (var i = 0; i < data["data"]["classes"].length; i++) {
-              var class_id = data["data"]["classes"][i].class_id
-              var trainer_name = data["data"]["classes"][i].trainer_name
+          // If there are no trainers to assign
+          if (data["data"]["trainers"].length == 0) {
+            var trainers_status_str = `No trainers to assign.`;
+            trainers_available.innerHTML = trainers_status_str
+          }
 
-              var class_start_datetime = data["data"]["classes"][i].class_start_datetime
-              var class_end_datetime = data["data"]["classes"][i].class_start_datetime
-              var current_class_size = data["data"]["classes"][i].current_class_size
-              var total_class_size = data["data"]["classes"][i].total_class_size
-              var enrolment_start_datetime = data["data"]["classes"][i].enrolment_start_datetime
-              var enrolment_end_datetime = data["data"]["classes"][i].enrolment_end_datetime
+          // If there are trainers to assign 
+          else {
+            for (var i = 0; i < data["data"]["trainers"].length; i++) {
+              var trainer_user_name = data["data"]["trainers"][i]["user_name"]
+              var trainer_employee_name = data["data"]["trainers"][i]["employee_name"]
 
+              var trainer_str = `<option value="${trainer_user_name}">${trainer_employee_name}</option>`
 
-              html_str =
-                `
-          <tr>
-            <td><a href="class_detail.php" onclick="select_class('${class_id}')">${class_id}</a></td>
-            <td>${trainer_name}</td>
-            <td>${class_start_datetime} - ${class_end_datetime}</td>
-            <td>${current_class_size}/${total_class_size}</td>
-            <td>${enrolment_start_datetime} - ${enrolment_end_datetime}</td>
-          </tr>
-          `;
-
-              classes_table.innerHTML += html_str;
+              trainers_available.innerHTML += trainer_str
             }
+          }
+
+          // If there are no classes attached to the course
+          if (data["data"]["classes"].length == 0) {
+            var class_status_str = `No classes for this course.`;
+            main_table.innerHTML = class_status_str;
+          }
+
+          //If there are classes attached to the course
+          else {
+            for (var i = 0; i < data["data"]["classes"].length; i++) {
+              var class_id = data["data"]["classes"][i]["class_id"]
+              var trainer_employee_name = data["data"]["classes"][i]["trainer_name"]
+              var current_class_size = data["data"]["classes"][i]["current_class_size"]
+              var total_class_size = data["data"]["classes"][i]["total_class_size"]
+
+              var class_start_datetime = new Date(data["data"]["classes"][i]["class_start_datetime"])
+              var [class_start_date, class_start_time] = [class_start_datetime.toLocaleDateString(),
+                class_start_datetime.toLocaleTimeString()
+              ]
+
+              var class_end_datetime = new Date(data["data"]["classes"][i]["class_end_datetime"])
+              var [class_end_date, class_end_time] = [class_end_datetime.toLocaleDateString(), class_end_datetime
+                .toLocaleTimeString()
+              ]
+
+              var enrolment_start_datetime = new Date(data["data"]["classes"][i]["enrolment_start_datetime"])
+              var [enrolment_start_date, enrolment_start_time] = [enrolment_start_datetime.toLocaleDateString(),
+                enrolment_start_datetime.toLocaleTimeString()
+              ]
+
+              var enrolment_end_datetime = new Date(data["data"]["classes"][i]["enrolment_end_datetime"])
+              var [enrolment_end_date, enrolment_end_time] = [enrolment_end_datetime.toLocaleDateString(),
+                enrolment_end_datetime.toLocaleTimeString()
+              ]
+
+              var class_str =
+                `
+              <tr>
+                <td><a href="#" onclick="admin_select_class('${class_id}')">${class_id}</a></td>
+                <td>${trainer_employee_name}</td>
+                <td>${class_start_date}, ${class_start_time} - ${class_end_date}, ${class_end_time}</td>
+                <td>${enrolment_start_date}, ${enrolment_start_time} - ${enrolment_end_date}, ${enrolment_end_time}</td>
+                <td>${current_class_size}/${total_class_size}</td>
+              </tr>
+              `;
+
+              classes_table.innerHTML += class_str;
+            }
+
           }
 
         }
@@ -224,11 +404,19 @@
   }
 </script>
 
+<!-- Function: (Admin) selects a class -->
+<!-- On click, admin is able to select a class to view its details. -->
 <script>
-  function select_class(class_id) {
+  function admin_select_class(class_id) {
     event.preventDefault();
     sessionStorage.setItem("class_id", class_id);
     location.href = "class_detail.php";
+  }
+</script>
+
+<script>
+  function create_class() {
+    
   }
 </script>
 

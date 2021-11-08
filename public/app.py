@@ -20,6 +20,7 @@ class Class(db.Model):
     course_id = db.Column(db.String(10), db.ForeignKey('course.course_id'), primary_key=True)
     class_id = db.Column(db.String(10), primary_key=True)
     trainer_name = db.Column(db.String(100), nullable=False)
+    trainer_user_name = db.Column(db.String(100), db.ForeignKey('employee.user_name'), nullable=False)
     class_start_datetime = db.Column(db.DateTime, nullable=False)
     class_end_datetime = db.Column(db.DateTime, nullable=False)
     enrolment_start_datetime = db.Column(db.DateTime, nullable=False)
@@ -32,7 +33,8 @@ class Class(db.Model):
         dto = {
             "course_id": self.course_id, 
             "class_id": self.class_id, 
-            "trainer_name": self.trainer_name, 
+            "trainer_name": self.trainer_name,
+            "trainer_user_name": self.trainer_user_name, 
             "class_start_datetime": self.class_start_datetime,
             "class_end_datetime": self.class_end_datetime,
             "enrolment_start_datetime": self.enrolment_start_datetime,
@@ -293,13 +295,14 @@ db.create_all()
 
 # ----------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------------------------------------------------------------------------- #
-'''Admin: View all courses'''
+'''Admin: Get all courses'''
 
-@app.route("/view_all_courses")
-def view_all_courses():
+@app.route("/admin_get_all_courses")
+def admin_get_all_courses():
     try:
         course_list = Course.query.all()
 
+        # Courses are available
         if len(course_list) != 0:
             return jsonify(
                 {
@@ -310,6 +313,7 @@ def view_all_courses():
                 }
             ), 200
 
+        # Courses not available
         return jsonify(
             {
                 "code": 404,
@@ -317,6 +321,7 @@ def view_all_courses():
             }
         ), 404
 
+    # Error while retrieving courses
     except Exception as e:
         return jsonify(
             {
@@ -326,13 +331,14 @@ def view_all_courses():
         ), 500
 
 # ----------------------------------------------------------------------------------------------------------------------------- #
-'''Admin:  Search for courses'''
+'''Admin: Search for courses'''
 
-@app.route("/search_for_courses/<string:search_query>")
-def search_for_courses(search_query):
+@app.route("/admin_search_for_courses/<string:search_query>")
+def admin_search_for_courses(search_query):
     try:
         course_list = Course.query.filter(Course.course_name.contains(search_query)).all()
 
+        # Matching courses
         if len(course_list) != 0:
             return jsonify(
                 {
@@ -343,6 +349,7 @@ def search_for_courses(search_query):
                 }
             ), 200
         
+        # No matching courses
         return jsonify(
             {
                 "code": 404,
@@ -350,6 +357,7 @@ def search_for_courses(search_query):
             }
         ), 404
 
+    # Error while retrieving courses
     except Exception as e:
         return jsonify(
             {
@@ -359,13 +367,14 @@ def search_for_courses(search_query):
         ), 500
 
 # ----------------------------------------------------------------------------------------------------------------------------- #
-'''Admin:  Delete course'''
+'''Admin: Delete course'''
 
-@app.route("/delete_course/<string:course_id>", methods=['GET', 'DELETE'])
-def delete_course(course_id):
+@app.route("/admin_delete_course/<string:course_id>", methods=['GET', 'DELETE'])
+def admin_delete_course(course_id):
     try:
         course = Course.query.filter_by(course_id=course_id).first()
 
+        # If course to be deleted is found 
         if course:
             db.session.delete(course)
             db.session.commit()
@@ -376,14 +385,15 @@ def delete_course(course_id):
                 }
             ), 200
         
-        else:
-            return jsonify(
-                {
-                    "code": 404,
-                    "message": "Course not found."
-                }
-            ), 404
+        # If course to be deleted is not found
+        return jsonify(
+            {
+                "code": 404,
+                "message": "Course not found."
+            }
+        ), 404
 
+    # Error while deleting course
     except Exception as e:
         return jsonify(
             {
@@ -393,14 +403,24 @@ def delete_course(course_id):
         ), 500
 
 # ----------------------------------------------------------------------------------------------------------------------------- #
-'''Admin: Create course and prerequisite'''
+'''Admin: Create course'''
 
-@app.route("/create_course_and_prerequisite", methods=['POST'])
-def create_course_and_prerequisite():
+@app.route("/admin_create_course", methods=['POST'])
+def admin_create_course():
     try:
         data = request.get_json()
 
-        if (Course.query.filter_by(course_id = data["course_id"]).first()):
+        # If not all blanks are filled
+        if (data["course_id"] == "") or (data["course_name"] == "") or (data["course_desc"] == ""):
+            return jsonify(
+                {
+                    "code": 400,
+                    "message": "Please fill in all the blanks."
+                }
+            ), 400
+
+        # If Course ID already present in the system
+        elif (Course.query.filter_by(course_id = data["course_id"]).first()):
             return jsonify(
                 {
                     "code": 400,
@@ -408,70 +428,59 @@ def create_course_and_prerequisite():
                 }
             ), 400
 
-        elif (data["course_id"] == data["prerequisite_id"]):
-            return jsonify(
-                {
-                    "code": 400,
-                    "message": "Course cannot be prerequisite of itself."
-                }
-            ), 400
+        # If Course ID not present in the system
+        course = Course(course_id=data["course_id"], course_name=data["course_name"], course_desc=data["course_desc"])
+        prerequisite = Prerequisite(course_id=data["course_id"], prerequisite_id=data["prerequisite_id"])
 
-        elif (Course.query.filter_by(course_id = data["prerequisite_id"]).first()) or (data["prerequisite_id"] == "NIL"):
-            course = Course(course_id=data["course_id"], course_name=data["course_name"], course_desc=data["course_desc"])
-            if (data["prerequisite_id"] == "NIL"):
-                prerequisite = Prerequisite(course_id=data["course_id"], prerequisite_id='NIL')
-            else:
-                prerequisite = Prerequisite(course_id=data["course_id"], prerequisite_id=data["prerequisite_id"])
-            db.session.add(course)
-            db.session.add(prerequisite)
-            db.session.commit()
+        db.session.add(course)
+        db.session.add(prerequisite)
+        db.session.commit()
 
-            return jsonify(
-                {
-                    "code": 201,
-                    "course_data": course.json(),
-                    "prerequisite_data": prerequisite.json()
-                }
-            ), 201
+        return jsonify(
+            {
+                "code": 201,
+                "course": course.json(),
+                "prerequisite": prerequisite.json()
+            }
+        ), 201
 
-        else:
-            return jsonify(
-                {
-                    "code": 400,
-                    "message": "Prerequisite doesn't exist in the system."
-                }
-            ), 400
 
+    # Error while creating course
     except Exception as e:
         return jsonify(
             {
                 "code": 500,
-                "message": "An error occurred while creating the course and prerequisite: " + str(e)
+                "message": "An error occurred while creating the course: " + str(e)
             }
         ), 500
 
 # ----------------------------------------------------------------------------------------------------------------------------- #
-'''Admin: Get Specific Course, Prerequisite & Relevant Classes Details '''
+'''Admin: Get Course Details'''
 
-@app.route("/view_course_prerequisite_and_classes/<string:course_id>")
-def view_course_prerequisite_and_classes(course_id):
+@app.route("/admin_get_course_details/<string:course_id>")
+def admin_get_course_details(course_id):
     try:
         course = Course.query.filter_by(course_id=course_id).first()
         prerequisite = Prerequisite.query.filter_by(course_id=course_id).first()
         class_list = Class.query.filter_by(course_id=course_id).all()
 
+        trainer_list = Employee.query.filter_by(current_designation="TRAINER").all()
+
+        # If course is found, everything else should be found due to references
         if course:
             return jsonify(
                 {
                     "code": 200,
                     "data": {
-                        "course_data": course.json(),
+                        "course": course.json(),
                         "prerequisite": prerequisite.json(),
-                        "classes": [classes.json() for classes in class_list]
+                        "classes": [classes.json() for classes in class_list],
+                        "trainers": [trainer.json() for trainer in trainer_list]
                     }
                 }
             ), 200
         
+        # If course is not found
         return jsonify(
             {
                 "code": 404,
@@ -479,18 +488,68 @@ def view_course_prerequisite_and_classes(course_id):
             }
         ), 404
 
+    # Error while retrieving course and trainer details
     except Exception as e:
         return jsonify(
             {
                 "code": 500,
-                "message": "There was an error while retrieving the course: " + str(e)
+                "message": "There was an error while retrieving the course and trainer details: " + str(e)
             }
         ), 500
         
 # ----------------------------------------------------------------------------------------------------------------------------- #
-'''Function 2 - Admin assign learners/engineers to courses'''
+'''Admin: Create class '''
+
+@app.route("/admin_create_course", methods=['POST'])
+def admin_create_course():
+    try:
+        data = request.get_json()
+
+        # If not all blanks are filled
+        if (data["course_id"] == "") or (data["course_name"] == "") or (data["course_desc"] == ""):
+            return jsonify(
+                {
+                    "code": 400,
+                    "message": "Please fill in all the blanks."
+                }
+            ), 400
+
+        # If Course ID already present in the system
+        elif (Course.query.filter_by(course_id = data["course_id"]).first()):
+            return jsonify(
+                {
+                    "code": 400,
+                    "message": "A course with course id '{}' already exists.".format(data["course_id"])
+                }
+            ), 400
+
+        # If Course ID not present in the system
+        course = Course(course_id=data["course_id"], course_name=data["course_name"], course_desc=data["course_desc"])
+        prerequisite = Prerequisite(course_id=data["course_id"], prerequisite_id=data["prerequisite_id"])
+
+        db.session.add(course)
+        db.session.add(prerequisite)
+        db.session.commit()
+
+        return jsonify(
+            {
+                "code": 201,
+                "course": course.json(),
+                "prerequisite": prerequisite.json()
+            }
+        ), 201
 
 
+    # Error while creating course
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "An error occurred while creating the course: " + str(e)
+            }
+        ), 500
+        
+# ----------------------------------------------------------------------------------------------------------------------------- #
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

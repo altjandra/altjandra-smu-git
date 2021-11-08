@@ -528,7 +528,7 @@
 
         // Course can be deleted, reload page to show changes
         else {
-          window.location.reload();
+          window.location.reload()
         }
       })
   }
@@ -545,7 +545,7 @@
     var new_course_prereq = document.getElementById("prerequisites_available").value
 
     // Create course route (from Course table)
-    url = `http://localhost:5000/admin_create_course`;
+    url = `http://localhost:5000/admin_create_course`
 
     json = {
       'course_id': new_course_id,
@@ -567,7 +567,7 @@
       .then((data) => {
         // If course cannot be created, alert error message to user
         if (data["code"] != 201) {
-          alert(data["message"]);
+          alert(data["message"])
         }
 
         //  Course can be created, reload page to show changes
@@ -583,9 +583,9 @@
 <script>
   function admin_select_course(course_id) {
     // Set course id session storage item as the course id selected
-    event.preventDefault();
-    sessionStorage.setItem("course_id", course_id);
-    location.href = "course_detail.php";
+    event.preventDefault()
+    sessionStorage.setItem("course_id", course_id)
+    location.href = "course_detail.php"
   }
 </script>
 
