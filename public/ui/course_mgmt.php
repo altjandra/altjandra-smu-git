@@ -312,7 +312,7 @@
             <div class="col-2">
               <div class="search">
                 <input type="text" class="searchTerm" placeholder="Search by Course Name" id="search_query">
-                <button type="submit" class="searchButton" onclick="search_for_courses()">
+                <button type="submit" class="searchButton" onclick="admin_search_for_courses()">
                   <i class="material-icons">&#xe8b6;</i>
                 </button>
               </div>
@@ -328,7 +328,7 @@
           </div>
         </div>
 
-        <!-- Main Table Content -->
+        <!-- Main Course Table Content -->
         <table id="main_table" class="table table-striped table-hover">
           <thead id="main_table_headers">
             <tr>
@@ -392,7 +392,7 @@
             <button type="button" class="btn" style="background-color: #fff; border: 2px solid #999;"
               data-bs-dismiss="modal">Close</button>
             <button class="btn btn-primary" style="background-color: #96BB7C; border-color: #96BB7C;"
-              onclick="create_course()">Create Course</button>
+              onclick="admin_create_course()">Create Course</button>
           </div>
         </form>
       </div>
@@ -406,13 +406,13 @@
 <!-- On load, admin is able to see all the courses available in the system. -->
 <!-- On load, admin is able to see all the courses as prerequisite options. -->
 <script>
-  window.onload = function display_all_courses() {
+  window.onload = function admin_get_all_courses() {
     const main_table = document.getElementById("main_table")
     const courses_table = document.getElementById("courses_table")
     const prerequisites_available = document.getElementById("prerequisites_available")
 
     // Get all courses route (from Course table)
-    url = `http://localhost:5000/get_all_courses`;
+    url = `http://localhost:5000/admin_get_all_courses`;
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -432,11 +432,11 @@
             var course_str =
               `
             <tr id="${course_id}">
-              <td><a href="#" onclick="select_course('${course_id}')">${course_id}</a></td>
+              <td><a href="#" onclick="admin_select_course('${course_id}')">${course_id}</a></td>
               <td>${course_name}</td>                        
               <td>${course_desc}</td>
               <td>
-                <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="delete_course('${course_id}')"><i class="material-icons">&#xE5C9;</i></a>
+                <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="admin_delete_course('${course_id}')"><i class="material-icons">&#xE5C9;</i></a>
               </td>
             </tr>
             `
@@ -455,7 +455,7 @@
 <!-- Function: (Admin) search for courses -->
 <!-- On search, admin is able to see all the matching courses. -->
 <script>
-  function search_for_courses() {
+  function admin_search_for_courses() {
     // To reset the display of searched courses each time the search button is clicked
     const search_learners_table = document.getElementById("search_courses_table")
     search_learners_table.innerHTML = ""
@@ -465,12 +465,12 @@
 
     // Get all courses route (from Course table) if there is no search query
     if (search_query.trim() == "") {
-      url = `http://localhost:5000/get_all_courses`
+      url = `http://localhost:5000/admin_get_all_courses`
     }
 
     // Get searched courses route (from Course table) if there is a search query
     else {
-      url = `http://localhost:5000/search_for_courses/${search_query}`
+      url = `http://localhost:5000/admin_search_for_courses/${search_query}`
     }
 
     // Hide original displayed courses
@@ -495,11 +495,11 @@
             var searched_courses_str =
               `
             <tr id="${course_id}">
-              <td><a href="#" onclick="select_course('${course_id}')">${course_id}</a></td>
+              <td><a href="#" onclick="admin_select_course('${course_id}')">${course_id}</a></td>
               <td>${course_name}</td>                        
               <td>${course_desc}</td>
               <td>
-                  <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="delete_course('${course_id}')"><i class="material-icons">&#xE5C9;</i></a>
+                  <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="admin_delete_course('${course_id}')"><i class="material-icons">&#xE5C9;</i></a>
               </td>
             </tr>
             `
@@ -514,9 +514,9 @@
 <!-- Function: (Admin) delete a course -->
 <!-- On search, admin is able to delete a course. -->
 <script>
-  function delete_course(course_id) {
+  function admin_delete_course(course_id) {
     // Delete course route (from Course table) 
-    url = `http://localhost:5000/delete_course/${course_id}`;
+    url = `http://localhost:5000/admin_delete_course/${course_id}`;
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -537,7 +537,7 @@
 <!-- Function: (Admin) creates a course -->
 <!-- On click, admin is able to create a new course. -->
 <script>
-  function create_course() {
+  function admin_create_course() {
     event.preventDefault();
     var new_course_id = document.getElementById("newcourse_id").value
     var new_course_name = document.getElementById("newcourse_name").value
@@ -545,7 +545,7 @@
     var new_course_prereq = document.getElementById("prerequisites_available").value
 
     // Create course route (from Course table)
-    url = `http://localhost:5000/create_course`;
+    url = `http://localhost:5000/admin_create_course`;
 
     json = {
       'course_id': new_course_id,
@@ -581,7 +581,7 @@
 <!-- Function: (Admin) selects a course -->
 <!-- On click, admin is able to select a course to view its details. -->
 <script>
-  function select_course(course_id) {
+  function admin_select_course(course_id) {
     // Set course id session storage item as the course id selected
     event.preventDefault();
     sessionStorage.setItem("course_id", course_id);
