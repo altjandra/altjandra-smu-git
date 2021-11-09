@@ -2,17 +2,14 @@
 <html class="no-js" lang="en">
 
 <head>
-  <title>Index</title>
+  <title>Admin Homepage</title>
 
-  <!-- installs all relevant and common codelinks across pages -->
+  <!-- Installs all relevant and common codelinks across pages -->
   <?php include '../include/codelinks.php'; ?>
 </head>
 
+<!-- Internal CSS -->
 <style>
-  body {
-    background-color: #f5f5f5;
-  }
-
   #navbar {
     background-color: #fff;
     position: sticky;
@@ -54,8 +51,6 @@
     font-size: 20px;
     padding-top: 5px;
   }
-
-
 
   body {
     color: #566787;
@@ -100,7 +95,8 @@
     border-radius: 2px;
     border: none;
     outline: none !important;
-    margin-left: 10px;
+    margin-left: 170px;
+    width: 250px;
   }
 
   .table-title .btn:hover,
@@ -113,11 +109,13 @@
     float: left;
     font-size: 21px;
     margin-right: 5px;
+    margin-top: 2px;
   }
 
   .table-title .btn span {
     float: left;
     margin-top: 2px;
+    margin-left: 30px;
   }
 
   table.table tr th,
@@ -223,21 +221,62 @@
     margin-top: 10px;
     font-size: 13px;
   }
+
+  /* Full-width input fields */
+  .form-container input[type=text] {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    border: 2px solid #f1f1f1;
+    border-radius: 10px;
+    background: #fff;
+  }
+
+  /* When the inputs get focus, do something */
+  .form-container input[type=text]:focus {
+    background-color: #f1efef;
+    outline: none;
+  }
+
+  .prerequisites_available {
+    font-size: 13px;
+    padding: 10px 8px 10px 14px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px;
+  }
+
+  .prerequisites_available .select select {
+    background: transparent;
+    line-height: 1;
+    border: 0;
+    padding: 0;
+    border-radius: 0;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+    font-size: 1em;
+  }
+
+  #create_popup {
+    z-index: 9999;
+  }
 </style>
 
 <body>
-  <!--Nav Bar-->
+  <!-- Admin Nav Bar -->
   <nav class="navbar navbar-expand-lg navbar-light py-4 px-md-5 position-relative z-index-1" id="navbar">
-    <a class="navbar-brand" href="#">
-      <h1 class="h3 mt-0">
-        All-In-One
-      </h1>
-    </a><button class="navbar-toggler" type="button" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse"
+    <a class="navbar-brand">
+      <h1 class="h3 mt-0">All-In-One</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
         class="navbar-toggler-icon"></span></button>
     <div class="collapse navbar-collapse ms-lg-5 mt-4 mt-lg-0" id="navbarSupportedContent">
       <ul class="navbar-nav align-items-center">
-
         <li class="nav-item">
           <a class="nav-link" href="course_mgmt.php"><span>Course Management</span></a>
         </li>
@@ -245,9 +284,15 @@
           <a class="nav-link" href="learner_mgmt.php"><span>Learners Management</span></a>
         </li>
       </ul>
+      <ul class="navbar-nav mt-4 mt-lg-0 ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="primary-text-color"><strong>Welcome, Zora! [Admin] </strong></a>
+        </li>
+      </ul>
+    </div>
   </nav>
 
-  <!--Main Table-->
+  <!-- Main Table -->
   <script>
     $(document).ready(function () {
       $('[data-toggle="tooltip"]').tooltip();
@@ -262,112 +307,81 @@
             <div class="col-5">
               <h2><b>All Learners</b></h2>
             </div>
-            <div class="col-2">
-              <div class="search">
-                <input type="text" class="searchTerm" placeholder="Search" id="search_query">
-                <button type="submit" class="searchButton" onclick="search()">
-                  <i class="material-icons">&#xe8b6;</i>
-                </button>
-              </div>
-            </div>
-
           </div>
         </div>
 
-        <table class="table table-striped table-hover">
-          <thead>
+        <!-- Main Learners Table Content -->
+        <table id="main_table" class="table table-striped table-hover">
+          <thead id="main_table_headers">
             <tr>
-              <th><input type="checkbox" id="select-all" style="width: 17px; height: 17px"></th>
+              <th>User Name</th>
               <th>Name</th>
-              <th>Username</th>
+              <th></th>
               <th>Department</th>
             </tr>
           </thead>
 
-          <!-- will replace entire division of original mock data to new database learners data -->
-          <tbody id="learners_table">
-          </tbody>
+          <!-- On load, to display all courses in table -->
+          <tbody id="learners_table"></tbody>
 
-          <tbody id="search_learners_table">
-          </tbody>
         </table>
       </div>
     </div>
   </div>
 </body>
 
+<!-- All Javascript functions to link app.py routes to UI functionalities -->
+
+<!-- Function: (Admin) view all learners -->
+<!-- On load, admin is able to see all the learners available in the system. -->
 <script>
-  // will replace entire division of original mock data to new database learners data
-  window.onload = function display_learners() {
-    const learners_table = document.getElementById("learners_table");
-    url = `http://localhost:5000/employees/learners`;
-    var html_str = "";
+  window.onload = function admin_get_all_learners() {
+    const main_table = document.getElementById("main_table")
+    const learners_table = document.getElementById("learners_table")
+
+    // Get all learners route (from Employee table)
+    url = `http://localhost:5000/admin_get_all_learners`;
 
     const response = fetch(url)
       .then((response) => response.json())
       .then((data) => {
+        // Error received - Display error message
         if (data["code"] != 200) {
-          alert(data["message"]);
-        } else {
+          main_table.innerHTML = data["message"]
+        }
+
+        // No error received - Display all learners 
+        else {
           for (var i = 0; i < data["data"]["learners"].length; i++) {
-            var employee_name = data["data"]["learners"][i].employee_name;
-            var user_name = data["data"]["learners"][i].user_name;
-            var department = data["data"]["learners"][i].department;
+            var user_name = data["data"]["learners"][i].user_name
+            var employee_name = data["data"]["learners"][i].employee_name
+            var current_designation = data["data"]["learners"][i].current_designation
 
-            html_str =
+            var learner_str =
               `
-          <form id="employee_form" method="POST" action="learner_detail.php">
-            <tr>
-              <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-              <td><a href="#" value="${employee_name}" onclick="document.getElementById('employee_form').submit();">${employee_name}</a></td>
-              <td>${user_name}</td>
-              <td>${department}</td>
+            <tr id="${user_name}">
+              <td><a href="#" onclick="admin_select_learner('${user_name}')">${user_name}</a></td>
+              <td>${employee_name}</td>   
+              <td></td>                     
+              <td>${current_designation}</td>
             </tr>
+            `
 
-          </form>
-          `;
-
-            learners_table.innerHTML += html_str;
+            learners_table.innerHTML += learner_str
           }
         }
       })
   }
+</script>
 
-  function search() {
-    document.getElementById("search_learners_table").innerHTML = "";
-
-    const search_learners_table = document.getElementById("search_learners_table");
-    const search_query = document.getElementById("search_query").value
-    url = `http://localhost:5000/employees/learners/${search_query}`;
-    var html_str = "";
-
-    document.getElementById("learners_table").style.display = "none";
-
-    const response = fetch(url)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data["code"] != 200) {
-          alert(data["message"])
-        } else {
-          for (var i = 0; i < data["data"]["learners"].length; i++) {
-            var employee_name = data["data"]["learners"][i].employee_name;
-            var user_name = data["data"]["learners"][i].user_name;
-            var department = data["data"]["learners"][i].department;
-
-            html_str =
-              `
-          <tr>
-            <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-            <td><a href="learner_detail.php" value="${employee_name}">${employee_name}</a></td>
-            <td>${user_name}</td>
-            <td>${department}</td>
-          </tr>
-          `;
-
-            search_learners_table.innerHTML += html_str;
-          }
-        }
-      })
+<!-- Function: (Admin) selects a learner -->
+<!-- On click, admin is able to select a learner to view its details. -->
+<script>
+  function admin_select_learner(user_name) {
+    // Set course id session storage item as the course id selected
+    event.preventDefault()
+    sessionStorage.setItem("user_name", user_name)
+    location.href = "learner_detail.php"
   }
 </script>
 

@@ -58,14 +58,12 @@ class Completed_Courses(db.Model):
 
     user_name = db.Column(db.String(32), db.ForeignKey('employee.user_name'), primary_key=True)
     course_id = db.Column(db.String(10), db.ForeignKey('class.course_id'), primary_key=True)
-    class_id = db.Column(db.String(10), primary_key=True)
     final_quiz_grade = db.Column(db.Float, db.ForeignKey('quiz.quiz_id'), nullable=False)
 
     def json(self):
         dto = {
             "user_name": self.user_name, 
             "course_id": self.course_id, 
-            "class_id": self.class_id, 
             "final_quiz_grade": self.final_quiz_grade
         }
         
@@ -166,6 +164,7 @@ class Enrolment_Request(db.Model):
     __tablename__ = 'enrolment_request'
 
     user_name = db.Column(db.String(32), db.ForeignKey('employee.user_name'), primary_key=True)
+    name = db.Column(db.String(32), nullable=False)
     course_id = db.Column(db.String(10), db.ForeignKey('class.course_id'), primary_key=True)
     class_id = db.Column(db.String(10), primary_key=True)
     status = db.Column(db.String(100), nullable=False)
@@ -173,6 +172,7 @@ class Enrolment_Request(db.Model):
     def json(self):
         dto = {
             "user_name": self.user_name, 
+            "name": self.name,
             "course_id": self.course_id,
             "class_id": self.class_id,
             "status": self.status
@@ -187,6 +187,7 @@ class Overall_Course_Progress(db.Model):
     __tablename__ = 'overall_course_progress'
 
     user_name = db.Column(db.String(32), db.ForeignKey('employee.user_name'), primary_key=True)
+    name = db.Column(db.String(32), nullable=False)
     course_id = db.Column(db.String(10), db.ForeignKey('class.class_id'), primary_key=True)
     class_id = db.Column(db.String(10), primary_key=True)
     sections_completed = db.Column(db.Integer, nullable=False)
@@ -196,6 +197,7 @@ class Overall_Course_Progress(db.Model):
     def json(self):
         dto = {
             "user_name": self.user_name,
+            "name": self.name,
             "course_id": self.course_id,
             "class_id": self.class_id,
             "sections_completed": self.sections_completed,
@@ -291,9 +293,25 @@ class Quiz_Question_Options(db.Model):
         
         return dto
 
+# ----------------------------------------------------------------------------------------------------------------------------- #
+#SPM Database - Eligible_Learners Table
+
+class Eligible_Learners(db.Model):
+    __tablename__ = 'eligible_learners'
+
+    course_id = db.Column(db.String(10), db.ForeignKey('course.course_id'), primary_key=True)
+    user_name = db.Column(db.String(32), primary_key=True)
+
+    def json(self):
+        dto = {
+            "course_id": self.course_id, 
+            "user_name": self.user_name,
+        }
+        
+        return dto
+
 db.create_all()
 
-# ----------------------------------------------------------------------------------------------------------------------------- #
 # ----------------------------------------------------------------------------------------------------------------------------- #
 '''Admin: Get all courses'''
 
@@ -506,7 +524,7 @@ def admin_create_class():
         data = request.get_json()
 
         # If not all blanks are filled
-        if (data["class_id"] == "") or (data["class_start_datetime"] == "") or (data["class_end_datetime"] == "") or (data["total_class_size"] == "") or (data["enrolment_start_datetime"] == "") or (data["enrolment_end_datetime"] == ""):
+        if (data["class_id"] == "") or (data["class_start_date"] == "") or (data["class_end_date"] == "") or (data["class_start_time"] == "") or (data["class_end_time"] == "") or (data["enrolment_start_date"] == "") or (data["enrolment_end_date"] == "") or (data["enrolment_start_date"] == "") or (data["enrolment_end_time"] == "") or (data["total_class_size"] == ""):
             return jsonify(
                 {
                     "code": 400,
@@ -515,7 +533,7 @@ def admin_create_class():
             ), 400
 
         # If Class ID already present in the system
-        elif (Class.query.filter_by(class_id = data["class_id"]).first()):
+        elif (Class.query.filter_by(course_id=data["course_id"], class_id = data["class_id"]).first()):
             return jsonify(
                 {
                     "code": 400,
@@ -523,6 +541,41 @@ def admin_create_class():
                 }
             ), 400
 
+        # Invalid Input: class starts after it ends
+        elif (data["class_start_datetime"] >= data["class_end_datetime"]):
+            return jsonify(
+                {
+                    "code": 400,
+                    "message": "Class must have valid start-end period."
+                }
+            ), 400
+
+        # Invalid Input: enrolment starts after it ends
+        elif (data["enrolment_start_datetime"] >= data["enrolment_end_datetime"]):
+            return jsonify(
+                {
+                    "code": 400,
+                    "message": "Class must have valid enrolment start-end period."
+                }
+            ), 400
+
+        # Invalid Input: class starts before enrolment ends
+        elif (data["enrolment_start_datetime"] >= data["class_start_datetime"]) and (data["enrolment_end_datetime"] >= data["class_start_datetime"]):
+            return jsonify(
+                {
+                    "code": 400,
+                    "message": "Class must only start after enrolment."
+                }
+            ), 400
+
+        # Invalid Input: class starts before enrolment ends
+        elif (data["total_class_size"] == "0"):
+            return jsonify(
+                {
+                    "code": 400,
+                    "message": "Class size cannot be 0."
+                }
+            ), 400
 
         # If Class ID not present in the system
         class_item = Class(course_id=data["course_id"], class_id=data["class_id"], trainer_name=data["trainer_name"], trainer_user_name=data["trainer_user_name"], class_start_datetime=data["class_start_datetime"], class_end_datetime=data["class_end_datetime"], enrolment_start_datetime=data["enrolment_start_datetime"], enrolment_end_datetime=data["enrolment_end_datetime"], current_class_size=data["current_class_size"], total_class_size=data["total_class_size"])
@@ -543,6 +596,150 @@ def admin_create_class():
             {
                 "code": 500,
                 "message": "An error occurred while creating the class: " + str(e)
+            }
+        ), 500
+
+# ----------------------------------------------------------------------------------------------------------------------------- #
+'''Admin: View enrolment requests '''
+
+@app.route("/view_enrolment_requests/<string:course_id>/<string:class_id>")
+def view_enrolment_requests(course_id, class_id):
+    try:
+        enrolment_list = Enrolment_Request.query.filter_by(course_id=course_id, class_id=class_id).all()
+
+        # If enrolments are found
+        if len(enrolment_list) != 0:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": {
+                        "enrolment": [enrolment.json() for enrolment in enrolment_list]
+                    }
+                }
+            ), 200
+        
+        # If enrolments are not found
+        return jsonify(
+            {
+                "code": 404,
+                "message": "There are no enrolments."
+            }
+        ), 404
+
+    # Error while retrieving enrolments
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "There was an error while retrieving the enrolments: " + str(e)
+            }
+        ), 500
+        
+# ----------------------------------------------------------------------------------------------------------------------------- #
+'''Admin: View confirmed learners '''
+
+@app.route("/view_confirmed_learners/<string:course_id>/<string:class_id>")
+def view_confirmed_learners(course_id, class_id):
+    try:
+        learner_course_list = Overall_Course_Progress.query.filter_by(course_id=course_id, class_id=class_id).all()
+
+        # If learners are found
+        if len(learner_course_list) != 0:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": {
+                        "learner": [learner.json() for learner in learner_course_list]
+                    }
+                }
+            ), 200
+        
+        # If learners are not found
+        return jsonify(
+            {
+                "code": 404,
+                "message": "There are no learners."
+            }
+        ), 404
+
+    # Error while retrieving learners
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "There was an error while retrieving the learners: " + str(e)
+            }
+        ), 500
+
+# ----------------------------------------------------------------------------------------------------------------------------- #
+'''Admin: Get all learners'''
+
+@app.route("/admin_get_all_learners")
+def admin_get_all_learners():
+    try:
+        learner_list = Employee.query.filter_by(current_designation="LEARNER").all()
+
+        # Learners are available
+        if len(learner_list) != 0:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": {
+                        "learners": [learner.json() for learner in learner_list]
+                    }
+                }
+            ), 200
+
+        # Learners not available
+        return jsonify(
+            {
+                "code": 404,
+                "message": "There are no learners available."
+            }
+        ), 404
+
+    # Error while retrieving learners
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "There was an error while retrieving the learners: " + str(e)
+            }
+        ), 500
+
+# ----------------------------------------------------------------------------------------------------------------------------- #
+'''Admin: View eligible learners '''
+
+@app.route("/view_eligible_learners/<string:course_id>")
+def view_eligible_learners(course_id):
+    try:
+        eligible_learners = Eligible_Learners.query.filter_by(course_id=course_id).all()
+
+        # If eligible learners are found
+        if len(eligible_learners) != 0:
+            return jsonify(
+                {
+                    "code": 200,
+                    "data": {
+                        "learner": [learner.json() for learner in eligible_learners]
+                    }
+                }
+            ), 200
+        
+        # If eligible learners are not found
+        return jsonify(
+            {
+                "code": 404,
+                "message": "There are no learners."
+            }
+        ), 404
+
+    # Error while retrieving learners
+    except Exception as e:
+        return jsonify(
+            {
+                "code": 500,
+                "message": "There was an error while retrieving the learners: " + str(e)
             }
         ), 500
 

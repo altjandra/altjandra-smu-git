@@ -1,7 +1,3 @@
-<?php
-var_dump($_POST)
-?>
-
 <!DOCTYPE html>
 <html class="no-js" lang="en">
   <head>

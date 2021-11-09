@@ -262,66 +262,64 @@
     });
   </script>
 
+  <!--Class Confirmed Learners-->
   <div class="container">
     <div class="table-responsive">
       <div class="table-wrapper">
         <div class="table-title">
           <div class="row">
             <div class="col-5">
-              <h2><b>Class G1</b></h2>
+              <h2 id="class_selected"><b></b></h2>
             </div>
-            <div class="col-2">
-              <div class="search">
-                <input type="text" class="searchTerm" placeholder="Search">
-                <button type="submit" class="searchButton">
-                  <i class="material-icons">&#xe8b6;</i>
-                </button>
-              </div>
-            </div>
-            <div class="col-5">
+
+            <!-- Assign New Learners Button -->
+            <!-- On click, will lead to popup to assign qualified learners -->
+            <div class="col-5" id="assign_learner_button">
               <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#popup">
                 <i class="material-icons">&#xE147;</i> <span>Assign New Learners</span>
               </button>
             </div>
           </div>
         </div>
-        <table class="table table-striped table-hover">
-          <thead>
+
+        <!-- Main Confirmed Learners Content -->
+        <table id="main_table" class="table table-striped table-hover">
+          <thead id="main_table_headers">
             <tr>
-              <th><input type="checkbox" id="select-all" style="width: 17px; height: 17px"></th>
               <th>Learner Name</th>
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-              <td><a href="learner_detail.php">Heather Hoe</a></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-              <td><a href="#">Glennis Ng</a></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-              <td><a href="#">Shaziera</a></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-              <td><a href="#">Angela</a></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" id="specific-course" style="width: 17px; height: 17px"></td>
-              <td><a href="#">Person 5</a></td>
-              <td></td>
-            </tr>
-          </tbody>
-        </table>
 
+          <tbody id="confirmed_learners_table"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!--Class Enrolment Requests-->
+  <div class="container">
+    <div class="table-responsive">
+      <div class="table-wrapper">
+        <div class="table-title">
+          <div class="row">
+            <div class="col-5">
+              <h2 id="enrolment_requests_class"><b></b></h2>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Enrolment Requests Content -->
+        <table id="main_enrolment_table" class="table table-striped table-hover">
+          <thead id="main_table_headers">
+            <tr>
+              <th>Learner Name</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody id="enrolment_requests_table"></tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -330,37 +328,170 @@
   <div class="modal fade" id="popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
+
         <div class="modal-header">
           <h5 class="modal-title" id="exampleModalLabel">Assign New Learners</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
+        <!-- To assign new learners that are qualified and have not completed course -->
         <div class="modal-body">
-          <!-- From Here -->
           <form action="#" class="form-container">
-
-            <label style="margin-top: 10px;" for="newcourse-enroldate"><b>Select Learners To Assign</b></label>
-            <div>
-              <select class="selectpicker" id="assignlearner" multiple data-live-search="true">
-                <option>Jun Jie</option>
-                <option>Josh</option>
-                <option>Kelly</option>
-              </select>
+            <!-- To select learner -->
+            <label style="margin-top: 10px;" for="newlearner"><b>Select Learners To Assign</b></label>
+            <div class="learners_available">
+              <div class="select">
+                <select name="learners_available" id="learners_available">
+                </select>
+              </div>
             </div>
-
+          </form>
         </div>
 
+        <!-- Options to close or assign the learner -->
         <div class="modal-footer">
           <button type="button" class="btn" style="background-color: #fff; border: 2px solid #999;"
             data-bs-dismiss="modal">Close</button>
           <button type="submit" class="btn btn-primary"
-            style="background-color: #96BB7C; border-color: #96BB7C;">Confirm Assign</button>
+            style="background-color: #96BB7C; border-color: #96BB7C;" onclick="admin_assign_learner()">Confirm Assign</button>
         </div>
-        </form>
       </div>
     </div>
   </div>
 
 </body>
+
+<!-- All Javascript functions to link app.py routes to UI functionalities -->
+
+<!-- Function: (Admin) view class details -->
+<!-- On load, admin is able to see all the details of the class selected. -->
+<script>
+  window.onload = function admin_view_class() {
+    const class_selected = document.getElementById("class_selected")
+    const enrolment_requests_class = document.getElementById("enrolment_requests_class")
+    const main_table = document.getElementById("main_table")
+    const main_enrolment_table = document.getElementById("main_enrolment_table")
+    const confirmed_learners_table = document.getElementById("confirmed_learners_table")
+    const enrolment_requests_table = document.getElementById("enrolment_requests_table")
+
+    var class_id = sessionStorage.getItem("class_id")
+    var course_id = sessionStorage.getItem("course_id")
+
+    class_selected.innerHTML = `<h2 id="class_selected"><b>${class_id} Confirmed Learners</b></h2>`
+    enrolment_requests_class.innerHTML =
+      `<h2 id="enrolment_requests_class"><b>${class_id} Enrolment Requests</b></h2>`
+
+    var class_status = sessionStorage.getItem("class_status")
+
+    if (class_status == "ENROLMENT IN PROGRESS" || class_status == "ENROLMENT ENDED" || class_status ==
+      "CLASS IN PROGRESS" || class_status == "CLASS ENDED") {
+      document.getElementById("assign_learner_button").style.display = "none"
+    }
+
+    // View confirmed learners route (from Overall Course Progress table)
+    url = `http://localhost:5000/view_confirmed_learners/${course_id}/${class_id}`
+
+    const response = fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        // Error received - Alert error message
+        if (data["code"] != 200) {
+          main_table.innerHTML = data["message"]
+        }
+
+        // No error received - Display all confirmed learners 
+        else {
+          for (var i = 0; i < data["data"]["learner"].length; i++) {
+            var name = data["data"]["learner"][i]["name"]
+
+            var learner_str =
+              `
+            <tr>
+              <td><a href="learner_detail.php">${name}</a></td>
+              <td></td>
+            </tr>
+            `
+            confirmed_learners_table.innerHTML += learner_str
+          }
+
+        }
+      })
+
+    // View enrolments route (from Enrolment Requests table)
+    url1 = `http://localhost:5000/view_enrolment_requests/${course_id}/${class_id}`
+
+    const response1 = fetch(url1)
+      .then((response1) => response1.json())
+      .then((data) => {
+        // Error received - Alert error message
+        if (data["code"] != 200) {
+          main_enrolment_table.innerHTML = data["message"]
+        }
+
+        // No error received - Display all enrolments 
+        else {
+          for (var i = 0; i < data["data"]["enrolment"].length; i++) {
+            var name = data["data"]["enrolment"][i]["name"]
+            console.log(name)
+
+            var enrolment_str =
+              `
+            <tr>
+              <td><a href="#">${name}</a></td>
+              <td>
+                <a href="#" class="settings" title="Settings" data-toggle="tooltip" onclick="admin_approve_enrolment()"><i class="material-icons">&#10003;</i></a>
+                <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="admin_reject_enrolment()"><i class="material-icons">&#xE5C9;</i></a>
+              </td>
+            </tr>
+            `
+            enrolment_requests_table.innerHTML += enrolment_str
+          }
+
+        }
+      })
+
+    // View eligible learners route (from Eligible Learners table)
+    url2 = `http://localhost:5000/view_eligible_learners/${course_id}`
+
+    const response2 = fetch(url2)
+      .then((response2) => response2.json())
+      .then((data) => {
+        // Error received - Alert error message
+        if (data["code"] != 200) {
+          var learner_str = `No learners to assign.`
+          learners_available.innerHTML = learner_str
+        }
+
+        // No error received - Display all eligible learners 
+        else {
+          const learners_available = document.getElementById("learners_available")
+          
+          for (var i = 0; i < data["data"]["learner"].length; i++) {
+            var user_name = data["data"]["learner"][i]["user_name"]
+
+            var learner_str = `<option value="${user_name}">${user_name}</option>`
+
+            learners_available.innerHTML += learner_str
+            console.log(learners_available) 
+          }
+
+        }
+      })     
+
+  }
+</script>
+
+<script>
+  function admin_assign_learner(){
+    event.preventDefault()
+
+  }
+</script>
+
+
+
+
+
 
 <script>
   $('select').selectpicker();
