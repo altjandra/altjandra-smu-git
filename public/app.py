@@ -25,7 +25,7 @@ class Class(db.Model):
     class_end_datetime = db.Column(db.DateTime, nullable=False)
     enrolment_start_datetime = db.Column(db.DateTime, nullable=False)
     enrolment_end_datetime = db.Column(db.DateTime, nullable=False)
-    current_class_size = db.Column(db.Integer, nullable=True)
+    current_class_size = db.Column(db.Integer, nullable=False)
     total_class_size = db.Column(db.Integer, nullable=False)
     final_quiz_id = db.Column(db.String(100), db.ForeignKey('quiz.quiz_id'), nullable=True)
 
@@ -500,13 +500,13 @@ def admin_get_course_details(course_id):
 # ----------------------------------------------------------------------------------------------------------------------------- #
 '''Admin: Create class '''
 
-@app.route("/admin_create_course", methods=['POST'])
-def admin_create_course():
+@app.route("/admin_create_class", methods=['POST'])
+def admin_create_class():
     try:
         data = request.get_json()
 
         # If not all blanks are filled
-        if (data["course_id"] == "") or (data["course_name"] == "") or (data["course_desc"] == ""):
+        if (data["class_id"] == "") or (data["class_start_datetime"] == "") or (data["class_end_datetime"] == "") or (data["total_class_size"] == "") or (data["enrolment_start_datetime"] == "") or (data["enrolment_end_datetime"] == ""):
             return jsonify(
                 {
                     "code": 400,
@@ -514,41 +514,38 @@ def admin_create_course():
                 }
             ), 400
 
-        # If Course ID already present in the system
-        elif (Course.query.filter_by(course_id = data["course_id"]).first()):
+        # If Class ID already present in the system
+        elif (Class.query.filter_by(class_id = data["class_id"]).first()):
             return jsonify(
                 {
                     "code": 400,
-                    "message": "A course with course id '{}' already exists.".format(data["course_id"])
+                    "message": "A class with class id '{}' already exists.".format(data["class_id"])
                 }
             ), 400
 
-        # If Course ID not present in the system
-        course = Course(course_id=data["course_id"], course_name=data["course_name"], course_desc=data["course_desc"])
-        prerequisite = Prerequisite(course_id=data["course_id"], prerequisite_id=data["prerequisite_id"])
 
-        db.session.add(course)
-        db.session.add(prerequisite)
+        # If Class ID not present in the system
+        class_item = Class(course_id=data["course_id"], class_id=data["class_id"], trainer_name=data["trainer_name"], trainer_user_name=data["trainer_user_name"], class_start_datetime=data["class_start_datetime"], class_end_datetime=data["class_end_datetime"], enrolment_start_datetime=data["enrolment_start_datetime"], enrolment_end_datetime=data["enrolment_end_datetime"], current_class_size=data["current_class_size"], total_class_size=data["total_class_size"])
+
+        db.session.add(class_item)
         db.session.commit()
 
         return jsonify(
             {
                 "code": 201,
-                "course": course.json(),
-                "prerequisite": prerequisite.json()
+                "class_item": class_item.json(),
             }
         ), 201
-
 
     # Error while creating course
     except Exception as e:
         return jsonify(
             {
                 "code": 500,
-                "message": "An error occurred while creating the course: " + str(e)
+                "message": "An error occurred while creating the class: " + str(e)
             }
         ), 500
-        
+
 # ----------------------------------------------------------------------------------------------------------------------------- #
 
 if __name__ == '__main__':

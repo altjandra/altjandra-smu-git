@@ -168,9 +168,6 @@
     <div class="product-media position-relative" style="height: 300px">
       <!-- Default BG image for all-->
       <img class="zoom cover" src="../img/printer.jpg" alt="">
-      <div class="tag position-absolute rounded danger-color text-center"
-        style="padding: 5px 10px; left: 20px; top: 20px">
-      </div>
     </div>
 
     <!-- Course details content -->
@@ -202,6 +199,7 @@
             <th>Trainer Name</th>
             <th>Class Start - Class End</th>
             <th>Enrolment Start - Enrolment End</th>
+            <th>Class Enrolment Status</th>
             <th>Class Size</th>
           </tr>
         </thead>
@@ -364,32 +362,58 @@
               var total_class_size = data["data"]["classes"][i]["total_class_size"]
 
               var class_start_datetime = new Date(data["data"]["classes"][i]["class_start_datetime"])
-              var [class_start_date, class_start_time] = [class_start_datetime.toLocaleDateString(),
-                class_start_datetime.toLocaleTimeString()
+              var [class_start_date, class_start_time, class_start_datetime] = [class_start_datetime
+                .toLocaleDateString(),
+                class_start_datetime.toLocaleTimeString(), class_start_datetime.toLocaleString()
               ]
 
               var class_end_datetime = new Date(data["data"]["classes"][i]["class_end_datetime"])
-              var [class_end_date, class_end_time] = [class_end_datetime.toLocaleDateString(), class_end_datetime
-                .toLocaleTimeString()
+              var [class_end_date, class_end_time, class_end_datetime] = [class_end_datetime.toLocaleDateString(),
+                class_end_datetime
+                .toLocaleTimeString(), class_end_datetime.toLocaleString()
               ]
 
               var enrolment_start_datetime = new Date(data["data"]["classes"][i]["enrolment_start_datetime"])
-              var [enrolment_start_date, enrolment_start_time] = [enrolment_start_datetime.toLocaleDateString(),
-                enrolment_start_datetime.toLocaleTimeString()
+              var [enrolment_start_date, enrolment_start_time, enrolment_start_datetime] = [enrolment_start_datetime
+                .toLocaleDateString(),
+                enrolment_start_datetime.toLocaleTimeString(), enrolment_start_datetime.toLocaleString()
               ]
 
               var enrolment_end_datetime = new Date(data["data"]["classes"][i]["enrolment_end_datetime"])
-              var [enrolment_end_date, enrolment_end_time] = [enrolment_end_datetime.toLocaleDateString(),
-                enrolment_end_datetime.toLocaleTimeString()
+              var [enrolment_end_date, enrolment_end_time, enrolment_end_datetime] = [enrolment_end_datetime
+                .toLocaleDateString(),
+                enrolment_end_datetime.toLocaleTimeString(), enrolment_end_datetime.toLocaleString()
               ]
+
+              var current_datetime = new Date().toLocaleString()
+
+              if (current_datetime < enrolment_start_datetime && current_datetime < enrolment_end_datetime &&
+                current_datetime < class_start_datetime && current_datetime < class_end_datetime) {
+                var class_status = "ENROLMENT NOT STARTED"
+              } else if (current_datetime >= enrolment_start_datetime && current_datetime <
+                enrolment_end_datetime && current_datetime < class_start_datetime && current_datetime <
+                class_end_datetime) {
+                var class_status = "ENROLMENT IN PROGRESS"
+              } else if (current_datetime >= enrolment_start_datetime && current_datetime >=
+                enrolment_end_datetime && current_datetime < class_start_datetime && current_datetime <
+                class_end_datetime) {
+                var class_status = "ENROLMENT ENDED"
+              } else if (current_datetime >= enrolment_start_datetime && current_datetime >=
+                enrolment_end_datetime && current_datetime >= class_start_datetime && current_datetime <
+                class_end_datetime) {
+                var class_status = "CLASS IN PROGRESS"
+              } else {
+                var class_status = "CLASS ENDED"
+              }
 
               var class_str =
                 `
               <tr>
                 <td><a href="#" onclick="admin_select_class('${class_id}')">${class_id}</a></td>
                 <td>${trainer_employee_name}</td>
-                <td>${class_start_date}, ${class_start_time} - ${class_end_date}, ${class_end_time}</td>
-                <td>${enrolment_start_date}, ${enrolment_start_time} - ${enrolment_end_date}, ${enrolment_end_time}</td>
+                <td>${class_start_datetime} - ${class_end_datetime}</td>
+                <td>${enrolment_start_datetime} - ${enrolment_end_datetime}</td>
+                <td>${class_status}</td>
                 <td>${current_class_size}/${total_class_size}</td>
               </tr>
               `;
@@ -408,15 +432,15 @@
 <!-- On click, admin is able to select a class to view its details. -->
 <script>
   function admin_select_class(class_id) {
-    event.preventDefault();
-    sessionStorage.setItem("class_id", class_id);
-    location.href = "class_detail.php";
+    event.preventDefault()
+    sessionStorage.setItem("class_id", class_id)
+    location.href = "class_detail.php"
   }
 </script>
 
 <script>
-  function create_class() {
-    
+  function admin_create_class() {
+    alert('you selected create a class')
   }
 </script>
 

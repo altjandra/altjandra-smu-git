@@ -40,9 +40,9 @@ CREATE TABLE IF NOT EXISTS `class` (
   `class_end_datetime` datetime NOT NULL,
   `enrolment_start_datetime` datetime NOT NULL,
   `enrolment_end_datetime` datetime NOT NULL,
-  `current_class_size` int(11) NULL DEFAULT 0,
+  `current_class_size` int(11) NOT NULL,
   `total_class_size` int(11) NOT NULL,
-  `final_quiz_id` varchar(100) DEFAULT NULL,
+  `final_quiz_id` varchar(100) NULL,
   PRIMARY KEY (`course_id`,`class_id`),
   KEY `class_fk3` (`final_quiz_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -127,9 +127,9 @@ CREATE TABLE IF NOT EXISTS `course_section_progress` (
   `user_name` varchar(32) NOT NULL,
   `course_id` varchar(10) NOT NULL,
   `class_id` varchar(10) NOT NULL,
-  `section` int(11) NOT NULL DEFAULT '1',
-  `section_materials_status` varchar(15) NOT NULL DEFAULT 'IN PROGRESS',
-  `section_quiz_status` varchar(15) NOT NULL DEFAULT 'IN PROGRESS',
+  `section` int(11) NOT NULL,
+  `section_materials_status` varchar(15) NOT NULL,
+  `section_quiz_status` varchar(15) NOT NULL,
   PRIMARY KEY (`user_name`,`course_id`,`class_id`,`section`),
   KEY `course_section_progress_fk2` (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -192,7 +192,7 @@ CREATE TABLE IF NOT EXISTS `enrolment_request` (
   `user_name` varchar(32) NOT NULL,
   `course_id` varchar(10) NOT NULL,
   `class_id` varchar(10) NOT NULL,
-  `status` varchar(100) NOT NULL DEFAULT 'PENDING',
+  `status` varchar(100) NOT NULL,
   PRIMARY KEY (`user_name`,`course_id`,`class_id`),
   KEY `enrolment_request_fk2` (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -208,9 +208,9 @@ CREATE TABLE IF NOT EXISTS `overall_course_progress` (
   `user_name` varchar(32) NOT NULL,
   `course_id` varchar(10) NOT NULL,
   `class_id` varchar(10) NOT NULL,
-  `sections_completed` int(11) NOT NULL DEFAULT '0',
-  `current_section` int(11) NOT NULL DEFAULT '1',
-  `final_quiz_grade` decimal(5,2) DEFAULT NULL,
+  `sections_completed` int(11) NOT NULL,
+  `current_section` int(11) NOT NULL,
+  `final_quiz_grade` decimal(5,2) NULL,
   PRIMARY KEY (`user_name`,`course_id`,`class_id`),
   KEY `overall_course_progress_fk2` (`course_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -224,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `overall_course_progress` (
 DROP TABLE IF EXISTS `prerequisite`;
 CREATE TABLE IF NOT EXISTS `prerequisite` (
   `course_id` varchar(10) NOT NULL,
-  `prerequisite_id` varchar(10) NOT NULL DEFAULT 'NIL',
+  `prerequisite_id` varchar(10) NOT NULL,
   PRIMARY KEY (`course_id`,`prerequisite_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
