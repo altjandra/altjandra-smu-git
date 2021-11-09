@@ -428,6 +428,97 @@
   }
 </script>
 
+<!-- Function: Date validation when creating class -->
+<!-- On load, the date options should only show from today onwards. -->
+<script>
+  var today = new Date()
+  var dd = today.getDate()
+  var mm = today.getMonth() + 1
+  var yyyy = today.getFullYear()
+
+  if (dd < 10) {
+    dd = '0' + dd;
+  }
+
+  if (mm < 10) {
+    mm = '0' + mm;
+  }
+
+  today = yyyy + '-' + mm + '-' + dd
+  document.getElementById("newclass_start_date").setAttribute("min", today)
+  document.getElementById("newclass_end_date").setAttribute("min", today)
+  document.getElementById("newenrolment_start_date").setAttribute("min", today)
+  document.getElementById("newenrolment_end_date").setAttribute("min", today)
+</script>
+
+<!-- Function: (Admin) creates a class -->
+<!-- On click, admin is able to create a new class. -->
+<script>
+  function admin_create_class() {
+    event.preventDefault()
+    var newclass_id = document.getElementById("newclass_id").value
+    var newclasstrainer_user_name = document.getElementById("trainers_available").value
+    var newclass_trainer_name = $("#trainers_available option:selected").text()
+    var newclass_start_datetime = document.getElementById("newclass_start_date").value + " " + document.getElementById(
+      "newclass_start_time").value
+    var newclass_end_datetime = document.getElementById("newclass_end_date").value + " " + document.getElementById(
+      "newclass_end_time").value
+    var newenrolment_start_datetime = document.getElementById("newenrolment_start_date").value + " " + document
+      .getElementById("newenrolment_start_time").value
+    var newenrolment_end_datetime = document.getElementById("newenrolment_end_date").value + " " + document
+      .getElementById("newenrolment_end_time").value
+    var newclass_size = document.getElementById("newclass_size").value
+
+
+    // Create class route (from Class table)
+    url = `http://localhost:5000/admin_create_class`
+
+    json = {
+      'course_id': sessionStorage.getItem("course_id"),
+      'class_id': newclass_id,
+      'trainer_name': newclass_trainer_name,
+      'trainer_user_name': newclasstrainer_user_name,
+      'class_start_datetime': newclass_start_datetime,
+      'class_end_datetime': newclass_end_datetime,
+      'enrolment_start_datetime': newenrolment_start_datetime,
+      'enrolment_end_datetime': newenrolment_end_datetime,
+      'current_class_size': 0,
+      'total_class_size': newclass_size,
+      'class_start_date': document.getElementById("newclass_start_date").value,
+      'class_start_time': document.getElementById("newclass_start_time").value,
+      'class_end_date': document.getElementById("newclass_end_date").value,
+      'class_end_time': document.getElementById("newclass_end_time").value,
+      'enrolment_start_date': document.getElementById("newenrolment_start_date").value,
+      'enrolment_start_time': document.getElementById("newenrolment_start_time").value,
+      'enrolment_end_date': document.getElementById("newenrolment_end_date").value,
+      'enrolment_end_time': document.getElementById("newenrolment_end_time").value
+    }
+
+    json = JSON.stringify(json)
+
+    const response = fetch(url, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: json
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        // If class cannot be created, alert error message to user
+        if (data["code"] != 201) {
+          alert(data["message"])
+        }
+
+        //  Class can be created, reload page to show changes
+        else {
+          window.location.reload()
+        }
+      })
+
+  }
+</script>
+
 <!-- Function: (Admin) selects a class -->
 <!-- On click, admin is able to select a class to view its details. -->
 <script>
@@ -435,12 +526,6 @@
     event.preventDefault()
     sessionStorage.setItem("class_id", class_id)
     location.href = "class_detail.php"
-  }
-</script>
-
-<script>
-  function admin_create_class() {
-    alert('you selected create a class')
   }
 </script>
 

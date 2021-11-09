@@ -538,7 +538,7 @@
 <!-- On click, admin is able to create a new course. -->
 <script>
   function admin_create_course() {
-    event.preventDefault();
+    event.preventDefault()
     var new_course_id = document.getElementById("newcourse_id").value
     var new_course_name = document.getElementById("newcourse_name").value
     var new_course_desc = document.getElementById("newcourse_desc").value
@@ -554,7 +554,7 @@
       "prerequisite_id": new_course_prereq
     }
 
-    json = JSON.stringify(json);
+    json = JSON.stringify(json)
 
     const response = fetch(url, {
         method: 'POST',
