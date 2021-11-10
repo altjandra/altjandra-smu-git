@@ -260,10 +260,6 @@
     z-index: 10;
     font-size: 1em;
   }
-
-  #create_popup {
-    z-index: 9999;
-  }
 </style>
 
 <body>
@@ -307,6 +303,16 @@
             <div class="col-5">
               <h2><b>All Learners</b></h2>
             </div>
+
+            <!-- Search bar to find for all matching learners -->
+            <div class="col-2">
+              <div class="search">
+                <input type="text" class="searchTerm" placeholder="Search by Name" id="search_query">
+                <button type="submit" class="searchButton" onclick="admin_search_for_learners()">
+                  <i class="material-icons">&#xe8b6;</i>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -321,9 +327,13 @@
             </tr>
           </thead>
 
-          <!-- On load, to display all courses in table -->
+          <!-- On load, to display all learners in table -->
+          <!-- By default, displays content. Will hide if search_learners_table populate. -->
           <tbody id="learners_table"></tbody>
 
+          <!-- On search, to display all courses that match in table -->
+          <!-- By default, no content. -->
+          <tbody id="search_learners_table"></tbody>
         </table>
       </div>
     </div>
@@ -371,6 +381,64 @@
           }
         }
       })
+  }
+</script>
+
+<!-- Function: (Admin) search for learners -->
+<!-- On search, admin is able to see all the matching learners. -->
+<script>
+  function admin_search_for_learners() {
+    // To reset the display of searched courses each time the search button is clicked
+    const search_learners_table = document.getElementById("search_learners_table")
+    search_learners_table.innerHTML = ""
+
+    const search_query = document.getElementById("search_query").value
+    const learners_table = document.getElementById("learners_table")
+
+    // Get all learners route (from Employee table) if there is no search query
+    if (search_query.trim() == "") {
+      url = `http://localhost:5000/admin_get_all_learners`
+    }
+
+    // Get searched learners route (from Employee table) if there is a search query
+    else {
+      url = `http://localhost:5000/admin_search_for_learners/${search_query}`
+    }
+
+    // Hide original displayed learners
+    learners_table.style.display = "none"
+
+    const response = fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        // Error received - Alert error message
+        if (data["code"] != 200){
+          alert(data["message"])
+          window.location.reload()
+        }
+
+        // No error received - Display all matching learners
+        else{
+          for (var i = 0; i < data["data"]["learners"].length; i++){
+            var user_name = data["data"]["learners"][i].user_name
+            var name = data["data"]["learners"][i].employee_name
+            var department = data["data"]["learners"][i].department
+
+            var searched_learners_str =
+              `
+            <tr id="${user_name}">
+              <td><a href="#" onclick="admin_select_learner('${user_name}')">${user_name}</a></td>
+              <td>${name}</td>                        
+              <td></td>
+              <td>${department}</td>
+            </tr>
+            `
+
+            search_learners_table.innerHTML += searched_learners_str
+          }
+        }
+      })
+
   }
 </script>
 

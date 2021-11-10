@@ -272,7 +272,7 @@
               <h2 id="class_selected"><b></b></h2>
             </div>
 
-            <!-- Assign New Learners Button -->
+            <!-- Assign New Learners Button (if enrolment not started) -->
             <!-- On click, will lead to popup to assign qualified learners -->
             <div class="col-5" id="assign_learner_button">
               <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#popup">
@@ -315,6 +315,7 @@
             <tr>
               <th>Learner Name</th>
               <th></th>
+              <th></th>
             </tr>
           </thead>
 
@@ -337,6 +338,7 @@
         <!-- To assign new learners that are qualified and have not completed course -->
         <div class="modal-body">
           <form action="#" class="form-container">
+
             <!-- To select learner -->
             <label style="margin-top: 10px;" for="newlearner"><b>Select Learners To Assign</b></label>
             <div class="learners_available">
@@ -352,8 +354,8 @@
         <div class="modal-footer">
           <button type="button" class="btn" style="background-color: #fff; border: 2px solid #999;"
             data-bs-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary"
-            style="background-color: #96BB7C; border-color: #96BB7C;" onclick="admin_assign_learner()">Confirm Assign</button>
+          <button type="submit" class="btn btn-primary" style="background-color: #96BB7C; border-color: #96BB7C;"
+            onclick="admin_assign_learner()">Confirm Assign</button>
         </div>
       </div>
     </div>
@@ -367,22 +369,16 @@
 <!-- On load, admin is able to see all the details of the class selected. -->
 <script>
   window.onload = function admin_view_class() {
-    const class_selected = document.getElementById("class_selected")
-    const enrolment_requests_class = document.getElementById("enrolment_requests_class")
-    const main_table = document.getElementById("main_table")
-    const main_enrolment_table = document.getElementById("main_enrolment_table")
-    const confirmed_learners_table = document.getElementById("confirmed_learners_table")
-    const enrolment_requests_table = document.getElementById("enrolment_requests_table")
-
     var class_id = sessionStorage.getItem("class_id")
     var course_id = sessionStorage.getItem("course_id")
-
-    class_selected.innerHTML = `<h2 id="class_selected"><b>${class_id} Confirmed Learners</b></h2>`
-    enrolment_requests_class.innerHTML =
-      `<h2 id="enrolment_requests_class"><b>${class_id} Enrolment Requests</b></h2>`
-
     var class_status = sessionStorage.getItem("class_status")
 
+    document.getElementById("class_selected").innerHTML =
+      `<h2 id="class_selected"><b>${class_id} Confirmed Learners</b></h2>`
+    document.getElementById("enrolment_requests_class").innerHTML =
+      `<h2 id="enrolment_requests_class"><b>${class_id} Enrolment Requests</b></h2>`
+
+    // Only show the assigning new learners button if enrolment has not started
     if (class_status == "ENROLMENT IN PROGRESS" || class_status == "ENROLMENT ENDED" || class_status ==
       "CLASS IN PROGRESS" || class_status == "CLASS ENDED") {
       document.getElementById("assign_learner_button").style.display = "none"
@@ -394,12 +390,12 @@
     const response = fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        // Error received - Alert error message
+        // Error received - Display error message
         if (data["code"] != 200) {
-          main_table.innerHTML = data["message"]
+          document.getElementById("main_table").innerHTML = data["message"]
         }
 
-        // No error received - Display all confirmed learners 
+        // No error received - Display all confirmed learners
         else {
           for (var i = 0; i < data["data"]["learner"].length; i++) {
             var name = data["data"]["learner"][i]["name"]
@@ -411,92 +407,207 @@
               <td></td>
             </tr>
             `
-            confirmed_learners_table.innerHTML += learner_str
-          }
 
+            document.getElementById("confirmed_learners_table").innerHTML += learner_str
+          }
         }
       })
 
-    // View enrolments route (from Enrolment Requests table)
+    // View enrolment requests route (from Enrolment Request table)
     url1 = `http://localhost:5000/view_enrolment_requests/${course_id}/${class_id}`
 
     const response1 = fetch(url1)
       .then((response1) => response1.json())
       .then((data) => {
-        // Error received - Alert error message
+        // Error received - Display error message
         if (data["code"] != 200) {
-          main_enrolment_table.innerHTML = data["message"]
+          document.getElementById("main_enrolment_table").innerHTML = data["message"]
         }
 
-        // No error received - Display all enrolments 
+        // No error received - Display all enrolment requests
         else {
           for (var i = 0; i < data["data"]["enrolment"].length; i++) {
             var name = data["data"]["enrolment"][i]["name"]
-            console.log(name)
+            var user_name = data["data"]["enrolment"][i]["user_name"]
 
             var enrolment_str =
               `
             <tr>
               <td><a href="#">${name}</a></td>
+              <td></td>
               <td>
-                <a href="#" class="settings" title="Settings" data-toggle="tooltip" onclick="admin_approve_enrolment()"><i class="material-icons">&#10003;</i></a>
-                <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="admin_reject_enrolment()"><i class="material-icons">&#xE5C9;</i></a>
+                <a href="#" class="settings" title="Settings" data-toggle="tooltip" onclick="admin_approve_enrolment('${user_name}', '${name}')"><i class="material-icons">&#10003;</i></a>
+                  <a href="#" class="delete" title="Delete" data-toggle="tooltip" onclick="admin_reject_enrolment('${user_name}')"><i class="material-icons">&#xE5C9;</i></a>
               </td>
             </tr>
             `
-            enrolment_requests_table.innerHTML += enrolment_str
+
+            document.getElementById("enrolment_requests_table").innerHTML += enrolment_str
+
           }
+        }
+
+        // View eligible learners route
+        url2 = `http://localhost:5000/view_eligible_learners/${course_id}`
+
+        const response2 = fetch(url2)
+          .then((response2) => response2.json())
+          .then((data) => {
+            // Error received - Alert/Display error message
+            if (data["code"] != 200) {
+              alert(data["message"])
+              var learner_str = `No learners to assign.`
+              document.getElementById("learners_available").innerHTML = learner_str
+            }
+
+            // No error received - Display all qualified learners
+            else {
+              for (var i = 0; i < data["data"]["qualified_learners"].length; i++) {
+                var user_name = data["data"]["qualified_learners"][i]
+                var name = user_name.charAt(0).toUpperCase() + user_name.slice(1)
+                name = name.substring(0, name.length - 5)
+
+                var learner_str = `<option value="${user_name}">${name}</option>`
+
+                document.getElementById("learners_available").innerHTML += learner_str
+
+              }
+              console.log(document.getElementById("learners_available"))
+            }
+          })
+
+      })
+  }
+</script>
+
+<!-- Function: (Admin) assigns learner  -->
+<!-- On click, admin is able to assign the learner. -->
+<script>
+  function admin_assign_learner() {
+    event.preventDefault()
+    var learner_assigned = document.getElementById("learners_available").value
+    var name = learner_assigned.charAt(0).toUpperCase() + learner_assigned.slice(1)
+    name = name.substring(0, name.length - 5)
+
+    // Assign learner route 
+    url = `http://localhost:5000/admin_assign_learner`
+
+    json = {
+      'user_name': learner_assigned,
+      'name': name,
+      'course_id': sessionStorage.getItem('course_id'),
+      'class_id': sessionStorage.getItem('class_id'),
+      'sections_completed': 0,
+    }
+
+    json = JSON.stringify(json)
+
+    const response = fetch(url, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: json
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        // If learner cannot be assigned, alert error message to user
+        if (data["code"] != 201) {
+          alert(data["message"])
+        }
+
+        // Learner can be assigned, reload page to show changes
+        else {
+          window.location.reload()
+        }
+      })
+  }
+</script>
+
+
+<!-- Function: (Admin) approves learner enrolment request  -->
+<!-- On click, admin is able to approve the learner enrolment request. -->
+<script>
+  function admin_approve_enrolment(user_name, name) {
+    // Approve enrolment route 
+    url = `http://localhost:5000/admin_approve_enrolment`
+    var course_id = sessionStorage.getItem('course_id')
+    var class_id = sessionStorage.getItem('class_id')
+
+    json = {
+      'user_name': user_name,
+      'name': name,
+      'course_id': course_id,
+      'class_id': class_id,
+      'sections_completed': 0,
+    }
+
+    json = JSON.stringify(json)
+
+    const response = fetch(url, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: json
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        // If learner cannot be approved, alert error message to user
+        if (data["code"] != 201) {
+          alert(data["message"])
+        }
+
+        // Learner can be approved
+        else {
+          // Delete enrolment route 
+          url1 = `http://localhost:5000/admin_delete_enrolment_request/${user_name}/${course_id}/${class_id}`
+
+          const response1 = fetch(url1)
+            .then((response1) => response1.json())
+            .then((data) => {
+              // If enrolment cannot be removed, alert error message to user
+              if (data["code"] != 200) {
+                alert(data["message"])
+              }
+
+              // Enrolment can be removed, reload page to show changes
+              else {
+                window.location.reload()
+              }
+            })
 
         }
       })
 
-    // View eligible learners route (from Eligible Learners table)
-    url2 = `http://localhost:5000/view_eligible_learners/${course_id}`
 
-    const response2 = fetch(url2)
-      .then((response2) => response2.json())
+  }
+</script>
+
+<!-- Function: (Admin) rejects learner enrolment request  -->
+<!-- On click, admin is able to reject the learner enrolment request. -->
+<script>
+  function admin_reject_enrolment(user_name) {
+    var course_id = sessionStorage.getItem('course_id')
+    var class_id = sessionStorage.getItem('class_id')
+
+    // Delete enrolment route 
+    url = `http://localhost:5000/admin_delete_enrolment_request/${user_name}/${course_id}/${class_id}`
+
+    const response = fetch(url)
+      .then((response) => response.json())
       .then((data) => {
-        // Error received - Alert error message
-        if (data["code"] != 200) {
-          var learner_str = `No learners to assign.`
-          learners_available.innerHTML = learner_str
+        // If admin cannot reject enrolment, alert error message to user
+        if (data["code"] != 200){
+          alert(data["message"])
         }
 
-        // No error received - Display all eligible learners 
-        else {
-          const learners_available = document.getElementById("learners_available")
-          
-          for (var i = 0; i < data["data"]["learner"].length; i++) {
-            var user_name = data["data"]["learner"][i]["user_name"]
-
-            var learner_str = `<option value="${user_name}">${user_name}</option>`
-
-            learners_available.innerHTML += learner_str
-            console.log(learners_available) 
-          }
-
+        // Admin can reject enrolment, reload page to show changes
+        else{
+          window.location.reload()
         }
-      })     
-
+      })
   }
 </script>
-
-<script>
-  function admin_assign_learner(){
-    event.preventDefault()
-
-  }
-</script>
-
-
-
-
-
-
-<script>
-  $('select').selectpicker();
-</script>
-
-
 
 </html>

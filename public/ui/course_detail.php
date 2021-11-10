@@ -302,7 +302,7 @@
 
     var course_id = sessionStorage.getItem("course_id")
 
-    // Get course & all trainers details (from Course, Prerequisite, Employee, Class tables)
+    // Get course & all trainers details route (from Course, Prerequisite, Employee, Class tables)
     url = `http://localhost:5000/admin_get_course_details/${course_id}`
 
     const response = fetch(url)
@@ -396,9 +396,9 @@
                 <td>${class_status}</td>
                 <td>${current_class_size}/${total_class_size}</td>
               </tr>
-              `;
+              `
 
-              classes_table.innerHTML += class_str;
+              classes_table.innerHTML += class_str
             }
 
           }

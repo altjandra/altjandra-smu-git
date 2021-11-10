@@ -457,8 +457,8 @@
 <script>
   function admin_search_for_courses() {
     // To reset the display of searched courses each time the search button is clicked
-    const search_learners_table = document.getElementById("search_courses_table")
-    search_learners_table.innerHTML = ""
+    const search_courses_table = document.getElementById("search_courses_table")
+    search_courses_table.innerHTML = ""
 
     const search_query = document.getElementById("search_query").value
     const courses_table = document.getElementById("courses_table")
@@ -516,7 +516,7 @@
 <script>
   function admin_delete_course(course_id) {
     // Delete course route (from Course table) 
-    url = `http://localhost:5000/admin_delete_course/${course_id}`;
+    url = `http://localhost:5000/admin_delete_course/${course_id}`
 
     const response = fetch(url)
       .then((response) => response.json())
