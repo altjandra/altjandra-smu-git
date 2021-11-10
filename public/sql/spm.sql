@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `class` (
   `enrolment_end_datetime` datetime NOT NULL,
   `current_class_size` int(11) NOT NULL,
   `total_class_size` int(11) NOT NULL,
-  `no_of_sections` int(11) NOT NULL,
+  `no_of_sections` int(11) NULL,
   `final_quiz_id` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`course_id`,`class_id`),
   KEY `class_fk3` (`final_quiz_id`),
