@@ -381,8 +381,8 @@
                 var class_status = "ENROLMENT IN PROGRESS"
               } 
               
-              else if (current_datetime.getTime() >= enrolment_start_datetime.getTime() && current_datetime
-                .getTime() >= enrolment_end_datetime.getTime()) {
+              else if ((current_datetime.getTime() >= enrolment_start_datetime.getTime() && current_datetime
+                .getTime() >= enrolment_end_datetime.getTime()) || current_class_size == total_class_size) {
                 var class_status = "ENROLMENT ENDED"
               }
 
