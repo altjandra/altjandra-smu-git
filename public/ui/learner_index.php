@@ -276,7 +276,7 @@
             var course_str =
               `
             <tr>
-              <td><a href="#">${course_id}</a></td>
+              <td><a href="#" onclick="select_ongoing_course('${course_id}', '${class_id}')">${course_id}</a></td>
               <td>${class_id}</td>
               <td></td>
               <td>${sections_completed}</td>
@@ -371,6 +371,13 @@
   }
 </script>
 
-
+<script>
+  function select_ongoing_course(course_id, class_id){
+    event.preventDefault()
+    sessionStorage.setItem("course_id", course_id)
+    sessionStorage.setItem("class_id", class_id)
+    location.href = "course.php"
+  }
+</script>
 
 </html>

@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="../css/owl.carousel.min.css">
   <link rel="stylesheet" href="../css/owl.theme.default.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <script src="../js/jquery-3.4.1.min.js"></script>
+  <script src="../js/bootstrap.bundle.min.js"></script>
+  <script src="../js/owl.carousel.min.js"></script>
+  <script src="../js/tools.js"></script>
+
 </head>
 
 <style>
@@ -52,23 +58,26 @@
     <div class="collapse navbar-collapse ms-lg-5 mt-4 mt-lg-0" id="navbarSupportedContent">
       <ul class="navbar-nav align-items-center">
         <li class="nav-item">
-          <a class="nav-link" href="home.html"><span>Home</span></a>
+          <a class="nav-link" href="learner_index.php"><span>Home</span></a>
         </li>
       </ul>
       <ul class="navbar-nav mt-4 mt-lg-0 ms-auto align-items-center">
         <li class="nav-item">
-          <a class="primary-text-color" href="#"><strong>Welcome, Ben Tan</strong></a>
+          <a class="primary-text-color"><strong>Welcome, Heather [LEARNER]</strong></a>
         </li>
       </ul>
   </nav>
 
+
   <section>
     <div class="container py-7 py-lg-10">
       <div class="row justify-content-center">
+
         <div class="text-center col-lg-6">
           <h2 class="h2 text-color text-center" style="margin-top: 10px">
             Section 1: Introduction
           </h2>
+
           <!-- Progress Bar -->
           <div class="container">
             <div class="row">
@@ -83,11 +92,24 @@
               </div>
             </div>
           </div>
-          <p class="paragraph second-text-color text-center" style="margin-top: 10px">
-            50% complete
+
+          <p class="paragraph second-text-color text-center" style="margin-top: 20px">
           </p>
+          <ul class="nav nav-pills justify-content-center" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Course Homepage</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Content</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Final Quiz</a>
+            </li>
+          </ul>
+
         </div>
       </div>
+
       <!-- Section Contents -->
       <div class="row align-items-stretch justify-content-center mt-5 mt-md-7">
         <div class="col-lg-8 mb-4 mb-lg-0">
@@ -100,8 +122,8 @@
             <div class="media bg-cover">
               <img class="cover" src="../img/printer.jpg" alt="">
               <div class="filter gradient-filter"></div>
-            </div><button class="btn primary-color btn-circle btn-lg center-content-align position-absolute"><i
-                class="bi bi-play-fill icn-sm light-text-color"></i></button>
+            </div><button class="btn primary-color btn-circle btn-lg center-content-align position-absolute"
+              id="play_button"><i class="bi bi-play-fill icn-sm light-text-color" onclick="play_video()"></i></button>
           </div><br>
           <hr>
           <!-- Lecture Slides -->
@@ -110,7 +132,8 @@
           </h4>
           <h5 class="h5 text-color text-left" style="margin-top: 40px">
             <!-- Edit href to lead to PDF document -->
-            <a href="../public/clean.html">Intro_Slides_Lesson1.pdf</a>
+            <a
+              href="https://docs.google.com/document/d/1TqPV7qp9BE0Q6Krb-4fDxJv-z9ufF8tWiembl8SsFgg/edit#" id="slides">Intro_Slides_Lesson1.pdf</a>
           </h5>
           <br>
           <hr>
@@ -120,7 +143,7 @@
           </h4>
           <h5 class="h5 text-color text-left" style="margin-top: 40px">
             <!-- Edit href to lead to ungraded quiz document -->
-            <a href="../public/ungradedquizdetails.html">Ungraded Quiz</a>
+            <a href="ungradedquizdetails.html">Ungraded Quiz</a>
           </h5>
         </div>
       </div>
@@ -131,9 +154,23 @@
   </section>
 </body>
 
-<script src="../js/jquery-3.4.1.min.js"></script>
-<script src="../js/bootstrap.bundle.min.js"></script>
-<script src="../js/owl.carousel.min.js"></script>
-<script src="../js/tools.js"></script>
+<script>
+  function play_video() {
+    location.href = "https://www.youtube.com/watch?v=btGYcizV0iI"
+  }
+</script>
+
+<script>
+  var count = 0
+  document.getElementById("play_button").onclick = function () {
+    count += 1
+    alert(count)
+  }
+
+  document.getElementById("slides").addEventListener("click", () => {
+    count += 1
+    alert(count)
+  });
+</script>
 
 </html>
