@@ -24,7 +24,7 @@ class Class(db.Model):
     enrolment_end_datetime = db.Column(db.DateTime, nullable=False)
     current_class_size = db.Column(db.Integer, nullable=False)
     total_class_size = db.Column(db.Integer, nullable=False)
-    no_of_sections = db.Column(db.Integer, nullable=False)
+    no_of_sections = db.Column(db.Integer, nullable=True)
     final_quiz_id = db.Column(db.String(100), db.ForeignKey('quiz.quiz_id'), nullable=True)
 
     def json(self):

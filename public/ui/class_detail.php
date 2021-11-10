@@ -341,7 +341,7 @@
 
             <!-- To select learner -->
             <label style="margin-top: 10px;" for="newlearner"><b>Select Learners To Assign</b></label>
-            <div class="learners_available">
+            <div class="learners_available" id="learners_missing">
               <div class="select">
                 <select name="learners_available" id="learners_available">
                 </select>
@@ -454,10 +454,9 @@
           .then((response2) => response2.json())
           .then((data) => {
             // Error received - Alert/Display error message
-            if (data["code"] != 200) {
-              alert(data["message"])
+            if (data["data"]["qualified_learners"].length == 0) {
               var learner_str = `No learners to assign.`
-              document.getElementById("learners_available").innerHTML = learner_str
+              document.getElementById("learners_missing").innerHTML = learner_str
             }
 
             // No error received - Display all qualified learners
@@ -479,6 +478,7 @@
       })
   }
 </script>
+
 
 <!-- Function: (Admin) assigns learner  -->
 <!-- On click, admin is able to assign the learner. -->
@@ -518,7 +518,7 @@
 
         // Learner can be assigned, reload page to show changes
         else {
-          window.location.reload()
+          window.location.reload() 
         }
       })
   }

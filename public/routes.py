@@ -481,25 +481,44 @@ def view_eligible_learners(course_id):
         learner_list = Employee.query.filter_by(current_designation="LEARNER").all()
         all_learner_current_course = Overall_Course_Progress.query.filter_by(course_id=course_id).all()
         all_learner_completed_course = Completed_Courses.query.filter_by(course_id=course_id).all()
+
+        all_completed_courses = Completed_Courses.query.all()
+        prerequisite = Prerequisite.query.filter_by(course_id=course_id).first()
+
         qualified_learners = []
         unqualified_learners = []
         learner_list_only_names = []
-
-        # Returns only qualified learners
-        for learner in all_learner_current_course:
-            for system_learner in learner_list:
-                if (learner.json()["user_name"] == system_learner.json()["user_name"]):
-                    unqualified_learners.append(system_learner.json()["user_name"])
-
-        for learner in all_learner_completed_course:
-            for system_learner in learner_list:
-                if (learner.json()["user_name"] == system_learner.json()["user_name"]):
-                    unqualified_learners.append(system_learner.json()["user_name"])
-
+        qualified_learners_prereq = []
+        
         for learner in learner_list:
             learner_list_only_names.append(learner.json()["user_name"]) 
 
-        qualified_learners = set(learner_list_only_names) ^ set(unqualified_learners)
+        # If user is already taking the course - unqualified
+        for learner in all_learner_current_course:
+            for learner_name in learner_list_only_names:
+                if (learner.json()["user_name"] == learner_name):
+                    unqualified_learners.append(learner_name)
+
+        # If user has already completed the course - unqualified
+        for learner in all_learner_completed_course:
+            for learner_name in learner_list_only_names:
+                if (learner.json()["user_name"] == learner_name):
+                    unqualified_learners.append(learner_name)
+
+        # If course has no prerequisites - everyone qualifies
+        if (prerequisite.prerequisite_id == "NIL"):
+            for learner in learner_list:
+                qualified_learners_prereq.append(learner.json()["user_name"]) 
+
+        # If course has prerequisites - only those who have completed them qualifies
+        else:
+            for learner in all_completed_courses:
+                if (learner.json()["course_id"] == prerequisite.prerequisite_id):
+                    qualified_learners_prereq.append(learner.json()["user_name"])
+
+        
+        qualified_learners = set(learner_list_only_names) - set(unqualified_learners)
+        qualified_learners = list(set(qualified_learners).intersection(qualified_learners_prereq))
 
         return jsonify({
             "code": 200,

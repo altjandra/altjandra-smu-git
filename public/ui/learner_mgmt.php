@@ -365,7 +365,7 @@
           for (var i = 0; i < data["data"]["learners"].length; i++) {
             var user_name = data["data"]["learners"][i].user_name
             var employee_name = data["data"]["learners"][i].employee_name
-            var current_designation = data["data"]["learners"][i].current_designation
+            var department = data["data"]["learners"][i].department
 
             var learner_str =
               `
@@ -373,7 +373,7 @@
               <td><a href="#" onclick="admin_select_learner('${user_name}')">${user_name}</a></td>
               <td>${employee_name}</td>   
               <td></td>                     
-              <td>${current_designation}</td>
+              <td>${department}</td>
             </tr>
             `
 
