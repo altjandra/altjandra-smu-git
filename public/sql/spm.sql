@@ -103,8 +103,7 @@ CREATE TABLE IF NOT EXISTS `course` (
 INSERT INTO `course` (`course_id`, `course_name`, `course_desc`) VALUES
 ('EPSON101', 'Fundamentals of Epson Scanners', 'This course will teach you all about the basics on the latest\r\n  Epson-brand scanners.'),
 ('EPSON102', 'Advanced Epson Scanners', 'This course will teach you about the internal mechanics of the latest\r\n  Epson-brand scanners.'),
-('XEROX101', 'Mechanics of Xerox', 'This course will teach you about the internal workings of a Xerox-based,\r\n  standard-issued printer.'),
-('XEROX102', 'Advanced Mecanics of Xerox', 'This course will teach you all you need to know about the advanced\r\n  mechanics of a Xerox machine.');
+('XEROX101', 'Mechanics of Xerox', 'This course will teach you about the internal workings of a Xerox-based,\r\n  standard-issued printer.');
 
 -- --------------------------------------------------------
 
@@ -266,8 +265,7 @@ CREATE TABLE IF NOT EXISTS `prerequisite` (
 INSERT INTO `prerequisite` (`course_id`, `prerequisite_id`) VALUES
 ('EPSON101', 'NIL'),
 ('EPSON102', 'EPSON101'),
-('XEROX101', 'NIL'),
-('XEROX102', 'XEROX101');
+('XEROX101', 'NIL');
 
 -- --------------------------------------------------------
 
