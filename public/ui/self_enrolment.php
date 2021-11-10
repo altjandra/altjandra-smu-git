@@ -152,7 +152,7 @@
       <div class="collapse navbar-collapse ms-lg-5 mt-4 mt-lg-0" id="navbarSupportedContent">
         <ul class="navbar-nav align-items-center">
           <li class="nav-item">
-            <a class="nav-link" href="./index.php"><span>Home</span></a>
+            <a class="nav-link" href="./learner_index.php"><span>Home</span></a>
           </li>
         </ul>
         <ul class="navbar-nav mt-4 mt-lg-0 ms-auto align-items-center">
@@ -337,7 +337,7 @@
               }
 
               if (check == 0){
-                document.getElementById("dropdownbox").innerHTML = "<h1>No classes available for enrolment because enrolment has not started/has ended. </h1>"
+                document.getElementById("dropdownbox").innerHTML = "<h1>No classes available for enrolment. </h1>"
               }
 
             }
@@ -351,7 +351,7 @@
 <script>
   var user_name = sessionStorage.getItem("user_name")
   var course_id = sessionStorage.getItem("course_id")
-  url = `http://localhost:5000/view_enrolment_requests_learner/${course_id}/${user_name}`
+  url = `http://localhost:5000/view_enrolment_requests/${course_id}/${user_name}`
 
   const response = fetch(url)
     .then((response) => response.json())

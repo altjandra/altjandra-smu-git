@@ -292,10 +292,10 @@ def admin_create_class():
 # ----------------------------------------------------------------------------------------------------------------------------- #
 '''Admin: View enrolment requests '''
 
-@app.route("/view_enrolment_requests/<string:course_id>/<string:class_id>")
-def view_enrolment_requests(course_id, class_id):
+@app.route("/view_enrolment_requests/<string:course_id>/<string:user_name>")
+def view_enrolment_requests(course_id, user_name):
     try:
-        enrolment_list = Enrolment_Request.query.filter_by(course_id=course_id, class_id=class_id).all()
+        enrolment_list = Enrolment_Request.query.filter_by(course_id=course_id, user_name=user_name).all()
 
         # If enrolments are found
         if len(enrolment_list) != 0:
@@ -686,21 +686,23 @@ def view_eligible_courses(user_name):
         unqualified_courses = []
         course_list_only_course_id = []
 
-        # Returns only qualified courses
+        for course in course_list:
+            course_list_only_course_id.append(course.json()["course_id"])
+
+        # If user is already taking the course - ineligible course
         for course in all_learner_current_course:
-            for system_course in course_list:
-                if (course.json()["course_id"] == system_course.json()["course_id"]):
-                    unqualified_courses.append(system_course.json()["course_id"])
+            for system_course in course_list_only_course_id:
+                if (course.json()["course_id"] == system_course):
+                    unqualified_courses.append(system_course)
 
+        # If user has already completed the course - ineligible course
         for course in all_learner_completed_course:
-            for system_course in course_list:
-                if (course.json()["course_id"] == system_course.json()["course_id"]):
-                    unqualified_courses.append(system_course.json()["course_id"])
+            for system_course in course_list_only_course_id:
+                if (course.json()["course_id"] == system_course):
+                    unqualified_courses.append(system_course)
 
-        for system_course in course_list:
-            course_list_only_course_id.append(system_course.json()["course_id"]) 
 
-        qualified_courses = set(course_list_only_course_id) ^ set(unqualified_courses)
+        qualified_courses = set(course_list_only_course_id) - set(unqualified_courses)
 
         return jsonify({
             "code": 200,

@@ -1,3 +1,4 @@
+<!-- For the sake of the demo, heather.2021 will be the learner logged in. -->
 <script>
   sessionStorage.setItem("user_name", "heather.2021")
   sessionStorage.setItem("name", "Heather")
@@ -146,7 +147,7 @@
     <div class="collapse navbar-collapse ms-lg-5 mt-4 mt-lg-0" id="navbarSupportedContent">
       <ul class="navbar-nav align-items-center">
         <li class="nav-item">
-          <a class="nav-link" href="./index.php"><span>Home</span></a>
+          <a class="nav-link" href="./learner_index.php"><span>Home</span></a>
         </li>
       </ul>
       <ul class="navbar-nav mt-4 mt-lg-0 ms-auto align-items-center">
@@ -171,8 +172,8 @@
           <tr>
             <th>Course ID</th>
             <th>Class ID</th>
+            <th></th>
             <th>Sections Completed</th>
-            <th>Final Quiz Grade</th>
           </tr>
         </thead>
 
@@ -275,10 +276,10 @@
             var course_str =
               `
             <tr>
-              <td>${course_id}</td>
+              <td><a href="#">${course_id}</a></td>
               <td>${class_id}</td>
+              <td></td>
               <td>${sections_completed}</td>
-              <td>${final_quiz_grade}</td>
             </tr>
           `
             document.getElementById("courses_table").innerHTML += course_str
