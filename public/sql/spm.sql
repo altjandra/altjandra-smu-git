@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `class` (
   `enrolment_end_datetime` datetime NOT NULL,
   `current_class_size` int(11) NOT NULL,
   `total_class_size` int(11) NOT NULL,
-  `no_of_sections` int(11) NOT NULL,
+  `no_of_sections` int(11) NULL,
   `final_quiz_id` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`course_id`,`class_id`),
   KEY `class_fk3` (`final_quiz_id`),
@@ -103,7 +103,8 @@ CREATE TABLE IF NOT EXISTS `course` (
 INSERT INTO `course` (`course_id`, `course_name`, `course_desc`) VALUES
 ('EPSON101', 'Fundamentals of Epson Scanners', 'This course will teach you all about the basics on the latest\r\n  Epson-brand scanners.'),
 ('EPSON102', 'Advanced Epson Scanners', 'This course will teach you about the internal mechanics of the latest\r\n  Epson-brand scanners.'),
-('XEROX101', 'Mechanics of Xerox', 'This course will teach you about the internal workings of a Xerox-based,\r\n  standard-issued printer.');
+('XEROX101', 'Mechanics of Xerox', 'This course will teach you about the internal workings of a Xerox-based,\r\n  standard-issued printer.'),
+('XEROX102', 'Advanced Mechanics of Xerox', 'This course will teach you all you need to know about the advanced\r\n  mechanics of a Xerox machine.');
 
 -- --------------------------------------------------------
 
@@ -265,7 +266,8 @@ CREATE TABLE IF NOT EXISTS `prerequisite` (
 INSERT INTO `prerequisite` (`course_id`, `prerequisite_id`) VALUES
 ('EPSON101', 'NIL'),
 ('EPSON102', 'EPSON101'),
-('XEROX101', 'NIL');
+('XEROX101', 'NIL'),
+('XEROX102', 'XEROX101');
 
 -- --------------------------------------------------------
 

@@ -324,42 +324,6 @@ def view_enrolment_requests(course_id, class_id):
                 "message": "There was an error while retrieving the enrolments: " + str(e)
             }
         ), 500
-
-# ----------------------------------------------------------------------------------------------------------------------------- #
-'''View enrolment requests of learner'''
-
-@app.route("/view_enrolment_requests_learner/<string:course_id>/<string:user_name>")
-def view_enrolment_requests_learner(course_id, user_name):
-    try:
-        enrolment_list = Enrolment_Request.query.filter_by(course_id=course_id, user_name=user_name).all()
-
-        # If enrolments are found
-        if len(enrolment_list) != 0:
-            return jsonify(
-                {
-                    "code": 200,
-                    "data": {
-                        "enrolment": [enrolment.json() for enrolment in enrolment_list]
-                    }
-                }
-            ), 200
-        
-        # If enrolments are not found
-        return jsonify(
-            {
-                "code": 404,
-                "message": "There are no enrolment requests."
-            }
-        ), 404
-
-    # Error while retrieving enrolments
-    except Exception as e:
-        return jsonify(
-            {
-                "code": 500,
-                "message": "There was an error while retrieving the enrolments: " + str(e)
-            }
-        ), 500
         
 # ----------------------------------------------------------------------------------------------------------------------------- #
 '''Admin: View confirmed learners '''
@@ -517,25 +481,44 @@ def view_eligible_learners(course_id):
         learner_list = Employee.query.filter_by(current_designation="LEARNER").all()
         all_learner_current_course = Overall_Course_Progress.query.filter_by(course_id=course_id).all()
         all_learner_completed_course = Completed_Courses.query.filter_by(course_id=course_id).all()
+
+        all_completed_courses = Completed_Courses.query.all()
+        prerequisite = Prerequisite.query.filter_by(course_id=course_id).first()
+
         qualified_learners = []
         unqualified_learners = []
         learner_list_only_names = []
-
-        # Returns only qualified learners
-        for learner in all_learner_current_course:
-            for system_learner in learner_list:
-                if (learner.json()["user_name"] == system_learner.json()["user_name"]):
-                    unqualified_learners.append(system_learner.json()["user_name"])
-
-        for learner in all_learner_completed_course:
-            for system_learner in learner_list:
-                if (learner.json()["user_name"] == system_learner.json()["user_name"]):
-                    unqualified_learners.append(system_learner.json()["user_name"])
-
+        qualified_learners_prereq = []
+        
         for learner in learner_list:
             learner_list_only_names.append(learner.json()["user_name"]) 
 
-        qualified_learners = set(learner_list_only_names) ^ set(unqualified_learners)
+        # If user is already taking the course - unqualified
+        for learner in all_learner_current_course:
+            for learner_name in learner_list_only_names:
+                if (learner.json()["user_name"] == learner_name):
+                    unqualified_learners.append(learner_name)
+
+        # If user has already completed the course - unqualified
+        for learner in all_learner_completed_course:
+            for learner_name in learner_list_only_names:
+                if (learner.json()["user_name"] == learner_name):
+                    unqualified_learners.append(learner_name)
+
+        # If course has no prerequisites - everyone qualifies
+        if (prerequisite.prerequisite_id == "NIL"):
+            for learner in learner_list:
+                qualified_learners_prereq.append(learner.json()["user_name"]) 
+
+        # If course has prerequisites - only those who have completed them qualifies
+        else:
+            for learner in all_completed_courses:
+                if (learner.json()["course_id"] == prerequisite.prerequisite_id):
+                    qualified_learners_prereq.append(learner.json()["user_name"])
+
+        
+        qualified_learners = set(learner_list_only_names) - set(unqualified_learners)
+        qualified_learners = list(set(qualified_learners).intersection(qualified_learners_prereq))
 
         return jsonify({
             "code": 200,
@@ -650,120 +633,5 @@ def admin_delete_enrolment_request(user_name, course_id, class_id):
             {
                 "code": 500,
                 "message": "There was an error while deleting the Enrolment Request: " + str(e)
-            }
-        ), 500
-
-# ----------------------------------------------------------------------------------------------------------------------------- #
-'''Learner: Get all current courses'''
-
-@app.route("/learner_get_all_current_courses/<string:user_name>")
-def learner_get_all_current_courses(user_name):
-    try:
-        current_course_list = Overall_Course_Progress.query.filter_by(user_name=user_name).all()
-
-        # Courses are available
-        if len(current_course_list) != 0:
-            return jsonify(
-                {
-                    "code": 200,
-                    "data": {
-                        "courses": [course.json() for course in current_course_list]
-                    }
-                }
-            ), 200
-
-        # Courses not available
-        return jsonify(
-            {
-                "code": 404,
-                "message": "There are no courses available."
-            }
-        ), 404
-
-    # Error while retrieving courses
-    except Exception as e:
-        return jsonify(
-            {
-                "code": 500,
-                "message": "There was an error while retrieving the courses: " + str(e)
-            }
-        ), 500
-
-# ----------------------------------------------------------------------------------------------------------------------------- #
-'''Admin: View eligible courses '''
-
-@app.route("/view_eligible_courses/<string:user_name>")
-def view_eligible_courses(user_name):
-    try:
-        course_list = Course.query.all()
-        all_learner_current_course = Overall_Course_Progress.query.filter_by(user_name=user_name).all()
-        all_learner_completed_course = Completed_Courses.query.filter_by(user_name=user_name).all()
-
-        qualified_courses = []
-        unqualified_courses = []
-        course_list_only_course_id = []
-
-        # Returns only qualified courses
-        for course in all_learner_current_course:
-            for system_course in course_list:
-                if (course.json()["course_id"] == system_course.json()["course_id"]):
-                    unqualified_courses.append(system_course.json()["course_id"])
-
-        for course in all_learner_completed_course:
-            for system_course in course_list:
-                if (course.json()["course_id"] == system_course.json()["course_id"]):
-                    unqualified_courses.append(system_course.json()["course_id"])
-
-        for system_course in course_list:
-            course_list_only_course_id.append(system_course.json()["course_id"]) 
-
-        qualified_courses = set(course_list_only_course_id) ^ set(unqualified_courses)
-
-        return jsonify({
-            "code": 200,
-            "data": {
-                "qualified_courses": list(qualified_courses),
-                "unqualified_courses": list(unqualified_courses),
-                "course_list": [course.json() for course in course_list],
-
-            }
-        }), 200
-
-
-    # Error while retrieving qualified courses
-    except Exception as e:
-        return jsonify(
-            {
-                "code": 500,
-                "message": "There was an error while retrieving the eligible courses: " + str(e)
-            }
-        ), 500
-
-# ----------------------------------------------------------------------------------------------------------------------------- #
-'''Learner: Submit Enrolment Request'''
-
-@app.route("/submit_enrolment_request", methods=['POST'])
-def submit_enrolment_request():
-    try:
-        data = request.get_json()
-
-        enrolment_request = Enrolment_Request(**data)
-
-        db.session.add(enrolment_request)
-        db.session.commit()
-
-        return jsonify(
-            {
-                "code": 201,
-                "enrolment_request": enrolment_request.json()
-            }
-        ), 201
-
-    # Error while submitting enrolment request
-    except Exception as e:
-        return jsonify(
-            {
-                "code": 500,
-                "message": "An error occurred while submitting the enrolment request: " + str(e)
             }
         ), 500
