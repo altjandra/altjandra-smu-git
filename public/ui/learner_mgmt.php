@@ -350,7 +350,7 @@
     const learners_table = document.getElementById("learners_table")
 
     // Get all learners route (from Employee table)
-    url = `http://localhost:5000/admin_get_all_learners`;
+    url = `http://3.139.154.29:5000/admin_get_all_learners`;
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -397,12 +397,12 @@
 
     // Get all learners route (from Employee table) if there is no search query
     if (search_query.trim() == "") {
-      url = `http://localhost:5000/admin_get_all_learners`
+      url = `http://3.139.154.29:5000/admin_get_all_learners`
     }
 
     // Get searched learners route (from Employee table) if there is a search query
     else {
-      url = `http://localhost:5000/admin_search_for_learners/${search_query}`
+      url = `http://3.139.154.29:5000/admin_search_for_learners/${search_query}`
     }
 
     // Hide original displayed learners
