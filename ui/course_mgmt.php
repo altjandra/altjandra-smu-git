@@ -412,7 +412,7 @@
     const prerequisites_available = document.getElementById("prerequisites_available")
 
     // Get all courses route (from Course table)
-    url = `http://localhost:5000/admin_get_all_courses`;
+    url = `http://3.139.154.29:5000/admin_get_all_courses`;
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -465,12 +465,12 @@
 
     // Get all courses route (from Course table) if there is no search query
     if (search_query.trim() == "") {
-      url = `http://localhost:5000/admin_get_all_courses`
+      url = `http://3.139.154.29:5000/admin_get_all_courses`
     }
 
     // Get searched courses route (from Course table) if there is a search query
     else {
-      url = `http://localhost:5000/admin_search_for_courses/${search_query}`
+      url = `http://3.139.154.29:5000/admin_search_for_courses/${search_query}`
     }
 
     // Hide original displayed courses
@@ -516,7 +516,7 @@
 <script>
   function admin_delete_course(course_id) {
     // Delete course route (from Course table) 
-    url = `http://localhost:5000/admin_delete_course/${course_id}`
+    url = `http://3.139.154.29:5000/admin_delete_course/${course_id}`
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -545,7 +545,7 @@
     var new_course_prereq = document.getElementById("prerequisites_available").value
 
     // Create course route (from Course table)
-    url = `http://localhost:5000/admin_create_course`
+    url = `http://3.139.154.29:5000/admin_create_course`
 
     json = {
       'course_id': new_course_id,

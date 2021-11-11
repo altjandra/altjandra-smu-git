@@ -385,7 +385,7 @@
     }
 
     // View confirmed learners route (from Overall Course Progress table)
-    url = `http://localhost:5000/view_confirmed_learners/${course_id}/${class_id}`
+    url = `http://3.139.154.29:5000/view_confirmed_learners/${course_id}/${class_id}`
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -414,7 +414,7 @@
       })
 
     // View enrolment requests route (from Enrolment Request table)
-    url1 = `http://localhost:5000/view_enrolment_requests/${course_id}/${class_id}`
+    url1 = `http://3.139.154.29:5000/view_enrolment_requests/${course_id}/${class_id}`
 
     const response1 = fetch(url1)
       .then((response1) => response1.json())
@@ -448,7 +448,7 @@
         }
 
         // View eligible learners route
-        url2 = `http://localhost:5000/view_eligible_learners/${course_id}`
+        url2 = `http://3.139.154.29:5000/view_eligible_learners/${course_id}`
 
         const response2 = fetch(url2)
           .then((response2) => response2.json())
@@ -490,7 +490,7 @@
     name = name.substring(0, name.length - 5)
 
     // Assign learner route 
-    url = `http://localhost:5000/admin_assign_learner`
+    url = `http://3.139.154.29:5000/admin_assign_learner`
 
     json = {
       'user_name': learner_assigned,
@@ -530,7 +530,7 @@
 <script>
   function admin_approve_enrolment(user_name, name) {
     // Approve enrolment route 
-    url = `http://localhost:5000/admin_approve_enrolment`
+    url = `http://3.139.154.29:5000/admin_approve_enrolment`
     var course_id = sessionStorage.getItem('course_id')
     var class_id = sessionStorage.getItem('class_id')
 
@@ -561,7 +561,7 @@
         // Learner can be approved
         else {
           // Delete enrolment route 
-          url1 = `http://localhost:5000/admin_delete_enrolment_request/${user_name}/${course_id}/${class_id}`
+          url1 = `http://3.139.154.29:5000/admin_delete_enrolment_request/${user_name}/${course_id}/${class_id}`
 
           const response1 = fetch(url1)
             .then((response1) => response1.json())
@@ -592,7 +592,7 @@
     var class_id = sessionStorage.getItem('class_id')
 
     // Delete enrolment route 
-    url = `http://localhost:5000/admin_delete_enrolment_request/${user_name}/${course_id}/${class_id}`
+    url = `http://3.139.154.29:5000/admin_delete_enrolment_request/${user_name}/${course_id}/${class_id}`
 
     const response = fetch(url)
       .then((response) => response.json())

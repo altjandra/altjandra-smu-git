@@ -303,7 +303,7 @@
     var course_id = sessionStorage.getItem("course_id")
 
     // Get course & all trainers details route (from Course, Prerequisite, Employee, Class tables)
-    url = `http://localhost:5000/admin_get_course_details/${course_id}`
+    url = `http://3.139.154.29:5000/admin_get_course_details/${course_id}`
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -457,7 +457,7 @@
 
 
     // Create class route (from Class table)
-    url = `http://localhost:5000/admin_create_class`
+    url = `http://3.139.154.29:5000/admin_create_class`
 
     json = {
       'course_id': sessionStorage.getItem("course_id"),

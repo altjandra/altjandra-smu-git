@@ -267,7 +267,7 @@
     var check = 0
 
     // Get course details
-    url = `http://localhost:5000/admin_get_course_details/${course_id}`
+    url = `http://3.139.154.29:5000/admin_get_course_details/${course_id}`
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -351,7 +351,7 @@
 <script>
   var user_name = sessionStorage.getItem("user_name")
   var course_id = sessionStorage.getItem("course_id")
-  url = `http://localhost:5000/view_enrolment_requests/${course_id}/${user_name}`
+  url = `http://3.139.154.29:5000/view_enrolment_requests/${course_id}/${user_name}`
 
   const response = fetch(url)
     .then((response) => response.json())
@@ -367,7 +367,7 @@
 <script>
   function learner_select_class(course_id, class_id) {
     // Submit enrolment request
-    url = `http://localhost:5000/submit_enrolment_request`
+    url = `http://3.139.154.29:5000/submit_enrolment_request`
     var user_name = sessionStorage.getItem("user_name")
     var name = sessionStorage.getItem("name")
 

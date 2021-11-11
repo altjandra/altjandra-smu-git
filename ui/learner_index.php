@@ -255,7 +255,7 @@
     var user_name = sessionStorage.getItem("user_name")
 
     // Get all courses of learner route
-    url = `http://localhost:5000/learner_get_all_current_courses/${user_name}`;
+    url = `http://3.139.154.29:5000/learner_get_all_current_courses/${user_name}`;
 
     const response = fetch(url)
       .then((response) => response.json())
@@ -289,7 +289,7 @@
       })
 
     // Get all courses - eligible and not eligible
-    url1 = `http://localhost:5000/view_eligible_courses/${user_name}`
+    url1 = `http://3.139.154.29:5000/view_eligible_courses/${user_name}`
 
     const response1 = fetch(url1)
       .then((response1) => response1.json())

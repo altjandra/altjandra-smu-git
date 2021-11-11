@@ -131,7 +131,7 @@
     document.getElementById("learner_name").innerHTML = name
 
     // Get trainer details route 
-    url = `http://localhost:5000/admin_get_learner_details/${user_name}`
+    url = `http://3.139.154.29:5000/admin_get_learner_details/${user_name}`
 
     const response = fetch(url)
       .then((response) => response.json())
